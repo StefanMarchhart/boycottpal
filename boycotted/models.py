@@ -1,3 +1,40 @@
 from django.db import models
+from django.core.validators import RegexValidator
+from account.models import *
 
 # Create your models here.
+
+# This model describes an entity being boycotted i.e. Trump or My local applebee's
+class Boycotted(models.Model):
+    # Primary key for the boycotted
+    boycotted_id = models.AutoField(verbose_name="Boycotted ID", primary_key=True)
+    # Name of the person/place being boycotted
+    name = models.CharField(max_length=500, verbose_name="Entity being boycotted")
+    # Location of a local variant of the boycotted or null if it's a non-local thing
+    zip = models.CharField(max_length=5,
+                           null=True,
+                           blank=True,
+                           validators=[
+                               RegexValidator(r'^\d{1,10}$',
+                                              message="Please enter a valid zipcode")
+                           ]
+                           )
+    # The boycotts filed against the boycotted object
+    boycotts = models.ManyToManyField("boycotted.Boycott", blank=True)
+
+# This class represents an individual instance of a boycott. Think Grandma boycotting Obama
+class Boycott(models.Model):
+    # The user doing the boycotting
+    boycotter = models.OneToOneField('account.BoycottUser')
+    # The time/date the boycott was submitted
+    date = models.DateTimeField()
+    # The reason for the boycott
+    reason = models.CharField(max_length=500, verbose_name="Why are you boycotting?")
+    # Target, not sure if needed yet
+    # boycotted = models.ForeignKey(
+    #     Boycotted,
+    #     on_delete=models.CASCADE,
+    #     related_name='+'
+    # )
+
+#
