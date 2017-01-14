@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'account',
+    'boycotted'
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'boycott.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': (os.path.join(BASE_DIR, 'boycott/templates'),),
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
