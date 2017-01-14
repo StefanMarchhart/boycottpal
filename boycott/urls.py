@@ -19,5 +19,5 @@ import account.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^landing',account.views.landing, name='landing')
+    url(r'^$',account.views.landing, name='landing')
 ]
