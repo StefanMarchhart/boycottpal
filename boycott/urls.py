@@ -17,7 +17,18 @@ from django.conf.urls import url
 from django.contrib import admin
 import account.views
 
+from django.conf.urls import url
+
+from django.conf import settings
+from django.conf.urls import url, include
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.contrib.auth import views as auth_views
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$',account.views.landing, name='landing')
+    url(r'^$',account.views.home, name='home'),
+    url(r'', include('account.urls')),
+    url(r'', include('boycotted.urls')),
 ]
