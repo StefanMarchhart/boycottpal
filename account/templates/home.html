@@ -24,25 +24,25 @@
     </div>
   </div>
     {% endif %}
-
+    {% if user.is_authenticated %}
       <div class="section">
 
+{#      var my_boycotts = JSON.parse("{{ my_boycotts|escapejs }}");#}
 
-      <div class="row">
-        <div class="col s12 m8 offset-m2"><div class="icon-block">
-            <h5 class="center">My Boycotts</h5>
-              <div class="collection center">
-                  <a href="#!" class="collection-item">Trump</a>
-                  <a href="#!" class="collection-item">Pence</a>
-                  <a href="#!" class="collection-item">DNC</a>
-                  <a href="#!" class="collection-item">Putin</a>
-              </div>
-        </div>
-
+          <div class="row">
+            <div class="col s12 m8 offset-m2 center">
+                <h5 class="center">My Boycotts</h5>
+                  <div class="collection center">
+                      {% for boycott in my_boycotts %}
+                        <a href="/boycotted/view/{{ boycott.id }}" class="collection-item">{{ boycott.name }} {{ boycott.location }}- {{ boycott.reason }}</a>
+                      {% endfor %}
+                  </div>
+                <a href="/boycott/add" class="waves-effect waves-light light-blue btn"><i class="material-icons left">add</i>Boycott Something!</a>
+            </div>
+          </div>
 
       </div>
-
-    </div>
+    {% endif %}
 
     <div class="section">
       <div class="row">

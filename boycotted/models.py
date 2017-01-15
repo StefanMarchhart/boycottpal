@@ -1,4 +1,3 @@
-from django.db import models
 from django.core.validators import RegexValidator
 from account.models import *
 
@@ -6,8 +5,6 @@ from account.models import *
 
 # This model describes an entity being boycotted i.e. Trump or My local applebee's
 class Boycotted(models.Model):
-    # Primary key for the boycotted
-    boycotted_id = models.AutoField(verbose_name="Boycotted ID", primary_key=True)
     # Name of the person/place being boycotted
     name = models.CharField(max_length=500, verbose_name="Entity being boycotted")
     # Location of a local variant of the boycotted or null if it's a non-local thing
@@ -25,16 +22,18 @@ class Boycotted(models.Model):
 # This class represents an individual instance of a boycott. Think Grandma boycotting Obama
 class Boycott(models.Model):
     # The user doing the boycotting
-    boycotter = models.OneToOneField('account.BoycottUser')
+    boycotter = models.ForeignKey(
+        'account.BoycottUser',
+        on_delete=models.CASCADE
+    )
     # The time/date the boycott was submitted
     date = models.DateTimeField()
     # The reason for the boycott
     reason = models.CharField(max_length=500, verbose_name="Why are you boycotting?")
     # Target, not sure if needed yet
-    # boycotted = models.ForeignKey(
-    #     Boycotted,
-    #     on_delete=models.CASCADE,
-    #     related_name='+'
-    # )
+    target = models.ForeignKey(
+        Boycotted,
+        on_delete=models.CASCADE
+    )
 
 #
