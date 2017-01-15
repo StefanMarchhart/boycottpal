@@ -29,6 +29,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',account.views.home, name='home'),
+    # url(r'^alert/(?P<alert>[0-9]+)',account.views.home, name='home'),
     url(r'', include('account.urls')),
     url(r'', include('boycotted.urls')),
 ]

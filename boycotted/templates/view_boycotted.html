@@ -6,8 +6,8 @@
         <div class="container">
             <div class="row">
               <div class="col s12 m6 offset-m3 center">
-                    <h3>{{ name }}</h3>
-                    <h5>{{ location }}</h5>
+                    <h4>{{ name }}</h4>
+                    <h6>{{ location }}</h6>
                   <div class="divider"></div>
               </div>
             </div>
@@ -21,7 +21,8 @@
                     <div class="col s12 m8 offset-m2">
                       <div class="card blue-grey darken-1">
                         <div class="card-content white-text">
-                          <span class="card-title">{{ boycott.username }} - {{ boycott.date }} </span>
+{#                          <span class="card-title">{{ boycott.username }} - {{ boycott.date }} </span>#}
+                          <h6>{{ boycott.username }} - {{ boycott.date }} </h6>
                             <div class="divider"></div>
 
                                <h5> {{ boycott.reason }}</h5>
@@ -31,10 +32,10 @@
 
 
                       </div>
+                     </div>
                     </div>
                 </div>
             {% endfor %}
-        </div>
     {#                        <a href="/boycotted/view/{{ boycott.id }}" class="collection-item">{{ boycott.name }} {{ boycott.location }}- {{ boycott.reason }}</a>#}
     </div>
     <div class="section">

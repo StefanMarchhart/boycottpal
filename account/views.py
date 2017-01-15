@@ -9,6 +9,11 @@ from uszipcode import ZipcodeSearchEngine
 def home(request):
     # return HttpResponse('Hello from Python!')
     decoded_json=[]
+    raw_alert = request.GET.get('alert')
+    if raw_alert == None:
+        alert=""
+    else:
+        alert=raw_alert
     if request.user.is_authenticated():
         boycotts=[]
         for boycott in request.user.boycotts.all():
@@ -32,7 +37,7 @@ def home(request):
 
 
 
-    return render(request, 'home.html',{'my_boycotts': decoded_json})
+    return render(request, 'home.html',{'alert':alert, 'my_boycotts': decoded_json})
 
 
 
@@ -44,10 +49,20 @@ def Signup(request):
             # process data in form
             user = form.save()
 
-            logging_in = authenticate(username=user.username, password=user.password)
-            if logging_in is not None:
-                login(request, logging_in)
-            return HttpResponseRedirect('/')
+
+            user = authenticate(username=form.cleaned_data['username'],
+                                    password=form.cleaned_data['password'],
+                                    )
+
+
+            if user is not None:
+                login(request, user)
+            return HttpResponseRedirect('/?alert=signup')
+
+        # new_user = authenticate(username=form.cleaned_data['username'],
+        #                         password=form.cleaned_data['password1'],
+        #                         )
+        # login(request, new_user)
 
     else:
         form = UserForm()
