@@ -20,7 +20,7 @@ def home(request):
                 location = search.by_zipcode(zip)
 
                 location = "("+ str(location.City) + ", " + str(location.State)+") "
-                print(location)
+
             bct = {
                 'name':boycott.target.name,
                 'location':location,

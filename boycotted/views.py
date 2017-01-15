@@ -1,10 +1,12 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
+import json
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from boycotted.forms import *
 from boycotted.models import *
+from uszipcode import ZipcodeSearchEngine
 # Create your views here.
 @login_required(login_url='/login/')
 def AddBoycott(request):
@@ -43,3 +45,34 @@ def AddBoycott(request):
         boycotted_form = BoycottedForm()
 
     return render(request, 'add_boycott.html', {'boycott_form': boycott_form, 'boycotted_form':boycotted_form})
+
+
+@login_required(login_url='/login/')
+def ViewBoycotted(request,boycotted_id):
+    # if this is a POST request we need to process the form data
+    boycotts=[]
+    boycotted=Boycotted.objects.get(id=boycotted_id)
+    if boycotted.zip == "":
+        location = ""
+    else:
+        search = ZipcodeSearchEngine()
+        location = search.by_zipcode(boycotted.zip)
+        location = "(" + str(location.City) + ", " + str(location.State) + ")"
+    for boycott in boycotted.boycotts.all():
+        boy={
+            'username':boycott.boycotter.username,
+            'date':boycott.date.strftime("%m/%d/%y"),
+            'reason':boycott.reason
+        }
+        boycotts.append(boy)
+    decoded_json = json.loads(json.dumps(boycotts))
+
+
+
+
+
+    return render(request, 'view_boycotted.html', {
+        'name': boycotted.name,
+        'location': location,
+        'boycotts': decoded_json
+    })
