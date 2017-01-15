@@ -53,10 +53,12 @@ def ViewBoycotted(request,boycotted_id):
     boycotts=[]
     boycotted=Boycotted.objects.get(id=boycotted_id)
     if boycotted.zip == "":
+        zip=""
         location = ""
     else:
+        zip=boycotted.zip
         search = ZipcodeSearchEngine()
-        location = search.by_zipcode(boycotted.zip)
+        location = search.by_zipcode(zip)
         location = "(" + str(location.City) + ", " + str(location.State) + ")"
     for boycott in boycotted.boycotts.all():
         boy={
@@ -73,6 +75,7 @@ def ViewBoycotted(request,boycotted_id):
 
     return render(request, 'view_boycotted.html', {
         'name': boycotted.name,
+        'zip': zip,
         'location': location,
         'boycotts': decoded_json
     })

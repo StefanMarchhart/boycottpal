@@ -5,45 +5,54 @@
 
 
 {#INTRO BLOCK#}
-      <div class="container">
     {% if not user.is_authenticated %}
 
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
+        <div class="section no-pad-bot blue grey lighten-4" id="index-banner">
+        <div class="container">
+
       <br><br>
       <h1 class="header center orange-text">Welcome to BoycottPal</h1>
       <div class="row center">
         <h5 class="header col s12 light left flow-text">A <strong> boycott</strong> is an act of voluntarily abstaining from using, buying, or dealing with a person, organization, or country as an expression of protest, usually for social or political reasons. The purpose of a boycott is to inflict some economic loss on the target, or to indicate a moral outrage, to try to compel the target to alter an objectionable behavior.</h5>
+        <h5 class="header col s12 light left flow-text">With Boycott Pal, you can keep track of the people and places you've boycotted, and talk to others who have done the same</h5>
       </div>
       <div class="row center">
         <a href="/signup/" id="download-button" class="btn-large waves-effect waves-light orange">Sign Up</a>
         <a href="/login/" id="download-button" class="btn-large waves-effect waves-light orange">Log in</a>
       </div>
       <br><br>
-
-    </div>
+</div>
   </div>
     {% endif %}
     {% if user.is_authenticated %}
-      <div class="section">
+      <div class="section grey lighten-3">
+              <div class="container">
+
 
 
           <div class="row">
-            <div class="col s12 m8 offset-m2 center">
+            <div class="col s12 m8 offset-m2">
                 <h5 class="center">My Boycotts</h5>
-                  <div class="collection center">
+{#                  <div class="collection center">#}
+                    <ul class="collection">
                       {% for boycott in my_boycotts %}
-                        <a href="/boycotted/view/{{ boycott.id }}" class="collection-item">{{ boycott.name }} {{ boycott.location }}- {{ boycott.reason }}</a>
+{#                        <a href="/boycotted/view/{{ boycott.id }}" class="collection-item">{{ boycott.name }} {{ boycott.location }}- {{ boycott.reason }}</a>#}
+                        <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.id }}">{{ boycott.name }} {{ boycott.location }}</a>- {{ boycott.reason }}<a href="google.com" class="secondary-content"><i class="material-icons">edit</i></a></div></li>
+{#                        <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.id }}" class="collection-item">{{ boycott.name }} {{ boycott.location }}- {{ boycott.reason }}</a><a href="google.com" class="secondary-content"><i class="material-icons">edit</i></a></div></li>#}
+
                       {% endfor %}
-                  </div>
+{#                  </div>#}
+                    </ul>
                 <a href="/boycott/add" class="waves-effect waves-light light-blue btn"><i class="material-icons left">add</i>Boycott Something!</a>
             </div>
           </div>
-
+        </div>
       </div>
     {% endif %}
 
     <div class="section">
+     <div class="container">
+
       <div class="row">
         <div class="col s12 m4 offset-m1">
           <div class="icon-block">
