@@ -10,7 +10,21 @@
                   <div class="card-content black-text center">
                     <span class="card-title">Please Sign In</span>
 
-                    <div class="panel-body">
+                    <div class="card-content">
+
+                    <script>
+                        function report_error(error) {
+                            swal({
+                                title: "Error",
+                                text: error,
+                                type: "error",
+                                html: true
+                            });
+                        }
+                    </script>
+
+
+
 {#                        {% if next %}#}
 {#                            {% if user.is_authenticated %}#}
 {#                                <div class="alert alert-warning" role="alert">Your account doesn't have access to this page. To proceed,#}
@@ -25,15 +39,23 @@
                         <form method="post" action="{% url 'login' %} " class="center">
                             {% csrf_token %}
 
-{#                                {{ form }}#}
-                            {{ form.non_field_errors }}
+
+                             {% if form.non_field_errors %}
+                                    <script>
+                                        report_error('{{ form.non_field_errors }}')
+                                    </script>
+                             {% endif %}
                             <div class="fieldWrapper input-field">
                                 {{ form.username.errors }}
                                 <label for="{{ form.username.id_for_label }}">Username</label>
                                 {{ form.username }}
                             </div>
                             <div class="fieldWrapper input-field">
-                                {{ form.password.errors }}
+                             {% if form.password.errors %}
+                                    <script>
+                                        report_error('{{ form.password.errors }}')
+                                    </script>
+                                {% endif %}
                                 <label for="{{ form.message.password }}">Password</label>
                                 {{ form.password }}
                             </div>

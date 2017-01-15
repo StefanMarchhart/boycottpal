@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+          <div class="col s12 m6 offset-m3">
+              <div class="light-blue lighten-5 card">
+                  <div class="card-content black-text center">
+                    <span class="card-title">Please Sign In</span>
+
+                    <div class="panel-body">
+{#                        {% if next %}#}
+{#                            {% if user.is_authenticated %}#}
+{#                                <div class="alert alert-warning" role="alert">Your account doesn't have access to this page. To proceed,#}
+{#                                    please login with an account that has access.</div>#}
+{#                            {% elif next == '/'%}#}
+{##}
+{#                            {% else %}#}
+{#                                <div class="alert alert-info" role="alert">Please login to see this page.</div>#}
+{##}
+{#                            {% endif %}#}
+{#                        {% endif %}#}
+
+
+                    <script>
+                        function report_error(error) {
+                            swal({
+                                title: "Error",
+                                text: error,
+                                type: "error",
+                                html: true
+                            });
+                        }
+                    </script>
+
+
+
+
+
+
+                        <form method="post" action="{% url 'signup' %} " class="center">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                {% if form.non_field_errors %}
+                                    <script>
+                                        report_error('{{ form.non_field_errors }}')
+                                    </script>
+                                {% endif %}
+                            </div>
+{#                            FIRST AND LAST NAME#}
+                            <div class="row">
+                                <div class="col fieldWrapper input-field m5 offset-m1">
+                                    {{ form.first_name.errors }}
+                                    <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                                    {{ form.first_name }}
+                                </div>
+                                <div class="col fieldWrapper input-field m5">
+                                    {{ form.last_name.errors }}
+                                    <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col m10 offset-m1 fieldWrapper input-field">
+                                    {{ form.email.errors }}
+                                        <label for="{{ form.message.email }}">Email</label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col m10 offset-m1 fieldWrapper input-field">
+                                    {% if form.username.errors %}
+                                        <script>
+                                            report_error('{{ form.username.errors }}')
+                                        </script>
+                                    {% endif %}
+
+                                    <label for="{{ form.message.username }}">Username</label>
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col m10 offset-m1 fieldWrapper input-field">
+                                    {{ form.password.errors }}
+                                    <label for="{{ form.message.password }}">Password</label>
+                                    {{ form.password }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col m10 offset-m1 fieldWrapper input-field">
+                                    {{ form.password2.errors }}
+                                    <label for="{{ form.message.password2 }}">Confirm Password</label>
+                                    {{ form.password2 }}
+                                </div>
+                            </div>
+
+                            {#                            <div style="text-align: center;">#}
+                            {#                                <input class="btn btn-success btn-sm" type="submit" value="login"/>#}
+{#                            </div>#}
+
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                            <a href="/" class="waves-effect waves-light red btn"><i class="material-icons right">cancel</i>Cancel</a>
+
+
+
+{#                            <a href="/register" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>Sign Up</a>#}
+
+
+
+{#                            <a href="/register">Sign Up</a>#}
+                            <input type="hidden" name="next" value="{{ next }}"/>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascript %}
+
+{#<script>#}
+{#    function username() {#}
+{##}
+{#            swal("Error", "That Username is already in use.", "error");#}
+{#    }#}
+{##}
+{#</script>#}
+
+{% endblock %}
