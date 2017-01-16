@@ -3,6 +3,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 import json
 from uszipcode import ZipcodeSearchEngine
+import operator
 
 
 # Create your views here.
@@ -30,10 +31,15 @@ def home(request):
                 'name':boycott.target.name,
                 'location':location,
                 'reason':boycott.reason,
-                'id':boycott.target.id
+                'id': boycott.id,
+                'target_id':boycott.target.id
             }
             boycotts.append(bct)
         decoded_json = json.loads(json.dumps(boycotts))
+
+
+    # x = {1: 2, 3: 4, 4: 3, 2: 1, 0: 0}
+    # sorted_x = sorted(x.items(), key=operator.itemgetter(1))
 
 
 
