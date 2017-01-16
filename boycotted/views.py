@@ -53,10 +53,12 @@ def ViewBoycotted(request,boycotted_id):
     boycotts=[]
     boycotted=Boycotted.objects.get(id=boycotted_id)
     if boycotted.zip == "":
+        zip=""
         location = ""
     else:
+        zip=boycotted.zip
         search = ZipcodeSearchEngine()
-        location = search.by_zipcode(boycotted.zip)
+        location = search.by_zipcode(zip)
         location = "(" + str(location.City) + ", " + str(location.State) + ")"
     for boycott in boycotted.boycotts.all():
         boy={
@@ -73,6 +75,55 @@ def ViewBoycotted(request,boycotted_id):
 
     return render(request, 'view_boycotted.html', {
         'name': boycotted.name,
+        'zip': zip,
         'location': location,
         'boycotts': decoded_json
     })
+
+
+@login_required(login_url='/login/')
+def EditBoycott(request,boycott_id):
+    boycott = Boycott.objects.get(id=boycott_id)
+    if request.user.username != boycott.boycotter.username:
+        return HttpResponseRedirect('/')
+
+    if boycott.target.zip == "":
+        zip=""
+        location = ""
+    else:
+        zip=boycott.target.zip
+        search = ZipcodeSearchEngine()
+        location = search.by_zipcode(zip)
+        location = "(" + str(location.City) + ", " + str(location.State) + ")"
+
+    if request.method == 'POST':
+
+        boycott_form = BoycottForm(data=request.POST, instance=boycott)
+        if boycott_form.is_valid():
+
+
+            new_boycott = boycott_form.save(commit=False)
+
+            boycott.reason=new_boycott.reason
+            boycott.save()
+
+            return HttpResponseRedirect('/')
+
+    else:
+        boycott_form = BoycottForm(instance=boycott)
+
+    return render(request, 'edit_boycott.html',
+                  {'boycott_form': boycott_form,
+                   'name': boycott.target.name,
+                   'location': location,
+                   'boycott_id': boycott_id
+                   })
+
+@login_required(login_url='/login/')
+def DeleteBoycott(request, boycott_id):
+    boycott = Boycott.objects.get(id=boycott_id)
+    if request.user.username != boycott.boycotter.username:
+        return HttpResponseRedirect('/')
+    boycott.delete()
+
+    return HttpResponseRedirect('/')
