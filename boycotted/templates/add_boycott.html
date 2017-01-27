@@ -33,7 +33,12 @@
                                 html: true
                             });
                         }
+
+
+
+
                     </script>
+
 
 
 
@@ -59,6 +64,7 @@
 
                                     <label for="{{ boycotted_form.message.name }}">Who or what are you Boycotting?</label>
                                     {{ boycotted_form.name }}
+
                                 </div>
                             </div>
 
@@ -145,12 +151,16 @@
 
 {% block javascript %}
 
-{#<script>#}
-{#    function username() {#}
-{##}
-{#            swal("Error", "That Username is already in use.", "error");#}
-{#    }#}
-{##}
-{#</script>#}
+                                <script>
+                                    $('#id_name').addClass('autocomplete');
+
+                                    $('#id_name').autocomplete({
+                                        data: {
+                                        {% for boycott in boycotted %}
+                                          "{{ boycott }}": null,
+                                        {% endfor %}
+                                        }
+                                    });
+                                </script>
 
 {% endblock %}

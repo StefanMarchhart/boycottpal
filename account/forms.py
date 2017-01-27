@@ -15,12 +15,10 @@ class UserForm(forms.ModelForm):
     password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].required = True
-        self.fields['last_name'].required = True
         self.fields['email'].required = True
     class Meta:
         model = BoycottUser
-        fields = ['first_name', 'last_name', 'username', 'email']
+        fields = ['username', 'email']
 
 
     def clean(self):

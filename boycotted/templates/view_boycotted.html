@@ -17,7 +17,8 @@
     <div class="section">
         <div class="container">
             {% for boycott in boycotts %}
-                <div class="row">
+
+                <div class="row boycott" {% if forloop.counter > 3 %}style="display: none"{% endif %}>
                     <div class="col s12 m8 offset-m2">
                       <div class="card grey lighten-2">
                         <div class="card-content black-text">
@@ -33,8 +34,16 @@
                      </div>
                     </div>
                 </div>
+
             {% endfor %}
-    {#                        <a href="/boycotted/view/{{ boycott.id }}" class="collection-item">{{ boycott.name }} {{ boycott.location }}- {{ boycott.reason }}</a>#}
+        <script>function showMore() {
+            $('.boycott').fadeIn('slow');
+            $('#show_more').fadeOut('slow');
+
+        }</script>
+        <div class="row center">
+           <button class="btn waves-effect light-blue waves-light" id="show_more" onclick=showMore();>Show More Boycotts!</button>
+        </div>
     </div>
     <div class="section">
         <div class="container">

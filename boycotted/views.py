@@ -46,8 +46,18 @@ def AddBoycott(request):
     else:
         boycott_form = BoycottForm()
         boycotted_form = BoycottedForm()
+        boycotted=[]
+        for boycott in Boycotted.objects.all():
+            boycotted.append(boycott.name)
 
-    return render(request, 'add_boycott.html', {'boycott_form': boycott_form, 'boycotted_form':boycotted_form})
+
+
+
+    return render(request, 'add_boycott.html', {
+        'boycott_form': boycott_form,
+        'boycotted_form':boycotted_form,
+        'boycotted':json.loads(json.dumps(boycotted))
+    })
 
 
 @login_required(login_url='/login/')
