@@ -26,12 +26,15 @@ def AddBoycott(request):
             #     If the boycotted exists already, fetch it.
                 boycotted = boycotted_query[0]
             else:
+                # boycotted = boycotted_form.save(commit=False)
                 boycotted = boycotted_form.save()
+                # boycotted.date = datetime.now()
+                # boycotted.save()
 
             # process data in form
             boycott = boycott_form.save(commit=False)
             boycott.boycotter = request.user
-            boycott.date = datetime.now()
+            # boycott.date = datetime.now()
             boycott.target = boycotted
             boycott.save()
 

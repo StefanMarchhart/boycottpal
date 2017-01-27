@@ -58,12 +58,13 @@
           <div class="icon-block">
             <h5 class="center light-blue-text"><i class="material-icons medium">stars</i></h5>
             <h5 class="center">Top Boycotts</h5>
-              <div class="collection center">
-{#                  {% for boycotted in top %}#}
-{#                  <a href="/boycotted/view/{{boycotted.id}}" class="collection-item">{{boycotted.name boycotted.location}}</a>#}
-                  <a href="#!" class="collection-item">Putin</a>
-{#                  {% endfor %}#}
-              </div>
+              <ul class="collection center">
+                {% for boycott in top_boycotts %}
+
+                  <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.id }}">{{ forloop.counter }}. {{ boycott.name }} {{ boycott.location }}</a></div></li>
+
+                {% endfor %}
+              </ul>
           </div>
         </div>
 
@@ -71,12 +72,13 @@
           <div class="icon-block">
             <h5 class="center light-blue-text"><i class="material-icons medium">trending_up</i></h5>
             <h5 class="center">Trending Boycotts</h5>
-              <div class="collection center">
-                  <a href="#!" class="collection-item">Trump</a>
-                  <a href="#!" class="collection-item">Pence</a>
-                  <a href="#!" class="collection-item">DNC</a>
-                  <a href="#!" class="collection-item">Putin</a>
-              </div>
+              <ul class="collection center">
+                {% for boycott in trending_boycotts %}
+
+                  <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.id }}">{{ forloop.counter }}.{{ boycott.name }} {{ boycott.location }}</a></div></li>
+
+                {% endfor %}
+              </ul>
             </div>
         </div>
       </div>
