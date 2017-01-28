@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% block content %}
     <div>
-        <ul id="WebTicker">
+        <ul id="WebTicker" class="grey lighten-2">
             {% for cnn, fox in news %}
 
                 <li><a class="light-blue-text" href="{{cnn.link}}">{{cnn.title | safe }}</a></li>
