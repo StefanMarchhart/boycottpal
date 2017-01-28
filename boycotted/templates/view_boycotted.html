@@ -39,10 +39,10 @@
         <script>function showMore() {
             $('.boycott').fadeIn('slow');
             $('#show_more').fadeOut('slow');
-
-        }</script>
-        <div class="row center">
-           <button class="btn waves-effect light-blue waves-light" id="show_more" onclick=showMore();>Show More Boycotts!</button>
+        }
+        </script>
+        <div class="row center"{% if boycotts|length <= 3 %}style="display: none"{% endif %}>
+            <button class="btn waves-effect light-blue waves-light" id="show_more" onclick=showMore();>Show More Boycotts!</button>
         </div>
     </div>
     <div class="section">

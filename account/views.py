@@ -6,10 +6,17 @@ from uszipcode import ZipcodeSearchEngine
 import operator
 from boycotted.models import *
 import datetime
+import feedparser
+
 
 
 # Create your views here.
 def home(request):
+    import feedparser
+    cnn = feedparser.parse('http://rss.cnn.com/rss/cnn_topstories.rss')
+    fox = feedparser.parse('http://feeds.foxnews.com/foxnews/latest')
+    news = json.loads(json.dumps(list(zip(cnn.entries[:25],fox.entries[:25]))))
+
     my_boycotts_json=[]
     top_boycotts_json=[]
     trending_boycotts_json=[]
@@ -21,12 +28,12 @@ def home(request):
     if request.user.is_authenticated():
         my_boycotts=[]
         for my_boycott in request.user.boycotts.all():
-            zip=my_boycott.target.zip
-            if zip == "":
+            zipcode=my_boycott.target.zip
+            if zipcode == "":
                 location = " "
             else:
                 search = ZipcodeSearchEngine()
-                location = search.by_zipcode(zip)
+                location = search.by_zipcode(zipcode)
 
                 location = "("+ str(location.City) + ", " + str(location.State)+") "
 
@@ -43,12 +50,12 @@ def home(request):
     trending_boycotts=[]
     top_boycotts=[]
     for top_boycott in Boycotted.objects.all():
-        zip = top_boycott.zip
-        if zip == "":
+        zipcode = top_boycott.zip
+        if zipcode == "":
             location = " "
         else:
             search = ZipcodeSearchEngine()
-            location = search.by_zipcode(zip)
+            location = search.by_zipcode(zipcode)
 
             location = "(" + str(location.City) + ", " + str(location.State) + ") "
 
@@ -67,12 +74,12 @@ def home(request):
     end_week = start_week + datetime.timedelta(7)
 
     for trending_boycott in Boycotted.objects.filter(date__range=[start_week,end_week]):
-        zip = trending_boycott.zip
-        if zip == "":
+        zipcode = trending_boycott.zip
+        if zipcode == "":
             location = " "
         else:
             search = ZipcodeSearchEngine()
-            location = search.by_zipcode(zip)
+            location = search.by_zipcode(zipcode)
 
             location = "(" + str(location.City) + ", " + str(location.State) + ") "
 
@@ -100,7 +107,8 @@ def home(request):
         'alert':alert,
         'my_boycotts': my_boycotts_json,
         'top_boycotts':top_boycotts_json,
-        'trending_boycotts':trending_boycotts_json
+        'trending_boycotts':trending_boycotts_json,
+        'news':news
     })
 
 
