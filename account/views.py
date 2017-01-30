@@ -1,3 +1,4 @@
+from account.disqus import get_disqus_sso
 from account.forms import UserForm
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
@@ -141,4 +142,14 @@ def Signup(request):
 
 
     return render(request, 'signup.html', {'form': form})
+
+def _get_disqus_sso(user):
+    if user.is_authenticated():
+        disqus_sso = get_disqus_sso(
+            user.id,
+            user.username,
+            user.email, )
+    else:
+        disqus_sso = get_disqus_sso()
+    return disqus_sso
 

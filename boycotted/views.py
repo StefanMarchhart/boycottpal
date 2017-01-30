@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from account.views import _get_disqus_sso
 from django.contrib.auth.decorators import login_required
 import json
 from django.http import HttpResponseRedirect
@@ -83,14 +84,15 @@ def ViewBoycotted(request,boycotted_id):
     decoded_json = json.loads(json.dumps(boycotts))
 
 
-
+    disqus_sso = _get_disqus_sso(request.user)
 
 
     return render(request, 'view_boycotted.html', {
         'name': boycotted.name,
         'zip': zip,
         'location': location,
-        'boycotts': decoded_json
+        'boycotts': decoded_json,
+        "disqus_sso": disqus_sso
     })
 
 
