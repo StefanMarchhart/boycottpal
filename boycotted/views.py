@@ -139,6 +139,10 @@ def DeleteBoycott(request, boycott_id):
     boycott = Boycott.objects.get(id=boycott_id)
     if request.user.username != boycott.boycotter.username:
         return HttpResponseRedirect('/')
+    boycotted=boycott.target
     boycott.delete()
+    if boycotted.boycotts.count()==0:
+        boycotted.delete()
+
 
     return HttpResponseRedirect('/')
