@@ -25,7 +25,7 @@
 {#                          <span class="card-title">{{ boycott.username }} - {{ boycott.date }} </span>#}
                           <h6>{{ boycott.username }}</h6>
                             <div class="divider grey darken-4"></div>
-                               <h5> {{ boycott.reason }}</h5>
+                               <h5> {{ boycott.reason | safe}}</h5>
                             <div class="right">
                                 <p><i>{{ boycott.date }}</i></p>
                             </div>
@@ -51,7 +51,7 @@
                 <div class="col s12 m8 offset-m2">
                   <div class="card blue-grey lighten-2">
                     <div class="card-content blue-grey-text grey lighten-3 center">
-                      <span class="card-title">Talk about {{ name }} {{ location }}</span>
+                      <span class="card-title">Talk about {{ name | safe }} {{ location }}</span>
                         <div id="disqus_thread"></div>
                             <script>
 
@@ -61,14 +61,14 @@
 {#                            #}
                             var disqus_config = function () {
 
-                                this.page.identifier = "{{ name }}/{{ zip }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                                this.page.title = "{{ name }} ({{ location }})"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                                {{ disqus_sso | safe }}
-                                this.sso = {
-                                    name: "boycottpal",
-                                    button: {% static '/disqus.png' %},
-                                    url: "http://boycottpal-dev.herokuapp.com/login/",
-                                    logout: "http://boycottpal-dev.herokuapp.com/logout/"
+                                this.page.identifier = "{{ name | safe }}/{{ zip }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                this.page.title = "{{ name | safe }} {{ location }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+{#                                {{ disqus_sso | safe }}#}
+{#                                this.sso = {#}
+{#                                    name: "boycottpal",#}
+{#                                    button: {% static '/disqus.png' %},#}
+{#                                    url: "http://boycottpal-dev.herokuapp.com/login/",#}
+{#                                    logout: "http://boycottpal-dev.herokuapp.com/logout/"#}
                             };
 
                             (function() { // DON'T EDIT BELOW THIS LINE

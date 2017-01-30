@@ -6,8 +6,8 @@
         <ul id="WebTicker" class="grey lighten-2">
             {% for cnn, fox in news %}
 
-                <li><a class="light-blue-text" href="{{cnn.link}}">{{cnn.title | safe }}</a></li>
-                <li><a class="red-text" href="{{fox.link}}">{{fox.title | safe }}</a></li>
+                <li><a class="light-blue-text ticker" href="{{cnn.link}}">CNN: {{cnn.title | safe }}</a></li>
+                <li><a class="red-text ticker" href="{{fox.link}}">Fox News: {{fox.title | safe }}</a></li>
 {#                <li><a class="light-red-text" href="{{fox.link}}">{{fox.title}}</a></li>#}
 
             {% endfor %}
@@ -59,7 +59,7 @@
                     <ul class="collection">
                       {% for boycott in my_boycotts %}
 {#                        <a href="/boycotted/view/{{ boycott.id }}" class="collection-item">{{ boycott.name }} {{ boycott.location }}- {{ boycott.reason }}</a>#}
-                        <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.target_id }}">{{ boycott.name }} {{ boycott.location }}</a>- {{ boycott.reason }}<a href="/boycott/edit/{{ boycott.id }}" class="secondary-content right"><i class="material-icons blue-text text-lighten-1">edit</i></a></div></li>
+                        <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.target_id }}">{{ boycott.name | safe }} {{ boycott.location }}</a>- {{ boycott.reason | safe }}<a href="/boycott/edit/{{ boycott.id }}" class="secondary-content right"><i class="material-icons blue-text text-lighten-1">edit</i></a></div></li>
 {#                        <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.id }}" class="collection-item">{{ boycott.name }} {{ boycott.location }}- {{ boycott.reason }}</a><a href="google.com" class="secondary-content"><i class="material-icons">edit</i></a></div></li>#}
 
                       {% endfor %}
@@ -83,7 +83,7 @@
               <ul class="collection center">
                 {% for boycott in top_boycotts %}
 
-                  <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.id }}">{{ forloop.counter }}. {{ boycott.name }} {{ boycott.location }}</a></div></li>
+                  <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.id }}">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a></div></li>
 
                 {% endfor %}
               </ul>
@@ -97,7 +97,7 @@
               <ul class="collection center">
                 {% for boycott in trending_boycotts %}
 
-                  <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.id }}">{{ forloop.counter }}.{{ boycott.name }} {{ boycott.location }}</a></div></li>
+                  <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.id }}">{{ forloop.counter }}.{{ boycott.name | safe }} {{ boycott.location }}</a></div></li>
 
                 {% endfor %}
               </ul>
