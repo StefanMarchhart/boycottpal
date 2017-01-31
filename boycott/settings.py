@@ -33,6 +33,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+CURRENT_ROOT = os.environ.get('CURRENT_ROOT')
 
 
 # Application definition

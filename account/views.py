@@ -1,6 +1,5 @@
 import string
 import random
-
 from account.disqus import get_disqus_sso
 from account.forms import UserForm, PasswordForm, TokenForm
 from django.shortcuts import render, HttpResponseRedirect
@@ -13,6 +12,7 @@ import datetime
 import feedparser
 from account.models import Token, BoycottUser
 from django.core.mail import send_mail
+from django.conf import settings
 
 TOKEN_EXPIRE= datetime.timedelta(1)
 
@@ -202,7 +202,8 @@ def get_reset(request):
                 user=user,
                 token=token
             )
-            send_mail('Boycott Pal Password Recovery', 'Here is your password reset link: ' +token, 'app62196690@heroku.com', [email],
+
+            send_mail('Boycott Pal Password Recovery', 'Here is your password reset link: \n'+ getattr(settings, "CURRENT_ROOT") + token, 'Support@BoycottPal.com', [email],
                       fail_silently=False)
 
             return HttpResponseRedirect('/?alert=reset')
