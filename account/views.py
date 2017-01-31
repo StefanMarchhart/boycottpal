@@ -203,7 +203,7 @@ def get_reset(request):
                 token=token
             )
 
-            send_mail('Boycott Pal Password Recovery', 'Here is your password reset link: \n'+ getattr(settings, "CURRENT_ROOT") +'reset/use/'+ token, 'Support@BoycottPal.com', [email],
+            send_mail('Boycott Pal Password Recovery', 'Here is your password reset link: \n'+ getattr(settings, "CURRENT_ROOT") +'reset/use/'+ token, 'Boycott_Support@BoycottPal.com', [email],
                       fail_silently=False)
 
             return HttpResponseRedirect('/?alert=reset')

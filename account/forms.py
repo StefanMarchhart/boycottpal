@@ -12,8 +12,29 @@ class PasswordForm(forms.ModelForm):
         model = BoycottUser
         fields = ['password']
 
+    def clean(self):
+        password = self.cleaned_data.get('password')
+        if len(password) < 8:
+            raise forms.ValidationError("Your password must be at least 8 characters long.")
+
+        # At least one letter and one non-letter
+        first_isalpha = password[0].isalpha()
+        if all(c.isalpha() == first_isalpha for c in password):
+            raise forms.ValidationError("Your password must contain at least one letter and at least one digit or" \
+                                        " punctuation character.")
+
 class TokenForm(forms.Form):
     email = forms.CharField(label="Email")
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        for user in BoycottUser.objects.all():
+            if user.email == email:
+                return
+            else:
+                pass
+        raise forms.ValidationError("This email isn't associated with an account. Perhaps you mistyped it?")
+
 
 
 
@@ -45,6 +66,16 @@ class UserForm(forms.ModelForm):
 
         if password1 and password1 != password2:
             raise forms.ValidationError("Passwords don't match")
+
+        if len(password1) < 8:
+            raise forms.ValidationError("Your password must be at least 8 characters long.")
+
+        # At least one letter and one non-letter
+        first_isalpha = password1[0].isalpha()
+        if all(c.isalpha() == first_isalpha for c in password1):
+            raise forms.ValidationError("Your password must contain at least one letter and at least one digit or" \
+                                        " punctuation character.")
+
 
         return cleaned_data
 

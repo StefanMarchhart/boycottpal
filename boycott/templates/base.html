@@ -28,7 +28,6 @@
       <ul class="right hide-on-med-and-down">
           {% if user.is_authenticated %}
               <li><a href="#"><i class="material-icons left">person</i>{{ user.username }}</a></li>
-              <li><a href="#"><i class="material-icons left">settings</i>Settings</a></li>
               <li><a href="/logout/"><i class="material-icons left">power_settings_new</i>Log Out</a></li>
           {% else %}
               <li><a href="/signup/"><i class="material-icons left">account_box</i>Sign up</a></li>
@@ -39,7 +38,6 @@
       <ul id="nav-mobile" class="side-nav">
           {% if user.is_authenticated %}
               <li><a href="#"><i class="material-icons left">person</i>{{ user.username }}</a></li>
-              <li><a href="#"><i class="material-icons left">settings</i>Settings</a></li>
               <li><a href="/logout/"><i class="material-icons left">power_settings_new</i>Log Out</a></li>
           {% else %}
               <li><a href="/signup/"><i class="material-icons left">account_box</i>Sign up</a></li>
