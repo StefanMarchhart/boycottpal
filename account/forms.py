@@ -6,7 +6,67 @@ from account.models import Token
 # Defines a login form, which allows for login
 from account.models import BoycottUser
 
-class PasswordForm(forms.ModelForm):
+
+class ChangeEmailForm(forms.ModelForm):
+    old_email = forms.CharField(label="Old Email")
+    email = forms.CharField(label="New Email")
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ChangeEmailForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = BoycottUser
+        fields = ['email']
+
+    def clean(self):
+        user=self.user
+        cleaned_data = super(ChangeEmailForm, self).clean()
+        old_email = self.cleaned_data.get('old_email')
+        email = self.cleaned_data.get('email')
+
+
+        if not old_email or (user.email != old_email):
+            raise forms.ValidationError("Your old email is incorrect")
+
+        return cleaned_data
+
+
+class ChangePasswordForm(forms.ModelForm):
+    old_password = forms.CharField(label="Old Password", widget=forms.PasswordInput)
+    password = forms.CharField(label="New Password", widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = BoycottUser
+        fields = ['password']
+
+    def clean(self):
+        user=self.user
+        cleaned_data = super(ChangePasswordForm, self).clean()
+        old_password = self.cleaned_data.get('old_password')
+        password = self.cleaned_data.get('password')
+
+
+        if not old_password or (user.check_password(old_password) == False):
+            raise forms.ValidationError("Your old password is incorrect")
+
+        if len(password) < 8:
+            raise forms.ValidationError("Your new password must be at least 8 characters long.")
+
+        # At least one letter and one non-letter
+        first_isalpha = password[0].isalpha()
+        if all(c.isalpha() == first_isalpha for c in password):
+            raise forms.ValidationError("Your password must contain at least one letter and at least one digit or" \
+                                        " punctuation character.")
+
+        return cleaned_data
+
+
+class ResetPasswordForm(forms.ModelForm):
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
     class Meta:
         model = BoycottUser

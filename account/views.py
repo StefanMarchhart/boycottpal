@@ -1,16 +1,17 @@
+import os
 import string
 import random
+import json
 from account.disqus import get_disqus_sso
-from account.forms import UserForm, PasswordForm, TokenForm
+from account.forms import UserForm, ResetPasswordForm, TokenForm, ChangePasswordForm,ChangeEmailForm
+from account.models import Token, BoycottUser
+from boycotted.models import *
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-import json
 from uszipcode import ZipcodeSearchEngine
 import operator
-from boycotted.models import *
 import datetime
 import feedparser
-from account.models import Token, BoycottUser
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -27,8 +28,6 @@ def home(request):
     news = json.loads(json.dumps(list(zip(cnn.entries[:25],fox.entries[:25]))))
 
     my_boycotts_json=[]
-    top_boycotts_json=[]
-    trending_boycotts_json=[]
     raw_alert = request.GET.get('alert')
     if raw_alert == None:
         alert=""
@@ -168,11 +167,11 @@ def reset_password(request, token):
         return HttpResponseRedirect('/?alert=expired')
     else:
         if request.method == 'POST':
-            password_form = PasswordForm(data=request.POST)
+            password_form = ResetPasswordForm(data=request.POST)
             if password_form.is_valid():
                 # Save boycotted values to access
                 user=token_obj.user
-                user.password = password_form.save(commit=False).password
+                user.set_password(password_form.save(commit=False).password)
                 user.save()
                 token_obj.delete()
                 login(request, user)
@@ -180,7 +179,7 @@ def reset_password(request, token):
                 return HttpResponseRedirect('/?alert=password')
 
         else:
-            password_form = PasswordForm()
+            password_form = ResetPasswordForm()
 
 
         return render(request, 'reset_password.html', {
@@ -203,7 +202,7 @@ def get_reset(request):
                 token=token
             )
 
-            send_mail('Boycott Pal Password Recovery', 'Here is your password reset link: \n'+ getattr(settings, "CURRENT_ROOT") +'reset/use/'+ token, 'Boycott_Support@BoycottPal.com', [email],
+            send_mail('Boycott Pal Password Recovery', 'Here is your password reset link: \n'+ os.environ.get('CURRENT_ROOT') +'reset/use/'+ token, 'Boycott_Support@BoycottPal.com', [email],
                       fail_silently=False)
 
             return HttpResponseRedirect('/?alert=reset')
@@ -214,4 +213,68 @@ def get_reset(request):
 
 
     return render(request, 'get_reset.html', {'token_form':token_form})
+
+def change_password(request):
+    if request.method == 'POST':
+        password_form = ChangePasswordForm(data=request.POST, user=request.user)
+        if password_form.is_valid():
+            # process data in form
+
+
+            password = password_form.save(commit=False).password
+            user=request.user
+            user.set_password(password)
+            user.save()
+            if user is not None:
+                login(request, user)
+
+            return HttpResponseRedirect('/?alert=password')
+
+
+    else:
+        password_form = ChangePasswordForm()
+        email_form = ChangeEmailForm()
+
+
+    return render(request, 'settings.html', {
+        'email_form': email_form,
+        'password_form':password_form
+    })
+
+def change_email(request):
+    if request.method == 'POST':
+        email_form = ChangeEmailForm(data=request.POST, user=request.user)
+        if email_form.is_valid():
+            # process data in form
+
+
+            email = email_form.save(commit=False).email
+            user=request.user
+            user.email=email
+            user.save()
+
+            return HttpResponseRedirect('/?alert=email')
+    else:
+        email_form = ChangeEmailForm()
+        password_form = ChangePasswordForm()
+
+
+    return render(request, 'settings.html', {
+        'email_form': email_form,
+        'password_form':password_form
+    })
+
+def settings(request):
+    email_form = ChangeEmailForm()
+    password_form = ChangePasswordForm()
+    return render(request, 'settings.html', {
+        'email_form': email_form,
+        'password_form':password_form
+    })
+
+
+
+
+
+
 
