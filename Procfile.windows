@@ -1,3 +1,4 @@
 web: python manage.py runserver localhost:5000
 migrate: python manage.py migrate
 make: python manage.py makemigrations
+static: python manage.py collectstatic --noinput

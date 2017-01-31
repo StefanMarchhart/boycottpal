@@ -12,6 +12,10 @@
       padding-top: 0 !important;
   }
 
-  .ticker{
+  .ticker {
       font-size: 15px;
+  }
+  .comment-icon{
+      font-size: 12px;
+      padding-right: 5px;
   }
