@@ -115,6 +115,12 @@
                 swal("Account Made!", "You've been signed in", "success")
             }else if(alert == 'logout'){
                 swal("You've been signed out","", "success")
+            }else if(alert == 'expired'){
+                swal("Your password reset token is invalid.", "It may have expired.", "warning")
+            }else if(alert == 'reset'){
+                swal("Reset Link Sent!", "A password recovery email has been sent to your email.", "success")
+            }else if(alert == 'password'){
+                swal("Password changed!","You have been logged in with your new password", "success")
             }else{
 
             }

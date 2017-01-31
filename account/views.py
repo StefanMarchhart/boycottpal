@@ -1,5 +1,8 @@
+import string
+import random
+
 from account.disqus import get_disqus_sso
-from account.forms import UserForm
+from account.forms import UserForm, PasswordForm, TokenForm
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 import json
@@ -8,8 +11,13 @@ import operator
 from boycotted.models import *
 import datetime
 import feedparser
+from account.models import Token, BoycottUser
+from django.core.mail import send_mail
 
+TOKEN_EXPIRE= datetime.timedelta(1)
 
+def token_generator(size=20, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
 
 # Create your views here.
 def home(request):
@@ -132,10 +140,6 @@ def Signup(request):
                 login(request, user)
             return HttpResponseRedirect('/?alert=signup')
 
-        # new_user = authenticate(username=form.cleaned_data['username'],
-        #                         password=form.cleaned_data['password1'],
-        #                         )
-        # login(request, new_user)
 
     else:
         form = UserForm()
@@ -152,4 +156,61 @@ def _get_disqus_sso(user):
     else:
         disqus_sso = get_disqus_sso()
     return disqus_sso
+
+
+def reset_password(request, token):
+    token_obj=Token.objects.filter(token=token)
+    if token_obj.count() == 0:
+        token_obj=None
+    else:
+        token_obj=token_obj[0]
+    if (token_obj is None ) or (token_obj.date - datetime.datetime.now(datetime.timezone.utc) > TOKEN_EXPIRE):
+        return HttpResponseRedirect('/?alert=expired')
+    else:
+        if request.method == 'POST':
+            password_form = PasswordForm(data=request.POST)
+            if password_form.is_valid():
+                # Save boycotted values to access
+                user=token_obj.user
+                user.password = password_form.save(commit=False).password
+                user.save()
+                token_obj.delete()
+                login(request, user)
+
+                return HttpResponseRedirect('/?alert=password')
+
+        else:
+            password_form = PasswordForm()
+
+
+        return render(request, 'reset_password.html', {
+            'password_form': password_form,
+            'username': token_obj.user.username,
+            'token': token
+        })
+
+def get_reset(request):
+    if request.method == 'POST':
+        token_form = TokenForm(data=request.POST)
+        if token_form.is_valid():
+            # process data in form
+            cleanEmail=token_form.cleaned_data
+            email=cleanEmail.get('email')
+            user = BoycottUser.objects.get(email=email)
+            token=token_generator()
+            Token.objects.create(
+                user=user,
+                token=token
+            )
+            send_mail('Boycott Pal Password Recovery', 'Here is your password reset link: ' +token, 'app62196690@heroku.com', [email],
+                      fail_silently=False)
+
+            return HttpResponseRedirect('/?alert=reset')
+
+
+    else:
+        token_form = TokenForm()
+
+
+    return render(request, 'get_reset.html', {'token_form':token_form})
 

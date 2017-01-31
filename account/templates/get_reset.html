@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+          <div class="col s12 m6 offset-m3">
+              <div class="light-blue lighten-5 card">
+                  <div class="card-content black-text center">
+                    <span class="card-title">Password Reset</span>
+
+                    <div class="card-content">
+                    <h5 class="center">Please enter your email</h5>
+
+                    <script>
+                        function report_error(error) {
+                            swal({
+                                title: "Error",
+                                text: error,
+                                type: "error",
+                                html: true
+                            });
+                        }
+                    </script>
+
+                        <form method="post" action="{% url 'get_reset' %} " class="center">
+                            {% csrf_token %}
+
+
+                             {% if token_form.non_field_errors %}
+                                    <script>
+                                        report_error('{{ token_form.non_field_errors }}')
+                                    </script>
+                             {% endif %}
+                            <div class="fieldWrapper input-field">
+                                {{ token_form.email.errors }}
+                                <label for="{{ token_form.email.id_for_label }}">Email</label>
+                                {{ token_form.email }}
+                            </div>
+
+
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                                <i class="material-icons right">email</i>
+                            </button>
+
+
+
+
+                            <input type="hidden" name="next" value="{{ next }}"/>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+
+
+{% endblock %}

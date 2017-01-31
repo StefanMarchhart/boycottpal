@@ -3,9 +3,10 @@ import hashlib
 import hmac
 import json as simplejson
 import time
+import os
+DISQUS_SECRET_KEY=os.environ.get('DISQUS_SECRET_KEY',"")
+DISQUS_PUBLIC_KEY=os.environ.get('DISQUS_PUBLIC_KEY',"")
 
-DISQUS_SECRET_KEY = 'rTezDfnlsdYUX90sKTExhQWDERK48NYvG4MKgcalq03xK2acFt6Z22spQMkswFTt'
-DISQUS_PUBLIC_KEY = 'UCkYzgSPnP4OtgopaqnhrhMrQnL6a8hJBvfzslmbB80N1jCaTexRI7mmVBumkoBO'
 
 
 def get_disqus_sso(user_id=None, username=None, email=None):
@@ -32,7 +33,6 @@ def get_disqus_sso(user_id=None, username=None, email=None):
 
     # sig = hmac.HMAC(key, (str(message) +" "+ timestamp).encode(), hashlib.sha1).hexdigest()
     sig = hmac.new(key, message, hashlib.sha1).hexdigest()
-    # import ipdb; ipdb.set_trace()
 
 
 # return a script tag to insert the sso message

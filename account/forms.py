@@ -1,9 +1,20 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
+from account.models import Token
 
 
 # Defines a login form, which allows for login
 from account.models import BoycottUser
+
+class PasswordForm(forms.ModelForm):
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
+    class Meta:
+        model = BoycottUser
+        fields = ['password']
+
+class TokenForm(forms.Form):
+    email = forms.CharField(label="Email")
+
 
 
 class LoginForm(AuthenticationForm):
