@@ -110,11 +110,15 @@
           <div class="icon-block">
             <h5 class="center light-blue-text"><i class="material-icons medium">trending_up</i></h5>
             <h5 class="center">Trending Boycotts</h5>
-              <ul class="collection center">
+              <ul class="collection">
                 {% for boycott in trending_boycotts %}
-
-                  <li class="collection-item"><div><a href="/boycotted/view/{{ boycott.id }}">{{ forloop.counter }}.{{ boycott.name | safe }} {{ boycott.location }}</a></div></li>
-
+                    <li class="collection-item">
+                        <div style="height: 22px;">
+                            <a href="/boycotted/view/{{ boycott.id }}" class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
+                            <a href="/boycotted/view/{{ boycott.id }}#disqus_thread" class="secondary-content right blue-text text-lighten-1"></a>
+                            <a href="/boycotted/view/{{ boycott.id }}" class="secondary-content right"><i class="material-icons blue-text comment-icon">comment</i> </a>
+                        </div>
+                    </li>
                 {% endfor %}
               </ul>
             </div>
