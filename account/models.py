@@ -13,3 +13,6 @@ class Token(models.Model):
     )
     token=models.CharField(max_length=500, verbose_name="Reset token")
     date= models.DateTimeField(default=datetime.datetime.now)
+
+    def __str__(self):
+        return 'Token: for' + self.user.username

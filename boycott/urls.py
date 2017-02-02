@@ -32,4 +32,5 @@ urlpatterns = [
     # url(r'^alert/(?P<alert>[0-9]+)',account.views.home, name='home'),
     url(r'', include('account.urls')),
     url(r'', include('boycotted.urls')),
+    url(r'', include('polls.urls')),
 ]

@@ -19,6 +19,9 @@ class Boycotted(models.Model):
     # The boycotts filed against the boycotted object
     boycotts = models.ManyToManyField("boycotted.Boycott", blank=True)
     date= models.DateTimeField(default=datetime.datetime.now)
+    def __str__(self):
+        return 'Boycotted: ' + self.name
+
 
 # This class represents an individual instance of a boycott. Think Grandma boycotting Obama
 class Boycott(models.Model):
@@ -36,5 +39,7 @@ class Boycott(models.Model):
         Boycotted,
         on_delete=models.CASCADE
     )
+    def __str__(self):
+        return 'Boycott: ' + self.boycotter.username
 
 #

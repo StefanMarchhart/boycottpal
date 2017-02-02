@@ -6,144 +6,183 @@
         <ul id="WebTicker" class="grey lighten-2">
             {% for cnn, fox in news %}
 
-                <li><a class="light-blue-text ticker" href="{{cnn.link}}">CNN: {{cnn.title | safe }}</a></li>
-                <li><a class="red-text ticker" href="{{fox.link}}">Fox News: {{fox.title | safe }}</a></li>
-{#                <li><a class="light-red-text" href="{{fox.link}}">{{fox.title}}</a></li>#}
+                <li><a class="light-blue-text ticker" href="{{ cnn.link }}">CNN: {{ cnn.title | safe }}</a></li>
+                <li><a class="red-text ticker" href="{{ fox.link }}">Fox News: {{ fox.title | safe }}</a></li>
+                {#                <li><a class="light-red-text" href="{{fox.link}}">{{fox.title}}</a></li>#}
 
             {% endfor %}
         </ul>
 
     </div>
-</div>
+    </div>
 
-        <script>
+    <script>
         $("#WebTicker").webTicker({
-            startEmpty:false,
-            hoverpause:false,
+            startEmpty: false,
+            hoverpause: false,
             transition: "ease"
         });
     </script>
 
 
 
-{#INTRO BLOCK#}
+    {#INTRO BLOCK#}
     {% if not user.is_authenticated %}
 
         <div class="section no-pad-bot blue grey lighten-4" id="index-banner">
-        <div class="container">
+            <div class="container">
 
-      <br><br>
-      <h1 class="header center orange-text">Welcome to BoycottPal</h1>
-      <div class="row center">
-        <h5 class="header col s12 light left flow-text">A <strong> boycott</strong> is an act of voluntarily abstaining from using, buying, or dealing with a person, organization, or country as an expression of protest, usually for social or political reasons. The purpose of a boycott is to inflict some economic loss on the target, or to indicate a moral outrage, to try to compel the target to alter an objectionable behavior.</h5>
-        <h5 class="header col s12 light left flow-text">With Boycott Pal, you can keep track of the people and places you've boycotted, and talk to others who have done the same</h5>
-      </div>
-      <div class="row center">
-        <a href="/signup/" id="download-button" class="btn-large waves-effect waves-light orange">Sign Up</a>
-        <a href="/login/" id="download-button" class="btn-large waves-effect waves-light orange">Log in</a>
-      </div>
-      <br><br>
-</div>
-  </div>
+                <br><br>
+                <h1 class="header center orange-text">Welcome to BoycottPal</h1>
+                <div class="row center">
+                    <h5 class="header col s12 light left flow-text">A <strong> boycott</strong> is an act of voluntarily
+                        abstaining from using, buying, or dealing with a person, organization, or country as an
+                        expression of protest, usually for social or political reasons. The purpose of a boycott is to
+                        inflict some economic loss on the target, or to indicate a moral outrage, to try to compel the
+                        target to alter an objectionable behavior.</h5>
+                    <h5 class="header col s12 light left flow-text">With Boycott Pal, you can keep track of the people
+                        and places you've boycotted, and talk to others who have done the same</h5>
+                </div>
+                <div class="row center">
+                    <a href="/signup/" id="download-button" class="btn-large waves-effect waves-light orange">Sign
+                        Up</a>
+                    <a href="/login/" id="download-button" class="btn-large waves-effect waves-light orange">Log in</a>
+                </div>
+                <br><br>
+            </div>
+        </div>
     {% endif %}
     {% if user.is_authenticated %}
-      <div class="section grey lighten-3">
-              <div class="container">
+        <div class="section grey lighten-3">
+            <div class="container">
 
 
+                <div class="row">
+                    <div class="col s12 m8 offset-m2 center">
+                        <h5>My Boycotts</h5>
+                        {#                  <div class="collection center">#}
+                        <ul class="collection">
+                        {% if my_boycotts|length == 0%}
+                            <li class="collection-item">
+                                    <div>
+                                        You have no Boycotts!
+                                    </div>
+                                </li>
 
-          <div class="row">
-            <div class="col s12 m8 offset-m2 center">
-                <h5>My Boycotts</h5>
-{#                  <div class="collection center">#}
-                    <ul class="collection">
-                      {% for boycott in my_boycotts %}
-                        <li class="collection-item">
-                            <div>
-                                <a href="/boycotted/view/{{ boycott.target_id }}">{{ boycott.name | safe }} {{ boycott.location }}</a>- {{ boycott.reason | safe }}<a href="/boycott/edit/{{ boycott.id }}" class="secondary-content right"><i class="material-icons blue-text text-lighten-1">edit</i></a>
-                            </div>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                <a href="/boycott/add" class="waves-effect waves-light light-blue btn"><i class="material-icons left">add</i>Boycott Something!</a>
+                        {% else %}
+
+
+                            {% for boycott in my_boycotts %}
+
+                                <li class="collection-item">
+                                    <div>
+                                        <a href="/boycotted/view/{{ boycott.target_id }}">{{ boycott.name | safe }} {{ boycott.location }}</a>- {{ boycott.reason | safe }}<a
+                                            href="/boycott/edit/{{ boycott.id }}" class="secondary-content right"><i
+                                            class="material-icons blue-text text-lighten-1">edit</i></a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                        </ul>
+                        <a href="/boycott/add" class="waves-effect waves-light light-blue btn"><i
+                                class="material-icons left">add</i>Boycott Something!</a>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     {% endif %}
 
     <div class="section">
-     <div class="container">
+        <div class="container">
 
-      <div class="row">
-        <div class="col s12 m4 offset-m1">
-          <div class="icon-block">
-            <h5 class="center light-blue-text"><i class="material-icons medium">stars</i></h5>
-            <h5 class="center">Top Boycotts</h5>
-              <ul class="collection">
-                {% for boycott in top_boycotts %}
-                    <li class="collection-item">
-                        <div style="height: 22px;">
-                            <a href="/boycotted/view/{{ boycott.id }}" class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
-                            <a href="/boycotted/view/{{ boycott.id }}#disqus_thread" class="secondary-content right blue-text text-lighten-1"></a>
-                            <a href="/boycotted/view/{{ boycott.id }}" class="secondary-content right"><i class="material-icons blue-text comment-icon">comment</i> </a>
-                        </div>
-                    </li>
+            <div class="row">
+                <div class="col s12 m4 offset-m1">
+                    <div class="icon-block">
+                        <h5 class="center light-blue-text"><i class="material-icons medium">stars</i></h5>
+                        <h5 class="center">Top Boycotts</h5>
+                        <ul class="collection">
+                            {% for boycott in top_boycotts %}
+                                <li class="collection-item">
+                                    <div style="height: 22px;">
+                                        <a href="/boycotted/view/{{ boycott.id }}"
+                                           class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
+                                        <a href="/boycotted/view/{{ boycott.id }}#disqus_thread"
+                                           class="secondary-content right blue-text text-lighten-1"></a>
+                                        <a href="/boycotted/view/{{ boycott.id }}" class="secondary-content right"><i
+                                                class="material-icons blue-text comment-icon">comment</i> </a>
+                                    </div>
+                                </li>
 
 
-{##}
-{#                    <li class="collection-item">#}
-{#                        <div>#}
-{#                            <a href="/boycotted/view/{{ boycott.id }}" class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>#}
-{#                            <a href="/boycotted/view/{{ boycott.id }}#disqus_thread" class="secondary-content right"><i class="material-icons blue-text comment-icon">comment</i></a>#}
-{##}
-{#                        </div>#}
-{##}
-{#                    </li>#}
+                                {##}
+                                {#                    <li class="collection-item">#}
+                                {#                        <div>#}
+                                {#                            <a href="/boycotted/view/{{ boycott.id }}" class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>#}
+                                {#                            <a href="/boycotted/view/{{ boycott.id }}#disqus_thread" class="secondary-content right"><i class="material-icons blue-text comment-icon">comment</i></a>#}
+                                {##}
+                                {#                        </div>#}
+                                {##}
+                                {#                    </li>#}
 
-                {% endfor %}
-              </ul>
-          </div>
-        </div>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
 
-        <div class="col s12 m4 offset-m2">
-          <div class="icon-block">
-            <h5 class="center light-blue-text"><i class="material-icons medium">trending_up</i></h5>
-            <h5 class="center">Trending Boycotts</h5>
-              <ul class="collection">
-                {% for boycott in trending_boycotts %}
-                    <li class="collection-item">
-                        <div style="height: 22px;">
-                            <a href="/boycotted/view/{{ boycott.id }}" class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
-                            <a href="/boycotted/view/{{ boycott.id }}#disqus_thread" class="secondary-content right blue-text text-lighten-1"></a>
-                            <a href="/boycotted/view/{{ boycott.id }}" class="secondary-content right"><i class="material-icons blue-text comment-icon">comment</i> </a>
-                        </div>
-                    </li>
-                {% endfor %}
-              </ul>
+                <div class="col s12 m4 offset-m2">
+                    <div class="icon-block">
+                        <h5 class="center light-blue-text"><i class="material-icons medium">trending_up</i></h5>
+                        <h5 class="center">Trending Boycotts</h5>
+                        <ul class="collection">
+
+                        {% if trending_boycotts|length == 0%}
+                            <li class="collection-item center">
+                                    <div>
+                                       There are no Trending Boycotts yet!
+                                    </div>
+                                </li>
+
+                        {% else %}
+
+                            {% for boycott in trending_boycotts %}
+                                <li class="collection-item">
+                                    <div style="height: 22px;">
+                                        <a href="/boycotted/view/{{ boycott.id }}"
+                                           class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
+                                        <a href="/boycotted/view/{{ boycott.id }}#disqus_thread"
+                                           class="secondary-content right blue-text text-lighten-1"></a>
+                                        <a href="/boycotted/view/{{ boycott.id }}" class="secondary-content right"><i
+                                                class="material-icons blue-text comment-icon">comment</i> </a>
+                                    </div>
+
+
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-      </div>
 
+        </div>
     </div>
-  </div>
 
     {% if alert != '' %}
         <script>
-            alert='{{ alert }}';
-            if(alert == 'signup'){
+            alert = '{{ alert }}';
+            if (alert == 'signup') {
                 swal("Account Made!", "You've been signed in", "success")
-            }else if(alert == 'logout'){
-                swal("You've been signed out","", "success")
-            }else if(alert == 'expired'){
+            } else if (alert == 'logout') {
+                swal("You've been signed out", "", "success")
+            } else if (alert == 'expired') {
                 swal("Your password reset token is invalid.", "It may have expired.", "warning")
-            }else if(alert == 'reset'){
+            } else if (alert == 'reset') {
                 swal("Reset Link Sent!", "A password recovery email has been sent to your email.", "success")
-            }else if(alert == 'password'){
-                swal("Password changed!","You have been logged in with your new password", "success")
-            }else if(alert == 'email'){
-                swal("Email changed!","Your account's email has been changed", "success")
-            }else{
+            } else if (alert == 'password') {
+                swal("Password changed!", "You have been logged in with your new password", "success")
+            } else if (alert == 'email') {
+                swal("Email changed!", "Your account's email has been changed", "success")
+            } else {
 
             }
         </script>
@@ -153,12 +192,12 @@
 {% endblock %}
 
 {% block javascript %}
-{#    <script>#}
-{#        $("#WebTicker").webTicker({#}
-{#            startEmpty:false,#}
-{#            hoverpause:false,#}
-{#            transition: "ease"#}
-{#        });#}
-{#    </script>#}
+    {#    <script>#}
+    {#        $("#WebTicker").webTicker({#}
+    {#            startEmpty:false,#}
+    {#            hoverpause:false,#}
+    {#            transition: "ease"#}
+    {#        });#}
+    {#    </script>#}
 
 {% endblock %}

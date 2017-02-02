@@ -5,6 +5,7 @@ import json
 from account.disqus import get_disqus_sso
 from account.forms import UserForm, ResetPasswordForm, TokenForm, ChangePasswordForm,ChangeEmailForm
 from account.models import Token, BoycottUser
+from boycott.general import process_zip
 from boycotted.models import *
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
@@ -14,6 +15,8 @@ import datetime
 import feedparser
 from django.core.mail import send_mail
 from django.conf import settings
+
+from polls.models import Poll
 
 TOKEN_EXPIRE= datetime.timedelta(1)
 
@@ -37,13 +40,7 @@ def home(request):
         my_boycotts=[]
         for my_boycott in request.user.boycotts.all():
             zipcode=my_boycott.target.zip
-            if zipcode == "":
-                location = " "
-            else:
-                search = ZipcodeSearchEngine()
-                location = search.by_zipcode(zipcode)
-
-                location = "("+ str(location.City) + ", " + str(location.State)+") "
+            location = process_zip(zipcode)
 
             my_bct = {
                 'name':my_boycott.target.name,
@@ -59,13 +56,7 @@ def home(request):
     top_boycotts=[]
     for top_boycott in Boycotted.objects.all():
         zipcode = top_boycott.zip
-        if zipcode == "":
-            location = " "
-        else:
-            search = ZipcodeSearchEngine()
-            location = search.by_zipcode(zipcode)
-
-            location = "(" + str(location.City) + ", " + str(location.State) + ") "
+        location = process_zip(zipcode)
 
 
 
@@ -83,13 +74,7 @@ def home(request):
 
     for trending_boycott in Boycotted.objects.filter(date__range=[start_week,end_week]):
         zipcode = trending_boycott.zip
-        if zipcode == "":
-            location = " "
-        else:
-            search = ZipcodeSearchEngine()
-            location = search.by_zipcode(zipcode)
-
-            location = "(" + str(location.City) + ", " + str(location.State) + ") "
+        location = process_zip(zipcode)
 
         trend_bct={
             'name':trending_boycott.name,
@@ -105,10 +90,7 @@ def home(request):
     top_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=getKey, reverse=True)[:25]))
     trending_boycotts_json = json.loads(json.dumps(sorted(trending_boycotts, key=getKey, reverse=True)[:10]))
 
-
-
-
-
+    recentpoll = Poll.objects.latest('id').id
 
 
     return render(request, 'home.html',{
@@ -116,7 +98,8 @@ def home(request):
         'my_boycotts': my_boycotts_json,
         'top_boycotts':top_boycotts_json,
         'trending_boycotts':trending_boycotts_json,
-        'news':news
+        'news':news,
+        'recent_poll':recentpoll
     })
 
 

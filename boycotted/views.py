@@ -66,6 +66,7 @@ def ViewBoycotted(request,boycotted_id):
     # if this is a POST request we need to process the form data
     boycotts=[]
     boycotted=Boycotted.objects.get(id=boycotted_id)
+
     if boycotted.zip == "":
         zip=""
         location = ""

@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'account',
-    'boycotted'
+    'boycotted',
+    'polls'
 
 ]
 

@@ -19,3 +19,10 @@
       font-size: 12px;
       padding-right: 5px;
   }
+
+  .radiostuff ul li{
+      padding-bottom: 20px;
+  }
+  .biglabel{
+       font-size: 1.5rem;
+  }
