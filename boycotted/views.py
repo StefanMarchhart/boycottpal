@@ -61,7 +61,7 @@ def AddBoycott(request):
     })
 
 
-@login_required(login_url='/login/')
+# @login_required(login_url='/login/')
 def ViewBoycotted(request,boycotted_id):
     # if this is a POST request we need to process the form data
     boycotts=[]

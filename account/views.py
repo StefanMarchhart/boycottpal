@@ -2,6 +2,9 @@ import os
 import string
 import random
 import json
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+
 from account.disqus import get_disqus_sso
 from account.forms import UserForm, ResetPasswordForm, TokenForm, ChangePasswordForm, ChangeEmailForm, EmailForm
 from account.models import Token, BoycottUser
@@ -18,6 +21,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 import feedparser
 
+from polls.forms import NewPollForm
 from polls.models import Poll
 
 TOKEN_EXPIRE = datetime.timedelta(1)
@@ -98,18 +102,13 @@ def home(request):
     top_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=getKey, reverse=True)[:25]))
     trending_boycotts_json = json.loads(json.dumps(sorted(trending_boycotts, key=getKey, reverse=True)[:10]))
 
-    if Poll.objects.all().count()==0:
-        recentpoll=''
-    else:
-        recentpoll = Poll.objects.latest('id').id
 
     return render(request, 'home.html', {
         'alert': alert,
         'my_boycotts': my_boycotts_json,
         'top_boycotts': top_boycotts_json,
         'trending_boycotts': trending_boycotts_json,
-        'news': news,
-        'recent_poll': recentpoll
+        'news': news
     })
 
 
@@ -205,7 +204,7 @@ def get_reset(request):
 
     return render(request, 'get_reset.html', {'token_form': token_form})
 
-
+@login_required(login_url='/login/')
 def change_password(request):
     if request.method == 'POST':
         password_form = ChangePasswordForm(data=request.POST, user=request.user)
@@ -232,7 +231,7 @@ def change_password(request):
         'password_form': password_form
     })
 
-
+@login_required(login_url='/login/')
 def change_email(request):
     if request.method == 'POST':
         email_form = ChangeEmailForm(data=request.POST, user=request.user)
@@ -255,7 +254,7 @@ def change_email(request):
         'password_form': password_form
     })
 
-
+@login_required(login_url='/login/')
 def settings(request):
     email_form = ChangeEmailForm()
     password_form = ChangePasswordForm()
@@ -264,7 +263,8 @@ def settings(request):
         'password_form': password_form
     })
 
-
+# @login_required(login_url='/login/')
+@user_passes_test(lambda u: u.is_superuser, login_url='/login/')
 def Console(request):
     raw_alert = request.GET.get('alert')
     if raw_alert == None:
@@ -273,19 +273,22 @@ def Console(request):
         alert = raw_alert
 
     email_form = EmailForm()
+    poll_form = NewPollForm()
     num_users=BoycottUser.objects.all().count()
     num_boycotts=Boycott.objects.all().count()
     num_hits=HC.objects.all()[0].hits
 
-    return render(request, 'admin.html', {
+    return render(request, 'console.html', {
         'alert': alert,
         'email_form': email_form,
+        'poll_form': poll_form,
         'num_users': num_users,
         'num_boycotts': num_boycotts,
         'num_hits': num_hits,
     })
 
 
+@user_passes_test(lambda u: u.is_superuser, login_url='/login/')
 def MassEmail(request):
     raw_alert = request.GET.get('alert')
     if raw_alert == None:
@@ -294,28 +297,25 @@ def MassEmail(request):
         alert = raw_alert
     if request.method == 'POST':
         email_form = EmailForm(data=request.POST)
-        print('1')
         if email_form.is_valid():
-            print('2')
+
             # process data in form
             cleanEmail = email_form.cleaned_data
             email = cleanEmail.get('email')
+            subject = cleanEmail.get('subject')
             mailList = []
             for user in BoycottUser.objects.all():
                 mailList.append(user.email)
 
-            send_mail('Boycott Pal', email, 'BoycottPal_Admin@BoycottPal.com', mailList,
+            send_mail(subject, email, 'BoycottPal_Admin@BoycottPal.com', mailList,
                       fail_silently=True)
-
-            print('3')
             return HttpResponseRedirect('/console/?alert=sent')
 
     else:
-        print('4')
         email_form = EmailForm()
         alert=''
 
-    return render(request, 'admin.html', {
+    return render(request, 'console.html', {
         'email_form': email_form,
         'alert': alert
     })

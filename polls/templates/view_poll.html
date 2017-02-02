@@ -27,25 +27,6 @@
                                         var ctx= $('#myChart');
 
 
-                                        var hues=[
-                                            'red',
-                                            'orange',
-                                            'yellow',
-                                            'green',
-                                            'blue',
-                                            'purple',
-                                            'pink',
-
-                                        ];
-
-                                        var color=[];
-
-                                        {% for dat in data %}
-                                            color.push(randomColor({
-                                                hue: hues.sort(function() { return 0.5 - Math.random();}).pop(),
-                                                luminosity: 'light'
-                                            }));
-                                        {% endfor %}
 
 
                                         var data={
@@ -53,7 +34,7 @@
                                             datasets: [
                                                 {
                                                     data: {{ data }},
-                                                                backgroundColor: color
+                                                                backgroundColor: {{ color|safe }}
                                                 }
                                             ]
                                         };

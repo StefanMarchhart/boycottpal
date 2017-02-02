@@ -1,5 +1,7 @@
 from uszipcode import ZipcodeSearchEngine
 
+from polls.models import Poll
+
 
 def suffix(d):
     return 'th' if 11 <= d <= 13 else {1: 'st', 2: 'nd', 3: 'rd'}.get(d % 10, 'th')
@@ -17,4 +19,3 @@ def process_zip(zipcode):
 
         location = "(" + str(location.City) + ", " + str(location.State) + ")"
     return location
-

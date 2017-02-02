@@ -12,3 +12,16 @@ class PollForm(forms.ModelForm):
         model = Poll
         fields = ['id']
 
+class NewPollForm(forms.ModelForm):
+    name = forms.CharField(required=True)
+    choice0 = forms.CharField(required=True)
+    choice1 = forms.CharField(required=True)
+    choice2 = forms.CharField(required=False)
+    choice3 = forms.CharField(required=False)
+    choice4 = forms.CharField(required=False)
+    choice5 = forms.CharField(required=False)
+    choice6 = forms.CharField(required=False)
+    color = forms.CharField(required=False, widget=forms.HiddenInput())
+    class Meta:
+        model = Poll
+        fields = ['name','color']

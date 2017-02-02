@@ -62,27 +62,27 @@
                         <h5>My Boycotts</h5>
                         {#                  <div class="collection center">#}
                         <ul class="collection">
-                        {% if my_boycotts|length == 0%}
-                            <li class="collection-item">
+                            {% if my_boycotts|length == 0 %}
+                                <li class="collection-item">
                                     <div>
                                         You have no Boycotts!
                                     </div>
                                 </li>
 
-                        {% else %}
+                            {% else %}
 
 
-                            {% for boycott in my_boycotts %}
+                                {% for boycott in my_boycotts %}
 
-                                <li class="collection-item">
-                                    <div>
-                                        <a href="/boycotted/view/{{ boycott.target_id }}">{{ boycott.name | safe }} {{ boycott.location }}</a>- {{ boycott.reason | safe }}<a
-                                            href="/boycott/edit/{{ boycott.id }}" class="secondary-content right"><i
-                                            class="material-icons blue-text text-lighten-1">edit</i></a>
-                                    </div>
-                                </li>
-                            {% endfor %}
-                        {% endif %}
+                                    <li class="collection-item">
+                                        <div>
+                                            <a href="/boycotted/view/{{ boycott.target_id }}">{{ boycott.name | safe }} {{ boycott.location }}</a>- {{ boycott.reason | safe }}<a
+                                                href="/boycott/edit/{{ boycott.id }}" class="secondary-content right"><i
+                                                class="material-icons blue-text text-lighten-1">edit</i></a>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
                         </ul>
                         <a href="/boycott/add" class="waves-effect waves-light light-blue btn"><i
                                 class="material-icons left">add</i>Boycott Something!</a>
@@ -101,30 +101,30 @@
                         <h5 class="center light-blue-text"><i class="material-icons medium">stars</i></h5>
                         <h5 class="center">Top Boycotts</h5>
                         <ul class="collection">
-                            {% for boycott in top_boycotts %}
-                                <li class="collection-item">
-                                    <div style="height: 22px;">
-                                        <a href="/boycotted/view/{{ boycott.id }}"
-                                           class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
-                                        <a href="/boycotted/view/{{ boycott.id }}#disqus_thread"
-                                           class="secondary-content right blue-text text-lighten-1"></a>
-                                        <a href="/boycotted/view/{{ boycott.id }}" class="secondary-content right"><i
-                                                class="material-icons blue-text comment-icon">comment</i> </a>
+                            {% if top_boycotts_boycotts|length == 0 %}
+                                <li class="collection-item center">
+                                    <div>
+                                        There are no Boycotts yet!
                                     </div>
                                 </li>
 
+                            {% else %}
+                                {% for boycott in top_boycotts %}
+                                    <li class="collection-item">
+                                        <div style="height: 22px;">
+                                            <a href="/boycotted/view/{{ boycott.id }}"
+                                               class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
+                                            <a href="/boycotted/view/{{ boycott.id }}#disqus_thread"
+                                               class="secondary-content right blue-text text-lighten-1"></a>
+                                            <a href="/boycotted/view/{{ boycott.id }}"
+                                               class="secondary-content right"><i
+                                                    class="material-icons blue-text comment-icon">comment</i> </a>
+                                        </div>
+                                    </li>
 
-                                {##}
-                                {#                    <li class="collection-item">#}
-                                {#                        <div>#}
-                                {#                            <a href="/boycotted/view/{{ boycott.id }}" class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>#}
-                                {#                            <a href="/boycotted/view/{{ boycott.id }}#disqus_thread" class="secondary-content right"><i class="material-icons blue-text comment-icon">comment</i></a>#}
-                                {##}
-                                {#                        </div>#}
-                                {##}
-                                {#                    </li>#}
 
-                            {% endfor %}
+                                {% endfor %}
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -135,30 +135,31 @@
                         <h5 class="center">Trending Boycotts</h5>
                         <ul class="collection">
 
-                        {% if trending_boycotts|length == 0%}
-                            <li class="collection-item center">
+                            {% if trending_boycotts|length == 0 %}
+                                <li class="collection-item center">
                                     <div>
-                                       There are no Trending Boycotts yet!
+                                        There are no Trending Boycotts yet!
                                     </div>
                                 </li>
 
-                        {% else %}
+                            {% else %}
 
-                            {% for boycott in trending_boycotts %}
-                                <li class="collection-item">
-                                    <div style="height: 22px;">
-                                        <a href="/boycotted/view/{{ boycott.id }}"
-                                           class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
-                                        <a href="/boycotted/view/{{ boycott.id }}#disqus_thread"
-                                           class="secondary-content right blue-text text-lighten-1"></a>
-                                        <a href="/boycotted/view/{{ boycott.id }}" class="secondary-content right"><i
-                                                class="material-icons blue-text comment-icon">comment</i> </a>
-                                    </div>
+                                {% for boycott in trending_boycotts %}
+                                    <li class="collection-item">
+                                        <div style="height: 22px;">
+                                            <a href="/boycotted/view/{{ boycott.id }}"
+                                               class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
+                                            <a href="/boycotted/view/{{ boycott.id }}#disqus_thread"
+                                               class="secondary-content right blue-text text-lighten-1"></a>
+                                            <a href="/boycotted/view/{{ boycott.id }}"
+                                               class="secondary-content right"><i
+                                                    class="material-icons blue-text comment-icon">comment</i> </a>
+                                        </div>
 
 
-                                </li>
-                            {% endfor %}
-                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

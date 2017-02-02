@@ -11,6 +11,7 @@ class Poll(models.Model):
     choices = models.ManyToManyField("polls.Choice", blank=True)
     voters = models.ManyToManyField("account.BoycottUser", blank=True)
     date= models.DateTimeField(default=datetime.datetime.now)
+    color = models.CharField(max_length=200)
     def __str__(self):
         return 'Poll: ' + self.name
 

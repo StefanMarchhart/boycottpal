@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <script>
+        function report_error(error) {
+            swal({
+                title: "Error",
+                text: error,
+                type: "error",
+                html: true
+            });
+        }
+    </script>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6 offset-m3 center">
+                    <h4>Admin Page</h4>
+
+                    <div class="divider"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m4 offset-m4">
+                    <div class="light-blue lighten-5 card">
+                        <div class="card-content black-text center">
+                            <span class="card-title">Moderate Comments</span>
+                            <div class="panel-body center">
+                                <a href="https://disqus.com/admin/moderate/"
+                                   class="btn-large waves-effect waves-light blue">Disqus</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+
+                    <div class="light-blue lighten-5 card">
+                        <div class="card-content black-text center">
+                            <span class="card-title">Site Statistics</span>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col s12 m4">
+
+                                        <div class="grey lighten-5 card">
+                                            <div class="card-content black-text center">
+                                                <span class="card-title">Number of users</span>
+                                                <div class="panel-body center ">
+                                                    <h3>{{ num_users }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col s12 m4">
+
+                                        <div class="grey lighten-5 card">
+                                            <div class="card-content black-text center">
+                                                <span class="card-title">Number of boycotts</span>
+                                                <div class="panel-body center ">
+                                                    <h3>{{ num_boycotts }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col s12 m4">
+
+                                        <div class="grey lighten-5 card">
+                                            <div class="card-content black-text center">
+                                                <span class="card-title">Number of Hits</span>
+                                                <div class="panel-body center ">
+                                                    <h3>{{ num_hits }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+
+                    <div class="light-blue lighten-5 card">
+                        <div class="card-content black-text center">
+                            <span class="card-title">Mass Email</span>
+                            <div class="panel-body">
+                                <form method="post" action="{% url 'mass_email' %} " class="center">
+                                    {% csrf_token %}
+
+                                    <div class="row">
+                                        {% if email_form.non_field_errors %}
+                                            <script>
+                                                report_error('{{ email_form.non_field_errors }}')
+                                            </script>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m10 offset-m1 fieldWrapper input-field" id="mass_email">
+                                            {{ email_form.subject.errors }}
+                                            <label for="{{ email_form.message.subject }}">Subject</label>
+                                            {{ email_form.subject }}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col m10 offset-m1 fieldWrapper input-field" id="mass_email">
+                                            {{ email_form.email.errors }}
+                                            <label for="{{ email_form.message.email }}">Email Body</label>
+                                            {{ email_form.email }}
+                                        </div>
+                                    </div>
+                                    <script>$('#id_email').addClass('materialize-textarea')</script>
+                                    <button class="btn waves-effect waves-light blue" type="submit" name="action">Send
+                                        Mass
+                                        Email
+                                        <i class="material-icons right">email</i>
+                                    </button>
+
+                                    <input type="hidden" name="next" value="{{ next }}"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+
+                    <div class="light-blue lighten-5 card">
+                        <div class="card-content black-text center">
+                            <span class="card-title">Make a Poll</span>
+                            <div class="panel-body">
+                                <form method="post" action="{% url 'make_poll' %} " class="center">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        {% if poll_form.non_field_errors %}
+                                            <script>
+                                                report_error('{{ poll_form.non_field_errors }}')
+                                            </script>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m6 offset-m3 fieldWrapper input-field" id="mass_email">
+                                            {{ poll_form.subject.errors }}
+                                            <label for="{{ poll_form.message.name }}">Title of Poll</label>
+                                            {{ poll_form.name }}
+                                        </div>
+                                    </div>
+                                    {##}
+                                    <div class="row">
+                                        <div class="col m8 offset-m2 fieldWrapper input-field" id="mass_email">
+                                            {{ poll_form.choice0.errors }}
+                                            <label for="{{ poll_form.message.choice0 }}">First Option</label>
+                                            {{ poll_form.choice0 }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m8 offset-m2 fieldWrapper input-field" id="mass_email">
+                                            {{ poll_form.choice1.errors }}
+                                            <label for="{{ poll_form.message.choice1 }}">Second Option</label>
+                                            {{ poll_form.choice1 }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m8 offset-m2 fieldWrapper input-field" id="mass_email">
+                                            {{ poll_form.choice2.errors }}
+                                            <label for="{{ poll_form.message.choice2 }}">Third Option (Optional)</label>
+                                            {{ poll_form.choice2 }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m8 offset-m2 fieldWrapper input-field" id="mass_email">
+                                            {{ poll_form.choice3.errors }}
+                                            <label for="{{ poll_form.message.choice3 }}">Fourth Option
+                                                (Optional)</label>
+                                            {{ poll_form.choice3 }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m8 offset-m2 fieldWrapper input-field" id="mass_email">
+                                            {{ poll_form.choice4.errors }}
+                                            <label for="{{ poll_form.message.choice4 }}">Fifth Option (Optional)</label>
+                                            {{ poll_form.choice4 }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m8 offset-m2 fieldWrapper input-field" id="mass_email">
+                                            {{ poll_form.choice5.errors }}
+                                            <label for="{{ poll_form.message.choice5 }}">Sixth Option (Optional)</label>
+                                            {{ poll_form.choice5 }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m8 offset-m2 fieldWrapper input-field" id="mass_email">
+                                            {{ poll_form.choice6.errors }}
+                                            <label for="{{ poll_form.message.choice6 }}">Seventh Option
+                                                (Optional)</label>
+                                            {{ poll_form.choice6 }}
+                                        </div>
+                                    </div>
+                                    {{ poll_form.color }}
+                                    <script>
+                                        var hues=[
+                                            'red',
+                                            'orange',
+                                            'yellow',
+                                            'green',
+                                            'blue',
+                                            'purple',
+                                            'pink',
+                                        ];
+
+                                        var colors=[];
+                                        for (i = 0; i < 7; i++) {
+                                            colors.push(randomColor({
+                                                hue: hues.sort(function() { return 0.5 - Math.random();}).pop(),
+                                                luminosity: 'light'
+                                            }));
+                                        }
+                                        color=colors.join();
+                                        $("#id_color").val(color);
+                                        {#                                        alert(color)#}
+
+
+                                    </script>
+{#                                    <input type="hidden" value=color name="color">#}
+
+                                    <button class="btn waves-effect waves-light blue" type="submit" name="action">Make
+                                        Poll
+                                        <i class="material-icons right">poll</i>
+                                    </button>
+
+                                    <input type="hidden" name="next" value="{{ next }}"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if alert != '' %}
+        <script>
+            alert = '{{ alert }}';
+            if (alert == 'sent') {
+                swal("Mass Email sent!", "", "success")
+            } else if (alert == 'poll') {
+                swal("Poll Made!", "", "success")
+            } else {
+
+            }
+        </script>
+
+    {% endif %}
+
+
+
+{% endblock %}
+
+
+{% block javascript %}
+
+{% endblock %}

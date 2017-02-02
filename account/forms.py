@@ -7,6 +7,7 @@ from account.models import Token
 from account.models import BoycottUser
 class EmailForm(forms.Form):
     email = forms.CharField(label="Email", widget=forms.Textarea)
+    subject = forms.CharField(label="Email")
     def clean(self):
         return super(EmailForm, self).clean()
 
