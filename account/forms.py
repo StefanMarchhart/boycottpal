@@ -5,6 +5,11 @@ from account.models import Token
 
 # Defines a login form, which allows for login
 from account.models import BoycottUser
+class EmailForm(forms.Form):
+    email = forms.CharField(label="Email", widget=forms.Textarea)
+    def clean(self):
+        return super(EmailForm, self).clean()
+
 
 
 class ChangeEmailForm(forms.ModelForm):

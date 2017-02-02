@@ -16,3 +16,8 @@ class Token(models.Model):
 
     def __str__(self):
         return 'Token: for' + self.user.username
+
+class HC(models.Model):
+    hits=models.IntegerField(default=0)
+    def __str__(self):
+        return 'Hits: ' + str(self.hits)
