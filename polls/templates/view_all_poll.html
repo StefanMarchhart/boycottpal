@@ -16,7 +16,7 @@
             </div>
             <div class="row">
                 <div class="col s12 m8 offset-m2 center">
-                    <ul class="collection">
+                    <ul class="collection white">
                         {% if all_polls|length == 0 %}
                             <li class="collection-item center">
                                 <div>
@@ -54,9 +54,7 @@
 {% endblock %}
 
 {% block javascript %}
-    <script>
-        $('main').addClass('grey lighten-3');
-    </script>
+
     <script>
         function confirmit(id) {
             swal({

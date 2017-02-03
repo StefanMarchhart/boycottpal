@@ -1,28 +1,66 @@
-  body {
+body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-  }
+}
 
-  main {
+main {
     flex: 1 0 auto;
-  }
+}
 
-  footer {
-      padding-top: 0 !important;
-  }
+footer {
+    padding-top: 0 !important;
+}
 
-  .ticker {
-      font-size: 15px;
-  }
-  .comment-icon{
-      font-size: 12px;
-      padding-right: 5px;
-  }
+.ticker {
+    font-size: 15px;
+}
 
-  .radiostuff ul li{
-      padding-bottom: 20px;
-  }
-  .biglabel{
-       font-size: 1.5rem;
-  }
+.comment-icon {
+    font-size: 12px;
+    padding-right: 5px;
+}
+
+.radiostuff ul li {
+    padding-bottom: 20px;
+}
+
+.biglabel {
+    font-size: 1.5rem;
+}
+
+/*
+When creating your CSS selector,
+change "brown" to something of your choosing
+*/
+.waves-effect.waves-blue .waves-ripple {
+    /* The alpha value allows the text and background color
+    of the button to still show through. */
+    background-color: dodgerblue;
+}
+
+@media (max-width: 768px) {
+    .flex-s {
+        display: flex;
+        flex-direction: column; /* Stack on top */
+    }
+
+    .box-top {
+        order: 2; /* Go down, bring Box B up */
+    }
+
+    .box-main {
+        order: 1; /* Go down, bring Box B up */
+    }
+
+    .box-trending {
+        order: 3; /* Go down, bring Box B up */
+    }
+}
+#webticker{
+    margin-top: 0;
+}
+
+.hidden{
+    visibility: hidden;
+}

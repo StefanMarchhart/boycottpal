@@ -5,11 +5,11 @@
     <div class="section">
         <div class="container">
             <div class="row">
-              <div class="col s12 m6 offset-m3 center">
-                  <h4>Poll for the week of {{ date }}</h4>
+                <div class="col s12 m6 offset-m3 center">
+                    <h4>Poll for the week of {{ date }}</h4>
 
-                  <div class="divider"></div>
-              </div>
+                    <div class="divider"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -18,38 +18,49 @@
         <div class="container">
             <div class="row">
                 <div class="col s12 m6 offset-m3">
-                    <div class="grey lighten-3 card">
+                    <div class="grey lighten-2 card">
                         <div class="card-content black-text center">
                             <span class="card-title">{{ name }}</span>
-                                <div class="panel-body">
-                                    <canvas id="myChart" width="400" height="400"></canvas>
-                                    <script>
-                                        var ctx= $('#myChart');
+                            <div class="panel-body">
+                                <canvas id="myChart" width="400" height="400"></canvas>
+                                <script>
+                                    var ctx = $('#myChart');
 
 
+                                    var data = {
+                                        labels: {{ labels | safe}},
+                                        datasets: [
+                                            {
+                                                data: {{ data }},
+                                                backgroundColor: {{ color|safe }}
+                                            }
+                                        ]
+                                    };
+
+                                    var options = {}
 
 
-                                        var data={
-                                            labels: {{ labels | safe}},
-                                            datasets: [
-                                                {
-                                                    data: {{ data }},
-                                                                backgroundColor: {{ color|safe }}
-                                                }
-                                            ]
-                                        };
+                                    var myChart = new Chart(ctx, {
+                                        type: 'pie',
+                                        data: data,
+                                        options: options
+                                    });
 
-                                        var options={}
+                                </script>
+                                <a href="/poll/view/all" class="waves-effect waves-light blue btn">See all Polls</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-
-                                        var myChart = new Chart(ctx,{
-                                            type: 'pie',
-                                            data: data,
-                                            options: options
-                                        });
-
-                                    </script>
-                                </div>
+            <div class="row">
+                <div class="col s12 m6 offset-m3">
+                    <div class="grey lighten-2 card">
+                        <div class="card-content black-text center">
+                            <div class="panel-body">
+                                <a href="/poll/view/all" class="waves-effect waves-light blue btn">See all Polls</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -60,39 +71,40 @@
         <div class="container">
             <div class="row">
                 <div class="col s12 m8 offset-m2">
-                  <div class="card blue-grey lighten-2">
-                    <div class="card-content blue-grey-text grey lighten-3 center">
-                      <span class="card-title">Talk about this weeks poll</span>
-                        <div id="disqus_thread"></div>
+                    <div class="card blue-grey lighten-2">
+                        <div class="card-content blue-grey-text grey lighten-2 center">
+                            <span class="card-title">Talk about this Poll</span>
+                            <div id="disqus_thread"></div>
                             <script>
 
-{#                            #}
-{#                            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.#}
-{#                            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/#}
-{#                            #}
-                            var disqus_config = function () {
+                                {#                            #}
+                                {#                            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.#}
+                                {#                            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/#}
+                                {#                            #}
+                                var disqus_config = function () {
 
-                                this.page.identifier = "poll/{{ id }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                                this.page.title = "Poll Number {{ id }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                                {{ disqus_sso | safe }}
-                                this.sso = {
-                                    name: "boycottpal",
-                                    button: "{% static '/disqus.png' %}",
-                                    url: "http://boycottpal-dev.herokuapp.com/login/",
-                                    logout: "http://boycottpal-dev.herokuapp.com/logout/"
-                                }
-                            };
+                                    this.page.identifier = "poll/{{ id }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    this.page.title = "Poll Number {{ id }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    {{ disqus_sso | safe }}
+                                    this.sso = {
+                                        name: "boycottpal",
+                                        button: "{% static '/disqus.png' %}",
+                                        url: "http://boycottpal-dev.herokuapp.com/login/",
+                                        logout: "http://boycottpal-dev.herokuapp.com/logout/"
+                                    }
+                                };
 
-                            (function() { // DON'T EDIT BELOW THIS LINE
-                                var d = document, s = d.createElement('script');
-                                s.src = '//boycottpal.disqus.com/embed.js';
-                                s.setAttribute('data-timestamp', +new Date());
-                                (d.head || d.body).appendChild(s);
+                                (function () { // DON'T EDIT BELOW THIS LINE
+                                    var d = document, s = d.createElement('script');
+                                    s.src = '//boycottpal.disqus.com/embed.js';
+                                    s.setAttribute('data-timestamp', +new Date());
+                                    (d.head || d.body).appendChild(s);
                                 })();
                             </script>
-                            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments
+                                powered by Disqus.</a></noscript>
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
         </div>
