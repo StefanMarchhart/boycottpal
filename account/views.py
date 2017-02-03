@@ -307,7 +307,7 @@ def MassEmail(request):
             for user in BoycottUser.objects.all():
                 mailList.append(user.email)
 
-            send_mail(subject, email, 'BoycottPal_Admin@BoycottPal.com', mailList,
+            send_mail(subject, email, 'admin@BoycottPal.com', mailList,
                       fail_silently=True)
             return HttpResponseRedirect('/console/?alert=sent')
 
