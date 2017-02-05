@@ -81,10 +81,8 @@ def home(request):
         top_boycotts.append(top_bct)
 
     date = datetime.date.today()
-    start_week = date - datetime.timedelta(date.weekday())
-    end_week = start_week + datetime.timedelta(7)
 
-    for trending_boycott in Boycotted.objects.filter(date__range=[start_week, end_week]):
+    for trending_boycott in Boycotted.objects.filter(date__month=date.month):
         zipcode = trending_boycott.zip
         location = process_zip(zipcode)
 
@@ -206,6 +204,7 @@ def get_reset(request):
 
 @login_required(login_url='/login/')
 def change_password(request):
+    email_form = ChangeEmailForm()
     if request.method == 'POST':
         password_form = ChangePasswordForm(data=request.POST, user=request.user)
         if password_form.is_valid():
@@ -233,6 +232,7 @@ def change_password(request):
 
 @login_required(login_url='/login/')
 def change_email(request):
+    password_form = ChangePasswordForm()
     if request.method == 'POST':
         email_form = ChangeEmailForm(data=request.POST, user=request.user)
         if email_form.is_valid():

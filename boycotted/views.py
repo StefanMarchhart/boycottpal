@@ -1,13 +1,16 @@
 from datetime import datetime
 
 from account.views import _get_disqus_sso
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 import json
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+
+from boycott.general import process_zip
 from boycotted.forms import *
 from boycotted.models import *
 from uszipcode import ZipcodeSearchEngine
+
 # Create your views here.
 @login_required(login_url='/login/')
 def AddBoycott(request):
@@ -144,6 +147,30 @@ def DeleteBoycott(request, boycott_id):
     boycott.delete()
     if boycotted.boycotts.count()==0:
         boycotted.delete()
+
+
+    return HttpResponseRedirect('/')
+
+def ViewAllBoycotted(request):
+        all_boycotted = []
+        for bct in Boycotted.objects.all():
+
+            pol = {
+                'name': bct.name,
+                'id': bct.id,
+                "location": process_zip(bct.zip)
+            }
+            all_boycotted.append(pol)
+
+        return render(request, 'view_all_boycotted.html', {
+            'all_boycotted': all_boycotted
+        })
+
+@user_passes_test(lambda u: u.is_superuser, login_url='/login/')
+def DeleteBoycotted(request, boycotted_id):
+    boycotted = Boycotted.objects.get(id=boycotted_id)
+
+    boycotted.delete()
 
 
     return HttpResponseRedirect('/')
