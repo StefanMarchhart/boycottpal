@@ -114,9 +114,10 @@ class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
+        self.fields['zip'].required = True
     class Meta:
         model = BoycottUser
-        fields = ['username', 'email']
+        fields = ['username', 'email', 'zip']
 
 
     def clean(self):

@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'template_name': 'home.html', 'next_page': '/'}, name='logout'),
     url(r'^signup/$', views.Signup, name='signup'),
     url(r'^console/$', account.views.Console, name='console'),
+    url(r'^terms/$', account.views.Terms),
     url(r'^console/mass_email$', account.views.MassEmail, name='mass_email'),
     url(r'^settings/email/$', account.views.change_email, name='change_email'),
     url(r'^settings/password/$', account.views.change_password, name='change_password'),

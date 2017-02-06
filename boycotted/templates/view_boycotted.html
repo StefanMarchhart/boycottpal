@@ -5,83 +5,93 @@
     <div class="section">
         <div class="container">
             <div class="row">
-              <div class="col s12 m6 offset-m3 center">
+                <div class="col s12 m6 offset-m3 center">
                     <h4>{{ name }}</h4>
                     <h6>{{ location }}</h6>
-                  <div class="divider"></div>
-              </div>
+                    <div class="divider"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="section">
-        <div class="container">
-            {% for boycott in boycotts %}
+    <div class="container">
+        {% for boycott in boycotts %}
 
-                <div class="row boycott" {% if forloop.counter > 3 %}style="display: none"{% endif %}>
-                    <div class="col s12 m8 offset-m2">
-                      <div class="card grey lighten-2">
+            <div class="row boycott" {% if forloop.counter > 3 %}style="display: none"{% endif %}>
+                <div class="col s12 m8 offset-m2">
+                    <div class="card grey lighten-2">
                         <div class="card-content black-text">
-{#                          <span class="card-title">{{ boycott.username }} - {{ boycott.date }} </span>#}
-                          <h6>{{ boycott.username }}</h6>
+                            {#                          <span class="card-title">{{ boycott.username }} - {{ boycott.date }} </span>#}
+                            <h6>{{ boycott.username }} </h6>
+
                             <div class="divider grey darken-4"></div>
-                               <h5> {{ boycott.reason | safe}}</h5>
+                            <h5> {{ boycott.reason | safe }}</h5>
+
+
+                            <a
+                                    onclick="confirmit('{{ boycotted.id }}')"
+                                    class="left"><i
+                                    class="material-icons red-text text-lighten-1">delete</i></a>
                             <div class="right">
                                 <p><i>{{ boycott.date }}</i></p>
                             </div>
 
-                      </div>
-                     </div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-            {% endfor %}
+        {% endfor %}
         <script>function showMore() {
             $('.boycott').fadeIn('slow');
             $('#show_more').fadeOut('slow');
         }
         </script>
-        <div class="row center"{% if boycotts|length <= 3 %}style="display: none"{% endif %}>
-            <button class="btn waves-effect light-blue waves-light" id="show_more" onclick=showMore();>Show More Boycotts!</button>
+        <div class="row center" {% if boycotts|length <= 3 %}style="display: none"{% endif %}>
+            <button class="btn waves-effect light-blue waves-light" id="show_more" onclick=showMore();>Show More
+                Boycotts!
+            </button>
         </div>
     </div>
     <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col s12 m8 offset-m2">
-                  <div class="card blue-grey lighten-2">
-                    <div class="card-content blue-grey-text grey lighten-2 center">
-                      <span class="card-title">Talk about {{ name | safe }} {{ location }}</span>
-                        <div id="disqus_thread"></div>
+                    <div class="card blue-grey lighten-2">
+                        <div class="card-content blue-grey-text grey lighten-2 center">
+                            <span class="card-title">Talk about {{ name | safe }} {{ location }}</span>
+                            <div id="disqus_thread"></div>
                             <script>
 
-{#                            #}
-{#                            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.#}
-{#                            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/#}
-{#                            #}
-                            var disqus_config = function () {
+                                {#                            #}
+                                {#                            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.#}
+                                {#                            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/#}
+                                {#                            #}
+                                var disqus_config = function () {
 
-                                this.page.identifier = "{{ name | safe }}/{{ zip }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                                this.page.title = "{{ name | safe }} {{ location }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                                {{ disqus_sso | safe }}
-                                this.sso = {
-                                    name: "boycottpal",
-                                    button: "{% static '/disqus.png' %}",
-                                    url: "http://boycottpal-dev.herokuapp.com/login/",
-                                    logout: "http://boycottpal-dev.herokuapp.com/logout/"
-                                }
-                            };
+                                    this.page.identifier = "{{ name | safe }}/{{ zip }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    this.page.title = "{{ name | safe }} {{ location }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    {{ disqus_sso | safe }}
+                                    this.sso = {
+                                        name: "boycottpal",
+                                        button: "{% static '/disqus.png' %}",
+                                        url: "http://boycottpal-dev.herokuapp.com/login/",
+                                        logout: "http://boycottpal-dev.herokuapp.com/logout/"
+                                    }
+                                };
 
-                            (function() { // DON'T EDIT BELOW THIS LINE
-                                var d = document, s = d.createElement('script');
-                                s.src = '//boycottpal.disqus.com/embed.js';
-                                s.setAttribute('data-timestamp', +new Date());
-                                (d.head || d.body).appendChild(s);
+                                (function () { // DON'T EDIT BELOW THIS LINE
+                                    var d = document, s = d.createElement('script');
+                                    s.src = '//boycottpal.disqus.com/embed.js';
+                                    s.setAttribute('data-timestamp', +new Date());
+                                    (d.head || d.body).appendChild(s);
                                 })();
                             </script>
-                            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments
+                                powered by Disqus.</a></noscript>
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
         </div>

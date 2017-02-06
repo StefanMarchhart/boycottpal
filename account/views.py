@@ -319,3 +319,6 @@ def MassEmail(request):
         'email_form': email_form,
         'alert': alert
     })
+
+def Terms(request):
+    return render(request, 'terms.html')

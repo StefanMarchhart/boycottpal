@@ -64,3 +64,11 @@ change "brown" to something of your choosing
 .hidden{
     visibility: hidden;
 }
+
+.list{
+    font-size: 1.2rem;
+}
+
+.terms{
+    padding-left: 40px;
+}
