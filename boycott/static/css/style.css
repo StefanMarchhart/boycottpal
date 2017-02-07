@@ -72,3 +72,13 @@ change "brown" to something of your choosing
 .terms{
     padding-left: 40px;
 }
+.reallyleft{
+    padding-left: 0;
+}
+.collect{
+    overflow:auto;
+}
+
+.bottommargin{
+    margin-bottom: 5%;
+}

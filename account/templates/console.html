@@ -40,6 +40,30 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col s12 m6 offset-m3">
+                    <div class="blue lighten-4 card">
+                        <div class="card-content black-text center">
+                            <span class="card-title">Moderate Comments</span>
+                            <div class="panel-body center">
+                                <div class="row">
+                                    <div class="col s12 m6">
+                                        <a href="/boycotted/view/all"
+                                           class="btn-large waves-effect waves-light blue bottommargin"><i
+                                                class="material-icons right">list</i>All Boycotted</a>
+                                    </div>
+                                    <div class="col s12 m6">
+                                        <a href="/users/view/all"
+                                           class="btn-large waves-effect waves-light blue"><i
+                                                class="material-icons right">person</i>All Users</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col s12 m8 offset-m2">
 
                     <div class="blue lighten-4 card">
@@ -213,7 +237,7 @@
                                     </div>
                                     {{ poll_form.color }}
                                     <script>
-                                        var hues=[
+                                        var hues = [
                                             'red',
                                             'orange',
                                             'yellow',
@@ -223,20 +247,22 @@
                                             'pink',
                                         ];
 
-                                        var colors=[];
+                                        var colors = [];
                                         for (i = 0; i < 7; i++) {
                                             colors.push(randomColor({
-                                                hue: hues.sort(function() { return 0.5 - Math.random();}).pop(),
+                                                hue: hues.sort(function () {
+                                                    return 0.5 - Math.random();
+                                                }).pop(),
                                                 luminosity: 'light'
                                             }));
                                         }
-                                        color=colors.join();
+                                        color = colors.join();
                                         $("#id_color").val(color);
                                         {#                                        alert(color)#}
 
 
                                     </script>
-{#                                    <input type="hidden" value=color name="color">#}
+                                    {#                                    <input type="hidden" value=color name="color">#}
 
                                     <button class="btn waves-effect waves-light blue" type="submit" name="action">Make
                                         Poll

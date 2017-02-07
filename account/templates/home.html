@@ -44,10 +44,10 @@
 
                         {% else %}
                             {% for boycott in top_boycotts %}
-                                <li class="collection-item">
+                                <li class="collection-item collect">
                                     <div style="height: 22px;">
                                         <a href="/boycotted/view/{{ boycott.id }}"
-                                           class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
+                                           class="left blue-text text-darken-2">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
                                         <a href="/boycotted/view/{{ boycott.id }}#disqus_thread"
                                            class="secondary-content right blue-text text-darken-2"></a>
                                         <a href="/boycotted/view/{{ boycott.id }}"
@@ -85,15 +85,23 @@
                                     target to alter an objectionable behavior.</h5>
                             </div>
                             <div class="row">
-                                <div class="col s12 m6 offset-m3">
-                                    <h5 class="header col s12 light left flow-text">BoycottPal allows you to:</h5>
-                                    <ul>
-                                        <li><h6 class="list">&#9733; Track your boycotts</h6></li>
-                                        <li><h6 class="list">&#9733; Know the top all-time boycotts</h6></li>
-                                        <li><h6 class="list">&#9733; View trending boycotts</h6></li>
-                                        <li><h6 class="list">&#9733; Debate and discuss topics</h6></li>
-                                        <li><h6 class="list">&#9733; Participate in weekly polls</h6></li>
-                                    </ul>
+                                <div class="col s10 m9 offset-m2 offset-s1">
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <h5 class="header light left reallyleft flow-text">BoycottPal allows you
+                                                to:</h5></br>
+                                        </div>
+                                        <div class="col s12">
+
+                                            <ul>
+                                                <li><h6 class="list">&#9733;Track your boycotts</h6></li>
+                                                <li><h6 class="list">&#9733;Know the top all-time boycotts</h6></li>
+                                                <li><h6 class="list">&#9733;View trending boycotts</h6></li>
+                                                <li><h6 class="list">&#9733;Debate and discuss topics</h6></li>
+                                                <li><h6 class="list">&#9733;Participate in weekly polls</h6></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -128,9 +136,10 @@
 
                                     {% for boycott in my_boycotts %}
 
-                                        <li class="collection-item">
+                                        <li class="collection-item collect">
                                             <div>
-                                                <a href="/boycotted/view/{{ boycott.target_id }}">{{ boycott.name | safe }} {{ boycott.location }}</a>- {{ boycott.reason | safe }}<a
+                                                <a class="blue-text text-darken-2"
+                                                   href="/boycotted/view/{{ boycott.target_id }}">{{ boycott.name | safe }} {{ boycott.location }}</a>- {{ boycott.reason | safe }}<a
                                                     href="/boycott/edit/{{ boycott.id }}"
                                                     class="secondary-content right"><i
                                                     class="material-icons blue-text text-darken-2">edit</i></a>
@@ -164,10 +173,10 @@
                         {% else %}
 
                             {% for boycott in trending_boycotts %}
-                                <li class="collection-item">
+                                <li class="collection-item collect">
                                     <div style="height: 22px;">
                                         <a href="/boycotted/view/{{ boycott.id }}"
-                                           class="left">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
+                                           class="left blue-text text-darken-2">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>
                                         <a href="/boycotted/view/{{ boycott.id }}#disqus_thread"
                                            class="secondary-content right blue-text text-darken-2"></a>
                                         <a href="/boycotted/view/{{ boycott.id }}"

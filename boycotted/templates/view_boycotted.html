@@ -21,6 +21,10 @@
             <div class="row boycott" {% if forloop.counter > 3 %}style="display: none"{% endif %}>
                 <div class="col s12 m8 offset-m2">
                     <div class="card grey lighten-2">
+                        <a
+                                onclick="confirmit('{{ boycotted.id }}')"
+                                class="right"><i
+                                class="material-icons red-text text-lighten-1">delete</i></a>
                         <div class="card-content black-text">
                             {#                          <span class="card-title">{{ boycott.username }} - {{ boycott.date }} </span>#}
                             <h6>{{ boycott.username }} </h6>
@@ -29,10 +33,6 @@
                             <h5> {{ boycott.reason | safe }}</h5>
 
 
-                            <a
-                                    onclick="confirmit('{{ boycotted.id }}')"
-                                    class="left"><i
-                                    class="material-icons red-text text-lighten-1">delete</i></a>
                             <div class="right">
                                 <p><i>{{ boycott.date }}</i></p>
                             </div>
