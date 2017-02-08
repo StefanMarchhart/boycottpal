@@ -322,3 +322,26 @@ def MassEmail(request):
 
 def Terms(request):
     return render(request, 'terms.html')
+
+def ViewAllUsers(request):
+    all_users=[]
+    for user in BoycottUser.objects.all():
+        usr= {
+            'name':user.name,
+            'email':user.email,
+            'id':user.id
+        }
+        all_users.append(usr)
+
+    return render(request, 'view_all_users.html', {
+        'all_users': all_users
+    })
+
+@user_passes_test(lambda u: u.is_superuser, login_url='/login/')
+def DeleteUser(request, user_id):
+    user = BoycottUser.objects.get(id=user_id)
+
+    user.delete()
+
+
+    return HttpResponseRedirect('/')
