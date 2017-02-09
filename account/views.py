@@ -19,7 +19,7 @@ import operator
 import datetime
 import feedparser
 from django.core.mail import send_mail
-from django.conf import settings
+from boycott import settings as bct_settings
 import feedparser
 
 from polls.forms import NewPollForm
@@ -189,7 +189,7 @@ def get_reset(request):
                 user=user,
                 token=token
             )
-            root=getattr(settings, "CURRENT_ROOT", None)
+            root=bct_settings.CURRENT_ROOT
             send_mail('Boycott Pal Password Recovery',
                       'Here is your password reset link: \n' + str(root) + 'reset/use/' + token,
                       'Boycott_Support@BoycottPal.com', [email],
