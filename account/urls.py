@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'^reset/use/(?P<token>[A-Za-z0-9]+)', account.views.reset_password, name='reset_password'),
     url(r'^reset/get/$', account.views.get_reset, name='get_reset'),
     url(r'^users/view/all', account.views.ViewAllUsers),
+    url(r'^user/delete/(?P<user_id>[0-9]+)', account.views.DeleteUser),
 ]
 

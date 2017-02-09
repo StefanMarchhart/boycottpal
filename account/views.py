@@ -323,7 +323,7 @@ def MassEmail(request):
 
 def Terms(request):
     return render(request, 'terms.html')
-
+@user_passes_test(lambda u: u.is_superuser, login_url='/login/')
 def ViewAllUsers(request):
     all_users=[]
     for user in BoycottUser.objects.all():
