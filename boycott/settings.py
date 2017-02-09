@@ -24,7 +24,16 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False')
+SERVER=os.environ.get('SERVER')
+if SERVER == "PROD":
+    DEBUG = False
+    CURRENT_ROOT='http://boycottpal.com'
+elif SERVER == "DEV":
+    DEBUG = True
+    CURRENT_ROOT='http://boycottpal.herokuapp.com'
+else:#server == LOCAL
+    DEBUG = True
+    CURRENT_ROOT='localhost:5000/'
 
 
 EMAIL_HOST = 'smtp.sendgrid.net'
@@ -76,6 +85,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'boycott.context_processors.favicon',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
