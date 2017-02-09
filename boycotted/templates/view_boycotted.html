@@ -30,7 +30,8 @@
                         {% endif %}
                         {% if user.username == boycott.username %}
                             <a
-                                    onclick="edit('{{ boycott.id }}')"
+{#                                    onclick="edit('{{ boycott.id }}')"#}
+                                    href="/boycott/edit/{{ boycott.id }}"
                                     class="right"><i
                                     class="material-icons blue-text text-darken-1">edit</i></a>
                         {% endif %}
@@ -123,7 +124,7 @@
                 closeOnConfirm: false
             }, function () {
                 swal({
-                    title: "Deleted!",prevepr
+                    title: "Deleted!",
                     text: "The boycott has been deleted.",
                     type: "success"
                 }, function () {

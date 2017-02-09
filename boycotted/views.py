@@ -45,7 +45,7 @@ def AddBoycott(request):
             boycotted.boycotts.add(boycott)
             boycotted.save()
             request.user.boycotts.add(boycott)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/boycotted/view/'+str(boycotted.id))
 
     else:
         boycott_form = BoycottForm()
