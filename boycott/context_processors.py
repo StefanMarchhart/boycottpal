@@ -1,5 +1,5 @@
 from django.conf import settings # import the settings file
-
+from boycott import settings as bctsettings
 def favicon(request):
     # return the value you want as a dictionnary. you may add multiple values in there.
     fav=""
@@ -10,3 +10,7 @@ def favicon(request):
     else:
         fav="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAY2loAAD/KgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARERERAAAAASIiIiIQAAASIiIiIiEAASIiIiIiIhASIiIiIiIiIRISISISISIhEiEhISEhIiESISEhISESIRISISEhISEhEhIhISEhISESIRESEiESIRIiIiIiIiIhASIiIiIiIhAAEiIiIiIhAAABIiIiIhAAAAARERERAADwDwAA4AcAAMADAACAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAAwAMAAOAHAADwDwAA"
     return {'favicon': fav}
+
+def root(request):
+    # return the value you want as a dictionnary. you may add multiple values in there.
+    return {'CURRENT_ROOT': bctsettings.CURRENT_ROOT}

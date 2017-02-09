@@ -85,9 +85,8 @@
                                     {{ disqus_sso | safe }}
                                     this.sso = {
                                         name: "boycottpal",
-                                        button: "{% static '/disqus.png' %}",
-                                        url: "http://boycottpal-dev.herokuapp.com/login/",
-                                        logout: "http://boycottpal-dev.herokuapp.com/logout/"
+                                        url: "{{CURRENT_ROOT}}login/",
+                                        logout: "{{CURRENT_ROOT}}logout/"
                                     }
                                 };
 

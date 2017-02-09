@@ -27,10 +27,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 SERVER=os.environ.get('SERVER')
 if SERVER == "PROD":
     DEBUG = False
-    CURRENT_ROOT='http://boycottpal.com'
+    CURRENT_ROOT='http://boycottpal.com/'
 elif SERVER == "DEV":
     DEBUG = True
-    CURRENT_ROOT='http://boycottpal-dev.herokuapp.com'
+    CURRENT_ROOT='http://boycottpal-dev.herokuapp.com/'
 else:#server == LOCAL
     DEBUG = True
     CURRENT_ROOT='localhost:5000/'
@@ -85,6 +85,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'boycott.context_processors.favicon',
+                'boycott.context_processors.root',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
