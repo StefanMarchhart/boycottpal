@@ -327,7 +327,7 @@ def ViewAllUsers(request):
     all_users=[]
     for user in BoycottUser.objects.all():
         usr= {
-            'name':user.name,
+            'name':user.username,
             'email':user.email,
             'id':user.id
         }

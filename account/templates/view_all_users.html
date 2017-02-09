@@ -28,7 +28,7 @@
                             {% for user in all_users %}
                                 <li class="collection-item">
                                     <div>
-                                        <p>{{ user.name | safe }} {{ user.email | safe }}
+                                        <p>{{ user.name | safe }}: {{ user.email | safe }}
                                         {% if request.user.is_superuser %}
                                             <a
                                                     onclick="confirmit('{{ boycotted.id }}')"

@@ -82,7 +82,8 @@ def ViewBoycotted(request,boycotted_id):
         boy={
             'username':boycott.boycotter.username,
             'date':boycott.date.strftime("%m/%d/%y"),
-            'reason':boycott.reason
+            'reason':boycott.reason,
+            'id':boycott.id
         }
         boycotts.append(boy)
     decoded_json = json.loads(json.dumps(boycotts))

@@ -21,10 +21,19 @@
             <div class="row boycott" {% if forloop.counter > 3 %}style="display: none"{% endif %}>
                 <div class="col s12 m8 offset-m2">
                     <div class="card grey lighten-2">
-                        <a
-                                onclick="confirmit('{{ boycotted.id }}')"
-                                class="right"><i
-                                class="material-icons red-text text-lighten-1">delete</i></a>
+
+                        {% if user.is_superuser %}
+                            <a
+                                    onclick="confirmit('{{ boycott.id }}')"
+                                    class="right"><i
+                                    class="material-icons red-text text-lighten-1">delete</i></a>
+                        {% endif %}
+                        {% if user.username == boycott.username %}
+                            <a
+                                    onclick="edit('{{ boycott.id }}')"
+                                    class="right"><i
+                                    class="material-icons blue-text text-darken-1">edit</i></a>
+                        {% endif %}
                         <div class="card-content black-text">
                             {#                          <span class="card-title">{{ boycott.username }} - {{ boycott.date }} </span>#}
                             <h6>{{ boycott.username }} </h6>
@@ -103,7 +112,30 @@
 {% endblock %}
 
 {% block javascript %}
-
+    <script>
+        function confirmit(id) {
+            swal({
+                title: "Are you sure you want to delete this Boycott?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
+                swal({
+                    title: "Deleted!",prevepr
+                    text: "The boycott has been deleted.",
+                    type: "success"
+                }, function () {
+                    location.href = '/boycott/delete/' + id;
+                    {#                    alert({{ appt_id }});#}
+                });
+            });
+        }
+        function edit(id) {
+            location.href='/boycott/edit/'+id;
+        }
+    </script>
 
 
 {% endblock %}
