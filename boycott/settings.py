@@ -28,6 +28,9 @@ SERVER=os.environ.get('SERVER')
 if SERVER == "PROD":
     DEBUG = False
     CURRENT_ROOT='http://boycottpal.com/'
+elif SERVER == "PTEST":
+    DEBUG = True
+    CURRENT_ROOT = 'http://boycottpal.com/'
 elif SERVER == "DEV":
     DEBUG = True
     CURRENT_ROOT='http://boycottpal-dev.herokuapp.com/'
