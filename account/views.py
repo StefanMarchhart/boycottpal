@@ -330,7 +330,8 @@ def ViewAllUsers(request):
         usr= {
             'name':user.username,
             'email':user.email,
-            'id':user.id
+            'id':user.id,
+            'location':process_zip(user.zip)
         }
         all_users.append(usr)
 
