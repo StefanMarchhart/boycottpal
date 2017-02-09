@@ -143,8 +143,9 @@ def EditBoycott(request,boycott_id):
 @login_required(login_url='/login/')
 def DeleteBoycott(request, boycott_id):
     boycott = Boycott.objects.get(id=boycott_id)
-    if request.user.username != boycott.boycotter.username:
-        return HttpResponseRedirect('/')
+    if not request.user.is_superuser:
+        if request.user.username != boycott.boycotter.username:
+            return HttpResponseRedirect('/')
     boycotted=boycott.target
     boycott.delete()
     if boycotted.boycotts.count()==0:
