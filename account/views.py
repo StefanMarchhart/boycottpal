@@ -191,7 +191,7 @@ def get_reset(request):
             )
             root=bct_settings.CURRENT_ROOT
             send_mail('Boycott Pal Password Recovery',
-                      'Here is your password reset link: \n' + str(root) + 'reset/use/' + token,
+                      'Here is your password reset link: \n' + str(root) + '/reset/use/' + token,
                       'Boycott_Support@BoycottPal.com', [email],
                       fail_silently=False)
 
@@ -212,7 +212,7 @@ def change_password(request):
             # process data in form
 
 
-            password = password_form.save(commit=False).password
+            password = password_form.cleaned_data.get('password')
             user = request.user
             user.set_password(password)
             user.save()

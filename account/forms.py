@@ -38,6 +38,7 @@ class ChangeEmailForm(forms.ModelForm):
         return cleaned_data
 
 
+
 class ChangePasswordForm(forms.ModelForm):
     old_password = forms.CharField(label="Old Password", widget=forms.PasswordInput)
     password = forms.CharField(label="New Password", widget=forms.PasswordInput)
