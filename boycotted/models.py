@@ -1,6 +1,6 @@
 from django.core.validators import RegexValidator
 from account.models import *
-
+import datetime
 # Create your models here.
 
 # This model describes an entity being boycotted i.e. Trump or My local applebee's
@@ -18,6 +18,10 @@ class Boycotted(models.Model):
                            )
     # The boycotts filed against the boycotted object
     boycotts = models.ManyToManyField("boycotted.Boycott", blank=True)
+    date= models.DateTimeField(default=datetime.datetime.now)
+    def __str__(self):
+        return 'Boycotted: ' + self.name
+
 
 # This class represents an individual instance of a boycott. Think Grandma boycotting Obama
 class Boycott(models.Model):
@@ -27,7 +31,7 @@ class Boycott(models.Model):
         on_delete=models.CASCADE
     )
     # The time/date the boycott was submitted
-    date = models.DateTimeField()
+    date = models.DateTimeField(default=datetime.datetime.now)
     # The reason for the boycott
     reason = models.CharField(max_length=500, verbose_name="Why are you boycotting?")
     # Target, not sure if needed yet
@@ -35,5 +39,7 @@ class Boycott(models.Model):
         Boycotted,
         on_delete=models.CASCADE
     )
+    def __str__(self):
+        return 'Boycott: ' + self.boycotter.username
 
 #

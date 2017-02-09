@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+    <div class="section">
+        <div class="container">
+
+            <div class="row">
+                <div class="col s12 m6 offset-m3 center">
+                    <h4>All Users</h4>
+
+                    <div class="divider"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m8 offset-m2 center">
+                    <ul class="collection white">
+                        {% if all_users|length == 0 %}
+                            <li class="collection-item center">
+                                <div>
+                                    There are no Users yet.
+                                </div>
+                            </li>
+
+                        {% else %}
+                            {% for user in all_users %}
+                                <li class="collection-item">
+                                    <div>
+                                        <p>{{ user.name | safe }}: {{ user.email | safe }}
+                                        {% if request.user.is_superuser %}
+                                            <a
+                                                    onclick="confirmit('{{ user.id }}')"
+                                                    class="secondary-content right"><i
+                                                    class="material-icons red-text text-lighten-1">delete</i></a></p>
+
+                                        {% endif %}
+
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script>
+        function confirmit(id) {
+            swal({
+                title: "Are you sure you want to delete this User",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete them!",
+                closeOnConfirm: false
+            }, function () {
+                swal({
+                    title: "Canceled!",
+                    text: "The User has been deleted.",
+                    type: "success"
+                }, function () {
+                    location.href = '/user/delete/' + id;
+                    {#                    alert({{ appt_id }});#}
+                });
+            });
+        }
+    </script>
+
+{% endblock %}

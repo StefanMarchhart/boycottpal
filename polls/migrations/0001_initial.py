@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 
 import datetime
 from django.conf import settings
-import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
 
@@ -19,27 +18,26 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Boycott',
+            name='Choice',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateTimeField(default=datetime.datetime.now)),
-                ('reason', models.CharField(max_length=500, verbose_name='Why are you boycotting?')),
-                ('boycotter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('name', models.CharField(max_length=500, verbose_name='The Choice')),
+                ('votes', models.IntegerField(default=0)),
             ],
         ),
         migrations.CreateModel(
-            name='Boycotted',
+            name='Poll',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=500, verbose_name='Entity being boycotted')),
-                ('zip', models.CharField(blank=True, max_length=5, null=True, validators=[django.core.validators.RegexValidator('^\\d{1,10}$', message='Please enter a valid zipcode')])),
+                ('name', models.CharField(max_length=500, verbose_name='The Name of the Poll')),
                 ('date', models.DateTimeField(default=datetime.datetime.now)),
-                ('boycotts', models.ManyToManyField(blank=True, to='boycotted.Boycott')),
+                ('choices', models.ManyToManyField(blank=True, to='polls.Choice')),
+                ('voters', models.ManyToManyField(blank=True, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
-            model_name='boycott',
+            model_name='choice',
             name='target',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='boycotted.Boycotted'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.Poll'),
         ),
     ]

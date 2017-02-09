@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6 offset-m3 center">
+                    <h4>Poll for the week of {{ date }}</h4>
+
+                    <div class="divider"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6 offset-m3">
+                    <div class="grey lighten-2 card">
+                        <div class="card-content black-text center">
+                            <span class="card-title">{{ name }}</span>
+                            <div class="panel-body">
+                                <canvas id="myChart" width="400" height="400"></canvas>
+                                <script>
+                                    var ctx = $('#myChart');
+
+
+                                    var data = {
+                                        labels: {{ labels | safe}},
+                                        datasets: [
+                                            {
+                                                data: {{ data }},
+                                                backgroundColor: {{ color|safe }}
+                                            }
+                                        ]
+                                    };
+
+                                    var options = {
+                                        tooltips: {
+                                            callbacks: {
+                                                label: function (tooltipItem, data) {
+                                                    //get the concerned dataset
+                                                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                                                    //calculate the total of this data set
+                                                    var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                                                        return previousValue + currentValue;
+                                                    });
+                                                    //get the current items value
+                                                    var currentValue = dataset.data[tooltipItem.index];
+                                                    //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+                                                    var precentage = Math.floor(((currentValue / total) * 100) + 0.5);
+
+                                                    return precentage + "%";
+                                                }
+                                            }
+                                        }
+                                    };
+
+
+                                    var myChart = new Chart(ctx, {
+                                        type: 'pie',
+                                        data: data,
+                                        options: options
+                                    });
+
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m2 offset-m5">
+                    <div class="grey lighten-2 card">
+                        <div class="card-content black-text center">
+                            <div class="panel-body">
+                                <a href="/poll/view/all" class="waves-effect waves-light blue btn">See all Polls</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card blue-grey lighten-2">
+                        <div class="card-content blue-grey-text grey lighten-2 center">
+                            <span class="card-title">Talk about this Poll</span>
+                            <div id="disqus_thread"></div>
+                            <script>
+
+                                {#                            #}
+                                {#                            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.#}
+                                {#                            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/#}
+                                {#                            #}
+
+                                var disqus_config = function () {
+
+                                    this.page.url = "{{ CURRENT_ROOT }}poll/view/{{ id }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    this.page.identifier = "{{ SERVER }}-poll-{{ id }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    this.page.title = "Poll Number {{ id }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    {{ disqus_sso | safe }}
+                                    this.sso = {
+                                        name: "boycottpal",
+                                        button: "https://i.imgur.com/IEkisek.png",
+                                        url: "{{CURRENT_ROOT}}login/",
+                                        logout: "{{CURRENT_ROOT}}logout/"
+                                    }
+                                };
+
+                                (function () { // DON'T EDIT BELOW THIS LINE
+                                    var d = document, s = d.createElement('script');
+                                    s.src = '//boycottpal.disqus.com/embed.js';
+                                    s.setAttribute('data-timestamp', +new Date());
+                                    (d.head || d.body).appendChild(s);
+                                })();
+                            </script>
+                            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments
+                                powered by Disqus.</a></noscript>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block javascript %}
+
+
+
+{% endblock %}

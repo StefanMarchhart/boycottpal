@@ -21,10 +21,28 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "g7iilt6uj&@rupry5(8n(ec(rg#i+@ncw+kq_qy^l(0pkdrw1j"
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SERVER=os.environ.get('SERVER')
+if SERVER == "PROD":
+    DEBUG = False
+    CURRENT_ROOT='http://boycottpal.com/'
+elif SERVER == "DEV":
+    DEBUG = True
+    CURRENT_ROOT='http://boycottpal-dev.herokuapp.com/'
+else:#server == LOCAL
+    DEBUG = True
+    CURRENT_ROOT='localhost:5000/'
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
+EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
+
 
 # Application definition
 
@@ -40,7 +58,8 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'account',
-    'boycotted'
+    'boycotted',
+    'polls'
 
 ]
 
@@ -65,6 +84,9 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'boycott.context_processors.favicon',
+                'boycott.context_processors.root',
+                'boycott.context_processors.server',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',

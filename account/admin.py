@@ -4,4 +4,6 @@ from django.contrib import admin
 from account.models import *
 
 admin.site.register(BoycottUser)
+admin.site.register(Token)
+admin.site.register(HC)
 

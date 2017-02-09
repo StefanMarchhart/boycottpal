@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+          <div class="col s12 m6 offset-m3">
+              <div class="blue lighten-4 card">
+                  <div class="card-content black-text center">
+                    <span class="card-title">Account Settings</span>
+                    <div class="panel-body">
+                    <script>
+                        function report_error(error) {
+                            swal({
+                                title: "Error",
+                                text: error,
+                                type: "error",
+                                html: true
+                            });
+                        }
+                    </script>
+
+
+
+
+{##}
+{##}
+                        <form method="post" action="{% url 'change_email' %} " class="center">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                {% if email_form.non_field_errors %}
+                                    <script>
+                                        report_error('{{ email_form.non_field_errors }}')
+                                    </script>
+                                {% endif %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col s12 m10 offset-m1 fieldWrapper input-field">
+                                    {{ email_form.email.errors }}
+                                        <label for="{{ email_form.message.old_email }}">Old Email</label>
+                                    {{ email_form.old_email }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m10 offset-m1 fieldWrapper input-field">
+                                    {{ email_form.email.errors }}
+                                        <label for="{{ email_form.message.email }}">New Email</label>
+                                    {{ email_form.email }}
+                                </div>
+                            </div>
+                            <button class="btn waves-effect waves-light blue" type="submit" name="action">Change Email
+                                <i class="material-icons right">email</i>
+                            </button>
+
+                            <input type="hidden" name="next" value="{{ next }}"/>
+                        </form>
+
+                        <form method="post" action="{% url 'change_password' %} " class="center">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                {% if password_form.non_field_errors %}
+                                    <script>
+                                        report_error('{{ password_form.non_field_errors }}')
+                                    </script>
+                                {% endif %}
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m10 offset-m1 fieldWrapper input-field">
+                                    {{ password_form.old_password.errors }}
+                                    <label for="{{ password_form.message.old_password }}">Old Password</label>
+                                    {{ password_form.old_password }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m10 offset-m1 fieldWrapper input-field">
+                                    {{ password_form.password.errors }}
+                                    <label for="{{ password_form.message.password }}">New Password</label>
+                                    {{ password_form.password }}
+                                </div>
+                            </div>
+
+                            <button class="btn waves-effect waves-light blue" type="submit" name="action">Change Password
+                                <i class="material-icons right">lock</i>
+                            </button>
+                            <input type="hidden" name="next" value="{{ next }}"/>
+                        </form>
+                    </br>
+                        <a href="/" class="waves-effect waves-light red btn center"><i class="material-icons right">cancel</i>Cancel</a>
+
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascript %}
+
+{#<script>#}
+{#    function username() {#}
+{##}
+{#            swal("Error", "That Username is already in use.", "error");#}
+{#    }#}
+{##}
+{#</script>#}
+
+{% endblock %}

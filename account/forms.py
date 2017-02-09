@@ -1,9 +1,108 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
+from account.models import Token
 
 
 # Defines a login form, which allows for login
 from account.models import BoycottUser
+class EmailForm(forms.Form):
+    email = forms.CharField(label="Email", widget=forms.Textarea)
+    subject = forms.CharField(label="Email")
+    def clean(self):
+        return super(EmailForm, self).clean()
+
+
+
+class ChangeEmailForm(forms.ModelForm):
+    old_email = forms.CharField(label="Old Email")
+    email = forms.CharField(label="New Email")
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ChangeEmailForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = BoycottUser
+        fields = ['email']
+
+    def clean(self):
+        user=self.user
+        cleaned_data = super(ChangeEmailForm, self).clean()
+        old_email = self.cleaned_data.get('old_email')
+        email = self.cleaned_data.get('email')
+
+
+        if not old_email or (user.email != old_email):
+            raise forms.ValidationError("Your old email is incorrect")
+
+        return cleaned_data
+
+
+
+class ChangePasswordForm(forms.ModelForm):
+    old_password = forms.CharField(label="Old Password", widget=forms.PasswordInput)
+    password = forms.CharField(label="New Password", widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = BoycottUser
+        fields = ['password']
+
+    def clean(self):
+        user=self.user
+        cleaned_data = super(ChangePasswordForm, self).clean()
+        old_password = self.cleaned_data.get('old_password')
+        password = self.cleaned_data.get('password')
+
+
+        if not old_password or (user.check_password(old_password) == False):
+            raise forms.ValidationError("Your old password is incorrect")
+
+        if len(password) < 8:
+            raise forms.ValidationError("Your new password must be at least 8 characters long.")
+
+        # At least one letter and one non-letter
+        first_isalpha = password[0].isalpha()
+        if all(c.isalpha() == first_isalpha for c in password):
+            raise forms.ValidationError("Your password must contain at least one letter and at least one digit or" \
+                                        " punctuation character.")
+
+        return cleaned_data
+
+
+class ResetPasswordForm(forms.ModelForm):
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
+    class Meta:
+        model = BoycottUser
+        fields = ['password']
+
+    def clean(self):
+        password = self.cleaned_data.get('password')
+        if len(password) < 8:
+            raise forms.ValidationError("Your password must be at least 8 characters long.")
+
+        # At least one letter and one non-letter
+        first_isalpha = password[0].isalpha()
+        if all(c.isalpha() == first_isalpha for c in password):
+            raise forms.ValidationError("Your password must contain at least one letter and at least one digit or" \
+                                        " punctuation character.")
+
+class TokenForm(forms.Form):
+    email = forms.CharField(label="Email")
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        for user in BoycottUser.objects.all():
+            if user.email == email:
+                return
+            else:
+                pass
+        raise forms.ValidationError("This email isn't associated with an account. Perhaps you mistyped it?")
+
+
 
 
 class LoginForm(AuthenticationForm):
@@ -15,12 +114,11 @@ class UserForm(forms.ModelForm):
     password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].required = True
-        self.fields['last_name'].required = True
         self.fields['email'].required = True
+        self.fields['zip'].required = True
     class Meta:
         model = BoycottUser
-        fields = ['first_name', 'last_name', 'username', 'email']
+        fields = ['username', 'email', 'zip']
 
 
     def clean(self):
@@ -36,6 +134,16 @@ class UserForm(forms.ModelForm):
 
         if password1 and password1 != password2:
             raise forms.ValidationError("Passwords don't match")
+
+        if len(password1) < 8:
+            raise forms.ValidationError("Your password must be at least 8 characters long.")
+
+        # At least one letter and one non-letter
+        first_isalpha = password1[0].isalpha()
+        if all(c.isalpha() == first_isalpha for c in password1):
+            raise forms.ValidationError("Your password must contain at least one letter and at least one digit or" \
+                                        " punctuation character.")
+
 
         return cleaned_data
 

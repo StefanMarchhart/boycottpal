@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <script>
+        function report_error(error) {
+            swal({
+                title: "Error",
+                text: error,
+                type: "error",
+                html: true
+            });
+        }
+    </script>
+    {#    <div class="section">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="col s12 m6 offset-m3 center">#}
+    {#                    <h5>Admin Page</h5>#}
+    {##}
+    {#                    <div class="divider"></div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+
+    <div class="section">
+        <div class="container">
+            <div class="col s12 m6 offset-m3">
+                <div class="blue lighten-4 card">
+                    <div class="card-content black-text">
+                        <div class="center">
+                            <span class="card-title cemter">Terms and Conditions</span>
+                        </div>
+                        <div class="card-content">
+                            <h5>By using or accessing BoycottPal, you agree to the terms and conditions of
+                                BoycottPal.</h5>
+                            <ol class="terms">
+                                <li>You are responsible and liable for any and all content you post on BoycottPal.</li>
+                                <li>You will not post any content that is threatening or pornographic; incites or
+                                    encourages physical violence on BoycottPal.
+                                </li>
+                                <li>You will not attempt to market any product through BoycottPal.</li>
+                                <li>You will not post any unauthorized commercial communications in any form on
+                                    BoycottPal.
+                                </li>
+                                <li>You will not collect other users’ content or information using any means including
+                                    automated means.
+                                </li>
+                                <li>You will not upload viruses or other malicious code.</li>
+                                <li>You will not use BoycottPal to do anything illegal, fraudulent or discriminatory.
+                                </li>
+                                <li>You will not do anything that could disable or impair BoycottPal.</li>
+                                <li>You will not encourage any violation of any Boycott policy.</li>
+                                <li>You will not use BoycottPal if you are under 13.</li>
+                                <li>You will keep your contact information accurate and up-to-date.</li>
+                                <li>You will not share your password, let anyone else access your account, or do
+                                    anything else that might jeopardize the security of your account.
+                                </li>
+                                <li>If you select a username or similar identifier for your account, we reserve the
+                                    right to remove or reclaim it if we believe it is appropriate (such as when a
+                                    trademark owner complains about a username that does not closely relate to a user's
+                                    actual name).
+                                </li>
+                                <li>You will not infringe or violate anyone’s rights or violates the law</li>
+                                <li>BoycottPal will remove any account or comment or post that violates the law, is
+                                    deemed inappropriate by BoycottPal administration or violates any BoycottPal policy.
+                                </li>
+                                <li>BoycottPal will remove any content or information that violates any other person’s
+                                    intellectual property rights.
+                                </li>
+                                <li>You will not post any information which may be personal identifying information of
+                                    any person.
+                                </li>
+                                <li>Forums or Chats may not be monitored and may contain objectionable or offensive
+                                    content.
+                                </li>
+                                <li>BoycottPal reserves the right to terminate any account at any time.</li>
+                                <li>If any portion of this Statement is found to be unenforceable, the remaining portion
+                                    will remain in full force and effect.
+                                </li>
+                                <li>If we fail to enforce any of this Statement, it will not be considered a waiver.
+                                </li>
+                                <li>Any amendment to or waiver of this Statement must be made in writing and signed by
+                                    us.
+                                </li>
+                                <li>You will not transfer any of your rights or obligations under this Statement to
+                                    anyone else without our consent.
+                                </li>
+                                <li>All of our rights and obligations under this Statement are freely assignable by us
+                                    in connection with a merger, acquisition, or sale of assets, or by operation of law
+                                    or otherwise.
+                                </li>
+                                <li>Nothing in this Statement shall prevent us from complying with the law.</li>
+                                <li>This Statement does not confer any third party beneficiary rights.</li>
+                                <li>You will not use the name BoycottPal or any logo related to BoycottPal without the
+                                    express written consent of BoycottPal.
+                                </li>
+                                <li>We reserve all rights not expressly granted to you.</li>
+                            </ol>
+                            <h5>Disclaimer and Disputes</h5>
+                            <ol class="terms">
+                                <li>BoycottPal takes no responsibility and assumes no liability for any User Content
+                                    that you or any other user or third party posts or transmits using BoycottPal. Users
+                                    understand and agree that the users may be exposed to user content that is
+                                    inaccurate, objectionable, inappropriate for children or otherwise unsuitable.
+                                </li>
+                                <li>For any dispute you have with BoycottPal, you agree to first contact us and attempt
+                                    to resolve the dispute with us informally.
+                                </li>
+                                <li>You will resolve any claim, cause of action or dispute (claim) you have with us
+                                    arising out of or relating to this Statement or BoycottPal exclusively in the U.S.
+                                    District Court for the Northern District of Ohio or a state court located in Ohio,
+                                    and you agree to submit to the personal jurisdiction of such courts for the purpose
+                                    of litigating all such claims. The laws of the State of Ohio will govern this
+                                    Statement, as well as any claim that might arise between you and us, without regard
+                                    to conflict of law provisions. In no event shall BoycottPal’s aggregate liability
+                                    for all claims exceed one hundred U.S. Dollars (U.S. $100.00)
+                                </li>
+                                <li>If anyone brings a claim against us related to your actions, content or information
+                                    on BoycottPal, you will indemnify and hold us harmless from and against all damages,
+                                    losses, and expenses of any kind (including reasonable legal fees and costs) related
+                                    to such claim. Although we provide rules for user conduct, we do not control or
+                                    direct users' actions on BoycottPal and are not responsible for the content or
+                                    information users transmit or share on BoycottPal. We are not responsible for any
+                                    offensive, inappropriate, obscene, unlawful or otherwise objectionable content or
+                                    information you may encounter on BoycottPal. We are not responsible for the conduct,
+                                    whether online or offline, of any user of BoycottPal.
+                                </li>
+                                <li>BoycottPal will try to keep BoycottPal safe but you use it at your own risk.
+                                    BoycottPal is a service that is provided without any express or implied warranties.
+                                    BoycottPal is not responsible for the actions or content of others. You release
+                                    BoycottPal from any claims and damages, known or unknown arising out of or in any
+                                    way connected with any claim you have against any others. BoycottPal will not be
+                                    liable to you for any lost profits or other consequential special or indirect or
+                                    incidental damages out of or in connection with your use of BoycottPal. In no event
+                                    shall BoycottPal’s aggregate liability for all claims exceed one hundred U.S.
+                                    Dollars (U.S. $100.00)
+                                </li>
+                            </ol>
+                            <p>BoycottPal respects your privacy. Please read the following to learn more about our
+                                privacy
+                                policy.</p>
+                            <h5>Personal Information</h5>
+                            {#                            <ul>#}
+                            <div class="terms">
+                                <li>Personal information is any information about you that identifies you like your
+                                    name,
+                                    address, email address, or anything that is not publicly available.
+                                </li>
+                                <li>BoycottPal collects personal information when you register. BoycottPal analyzes and
+                                    stores
+                                    all communications content, including email content from incoming and outgoing
+                                    email.
+                                    BoycottPal may receive and records information from your computer and browser,
+                                    including
+                                    your IP address, cookie information, software and hardware attributes, and the page
+                                    you
+                                    request.
+                                </li>
+                                <li>BoycottPal uses information for the following general purposes: to customize the
+                                    advertising
+                                    and content you see, fulfill your requests for products and services, improve our
+                                    services,
+                                    contact you, conduct research, and provide anonymous reporting for internal and
+                                    external
+                                    clients.
+                                </li>
+                                <li>BoycottPal does not sell, loan or share personal information about you with anyone
+                                    not
+                                    affiliated with BoycottPal unless you request it. Boycott Pal provides information
+                                    to
+                                    trusted affiliates only.
+                                </li>
+                                <li>BoycottPal responds to subpoenas, court orders or legal process or to establish or
+                                    exercise
+                                    BoycottPal’s legal rights or to defend against any legal claims.
+                                </li>
+
+                                <li>BoycottPal will share any information in order to investigate, prevent or take
+                                    action
+                                    regarding any illegal activities, suspected fraud or any threats to the physical
+                                    safety of
+                                    any person or as required by law.
+                                </li>
+                            </div>
+
+                            <h5>Cookies</h5>
+                            Cookies are small files stored on your computer by your web browser (such as Internet
+                            Explorer or Firefox) at the request of a site you're viewing. This allows the site you're
+                            viewing to remember things about you, such as your preferences and history or to keep you
+                            logged in. Cookies may be stored on your computer for a short time (such as only while your
+                            browser is open) or for an extended period of time, even years. Cookies not set by this site
+                            will not be accessible to us.
+                            BoycottPal Cookie Usage
+                            This site uses cookies for numerous things, including:
+                            <ol class="terms">
+                                <li>Registration and maintaining your preferences. This includes ensuring that you can
+                                    stay logged in and keeping the site in the language or appearance that you
+                                    requested.
+                                </li>
+                                <li>Analytics. This allows us to determine how people are using the site and improve
+                                    it.
+                                </li>
+                                <li>Advertising cookies (possibly third-party). If this site displays advertising,
+                                    cookies may be set by the advertisers to determine who has viewed an ad or similar
+                                    things. These cookies may be set by third parties, in which case this site has no
+                                    ability to read or write these cookies.
+                                </li>
+                                <li>Other third-party cookies for things like Facebook or Twitter sharing. These cookies
+                                    will generally be set by the third-party independently, so this site will have no
+                                    ability to access them.
+                                </li>
+                            </ol>
+                            <h5>Removing/Disabling Cookies</h5>
+                            Managing your cookies and cookie preferences must be done from within your browser's
+                            options/preferences.
+                            <h5>Edit or Delete your Account</h5>
+                            <div class="terms">
+                                <li>You can edit your account at any time.</li>
+                                <li>You can delete your account at any time by contacting
+                                    admin@boycottpal.com.</li>
+                                <li>Any information or communications relating to BoycottPal may be
+                            maintained in
+                                    achieved records after your account has been deleted.</li>
+                                <li>We reserve the right to send you certain communications relating to Boycott Pal including
+                            but not limited to administration and service announcements, without offering you the
+                                    opportunity to opt out of receiving them.</li>
+                                </div>
+                            <h5>Policy Changes</h5>
+                            BoycottPal may update or change this policy at any time without users consent or agreement.
+                            BoycottPal will notify you about significant changes regarding the treatment of personal
+                            information by sending an email to the email address you provided or by posting a notice on
+                            the website.
+                            <h5>Questions & Suggestions</h5>
+                            If you have questions, suggestions, or wish to make a complaint, please contact us at:
+                            Admin@BoycottPal.com
+                            Last Updated: February 4, 2017
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+{% block javascript %}
+
+{% endblock %}
