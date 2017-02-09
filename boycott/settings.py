@@ -25,12 +25,14 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SERVER=os.environ.get('SERVER')
+PDEBUG=os.environ.get('PDEBUG','False')
 if SERVER == "PROD":
-    DEBUG = False
+    if PDEBUG=='False':
+        DEBUG = False
+    else:
+        DEBUG = True
     CURRENT_ROOT='http://boycottpal.com/'
-elif SERVER == "PTEST":
-    DEBUG = True
-    CURRENT_ROOT = 'http://boycottpal.com/'
+
 elif SERVER == "DEV":
     DEBUG = True
     CURRENT_ROOT='http://boycottpal-dev.herokuapp.com/'
