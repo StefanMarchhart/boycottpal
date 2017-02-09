@@ -146,13 +146,7 @@ DATABASES['default'].update(db_from_env)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
-
-if SERVER == "PROD":
-    ALLOWED_HOSTS = ['.boycottpal.com', '.boycottpal.herokuapp.com']
-elif SERVER == "DEV":
-    ALLOWED_HOSTS = ['.boycottpal-dev.herokuapp.com']
-else:#server == LOCAL
-    ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS=['.boycottpal.com','.herokuapp.com']
 
 
 # Static files (CSS, JavaScript, Images)
