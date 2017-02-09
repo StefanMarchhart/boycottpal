@@ -14,3 +14,6 @@ def favicon(request):
 def root(request):
     # return the value you want as a dictionnary. you may add multiple values in there.
     return {'CURRENT_ROOT': bctsettings.CURRENT_ROOT}
+def server(request):
+    # return the value you want as a dictionnary. you may add multiple values in there.
+    return {'SERVER': bctsettings.SERVER}

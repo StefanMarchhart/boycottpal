@@ -97,7 +97,8 @@ def ViewBoycotted(request,boycotted_id):
         'zip': zip,
         'location': location,
         'boycotts': decoded_json,
-        "disqus_sso": disqus_sso
+        "disqus_sso": disqus_sso,
+        'id':boycotted_id
     })
 
 

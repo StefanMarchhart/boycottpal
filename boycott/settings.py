@@ -86,6 +86,7 @@ TEMPLATES = [
             'context_processors': [
                 'boycott.context_processors.favicon',
                 'boycott.context_processors.root',
+                'boycott.context_processors.server',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
