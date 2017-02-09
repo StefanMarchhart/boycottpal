@@ -2,6 +2,7 @@ import os
 import string
 import random
 import json
+from django.conf import settings # import the settings file
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 

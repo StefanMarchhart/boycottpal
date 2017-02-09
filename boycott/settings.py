@@ -30,7 +30,7 @@ if SERVER == "PROD":
     CURRENT_ROOT='http://boycottpal.com'
 elif SERVER == "DEV":
     DEBUG = True
-    CURRENT_ROOT='http://boycottpal.herokuapp.com'
+    CURRENT_ROOT='http://boycottpal-dev.herokuapp.com'
 else:#server == LOCAL
     DEBUG = True
     CURRENT_ROOT='localhost:5000/'
