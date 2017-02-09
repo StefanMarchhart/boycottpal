@@ -190,7 +190,7 @@ def get_reset(request):
             )
 
             send_mail('Boycott Pal Password Recovery',
-                      'Here is your password reset link: \n' + os.environ.get('CURRENT_ROOT') + 'reset/use/' + token,
+                      'Here is your password reset link: \n' + settings.CURRENT_ROOT + 'reset/use/' + token,
                       'Boycott_Support@BoycottPal.com', [email],
                       fail_silently=False)
 
