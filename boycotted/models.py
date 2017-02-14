@@ -40,6 +40,6 @@ class Boycott(models.Model):
         on_delete=models.CASCADE
     )
     def __str__(self):
-        return 'Boycott: ' + self.boycotter.username
+        return 'Target: '+ self.target.name +' - Boycotter: ' + self.boycotter.username + ' - Reason: '+self.reason
 
 #
