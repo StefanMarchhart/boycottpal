@@ -19,5 +19,6 @@ urlpatterns = [
     url(r'^reset/get/$', account.views.get_reset, name='get_reset'),
     url(r'^users/view/all', account.views.ViewAllUsers),
     url(r'^user/delete/(?P<user_id>[0-9]+)', account.views.DeleteUser),
+    url(r'^blog', account.views.Blog)
 ]
 
