@@ -42,6 +42,7 @@
                 {% if user.is_authenticated %}
                     <li><a href="/settings/"><i class="material-icons left">person</i>{{ user.username }}</a></li>
                     <li><a href="/poll/vote/{{ recent_poll }}"><i class="material-icons left">poll</i>Poll</a></li>
+                    <li><a href="/blog/"><i class="material-icons left">comment</i>Blog</a></li>
                     {% if request.user.is_superuser %}
                         <li><a href="/console/"><i class="material-icons left">settings</i>Console</a></li>
 
@@ -57,6 +58,7 @@
                 {% if user.is_authenticated %}
                     <li><a href="/settings/"><i class="material-icons left">person</i>{{ user.username }}</a></li>
                     <li><a href="/poll/vote/{{ recent_poll }}"><i class="material-icons left">poll</i>Poll</a></li>
+                    <li><a href="/blog/"><i class="material-icons left">comment</i>Blog</a></li>
                     {% if request.user.is_superuser %}
                         <li><a href="/console/"><i class="material-icons left">settings</i>Console</a></li>
                     {% endif %}
