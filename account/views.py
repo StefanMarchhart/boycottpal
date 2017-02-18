@@ -350,5 +350,7 @@ def DeleteUser(request, user_id):
 
 @login_required(login_url='/login/')
 def Blog(request):
+    disqus_sso = _get_disqus_sso(request.user)
     return render(request, 'blog.html', {
+        'disqus_sso':disqus_sso
     })
