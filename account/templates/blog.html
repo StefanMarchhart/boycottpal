@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6 offset-m3 center">
+                    <img class="responsive-img" src="{% static '/logo-med.png' %}">
+                    <h2 style="font-family: Serif; color: #414042;">Blog</h2>
+
+                    <div class="divider"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card blue-grey lighten-2">
+                        <div class="card-content blue-grey-text grey lighten-2 center">
+                            <div id="disqus_thread"></div>
+                            <script>
+
+                                {#                            #}
+                                {#                            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.#}
+                                {#                            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/#}
+                                {#                            #}
+
+                                var disqus_config = function () {
+
+                                    this.page.url = "{{ CURRENT_ROOT }}blog"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    this.page.identifier = "{{ SERVER }}-blog"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    this.page.title = "Blog"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    {{ disqus_sso | safe }}
+                                    this.sso = {
+                                        name: "boycottpal",
+                                        button: "https://i.imgur.com/IEkisek.png",
+                                        url: "{{CURRENT_ROOT}}login/",
+                                        logout: "{{CURRENT_ROOT}}logout/"
+                                    }
+                                };
+
+                                (function () { // DON'T EDIT BELOW THIS LINE
+                                    var d = document, s = d.createElement('script');
+                                    s.src = '//boycottpal.disqus.com/embed.js';
+                                    s.setAttribute('data-timestamp', +new Date());
+                                    (d.head || d.body).appendChild(s);
+                                })();
+                            </script>
+                            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments
+                                powered by Disqus.</a></noscript>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block javascript %}
+
+
+
+{% endblock %}

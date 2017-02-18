@@ -347,3 +347,8 @@ def DeleteUser(request, user_id):
 
 
     return HttpResponseRedirect('/')
+
+@login_required(login_url='/login/')
+def Blog(request):
+    return render(request, 'blog.html', {
+    })
