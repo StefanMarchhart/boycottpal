@@ -81,9 +81,13 @@ def home(request):
         }
         top_boycotts.append(top_bct)
 
-    date = datetime.date.today()
 
-    for trending_boycott in Boycotted.objects.filter(date__month=date.month):
+
+    # for trending_boycott in Boycotted.objects.filter(date__month=date.month):
+    tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+    lastMonth = datetime.date.today() + datetime.timedelta(days=-30)
+    print("\n\n\nPrinting Dates\n",tomorrow, lastMonth)
+    for trending_boycott in Boycotted.objects.filter(date__range=[lastMonth,tomorrow]):
         zipcode = trending_boycott.zip
         location = process_zip(zipcode)
 
