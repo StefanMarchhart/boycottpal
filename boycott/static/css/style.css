@@ -86,3 +86,13 @@ change "brown" to something of your choosing
 .autocomplete-content:empty{
     display: none;
 }
+
+.label{
+    color: #9e9e9e;
+}
+
+.select-wrapper *{
+    color: #1976D2 !important;
+    text-align: center;
+
+}
