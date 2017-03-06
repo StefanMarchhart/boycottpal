@@ -18,11 +18,10 @@ def AddBoycott(request):
     if request.method == 'POST':
         boycott_form = BoycottForm(data=request.POST)
         boycotted_form = BoycottedForm(data=request.POST)
+        boycotted=[]
         if boycotted_form.is_valid() and boycott_form.is_valid():
             # Save boycotted values to access
             temp_boycotted = boycotted_form.save(commit=False)
-            print(temp_boycotted.name)
-            print(temp_boycotted.zip)
 
             # Check to see if boycotted exists already
             boycotted_query = Boycotted.objects.filter(name=temp_boycotted.name).filter(zip=temp_boycotted.zip)

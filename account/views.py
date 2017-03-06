@@ -11,6 +11,7 @@ from account.forms import UserForm, ResetPasswordForm, TokenForm, ChangePassword
 from account.models import Token, BoycottUser
 from account.models import HC
 from boycott.general import process_zip
+from boycotted.forms import FilterForm
 from boycotted.models import *
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
@@ -34,6 +35,7 @@ def token_generator(size=20, chars=string.ascii_uppercase + string.digits):
 
 # Create your views here.
 def home(request):
+    # Hit counter
     if HC.objects.all().count()==0:
         HC.objects.create()
     else:
@@ -41,16 +43,19 @@ def home(request):
         hc.hits = hc.hits +1
         hc.save()
 
+    # fetch and store RSS FEEDS
     cnn = feedparser.parse('http://rss.cnn.com/rss/cnn_topstories.rss')
     fox = feedparser.parse('http://feeds.foxnews.com/foxnews/latest')
     news = json.loads(json.dumps(list(zip(cnn.entries[:25], fox.entries[:25]))))
 
     my_boycotts_json = []
+    # Handle Alerts
     raw_alert = request.GET.get('alert')
     if raw_alert == None:
         alert = ""
     else:
         alert = raw_alert
+
     if request.user.is_authenticated():
         my_boycotts = []
         for my_boycott in request.user.boycotts.all():
@@ -86,7 +91,6 @@ def home(request):
     # for trending_boycott in Boycotted.objects.filter(date__month=date.month):
     tomorrow = datetime.date.today() + datetime.timedelta(days=1)
     lastMonth = datetime.date.today() + datetime.timedelta(days=-30)
-    print("\n\n\nPrinting Dates\n",tomorrow, lastMonth)
     for trending_boycott in Boycotted.objects.filter(date__range=[lastMonth,tomorrow]):
         zipcode = trending_boycott.zip
         location = process_zip(zipcode)
@@ -99,11 +103,83 @@ def home(request):
         }
         trending_boycotts.append(trend_bct)
 
-    def getKey(boycott):
+    def sort_by_most(boycott):
         return int(boycott['num'])
 
-    top_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=getKey, reverse=True)[:25]))
-    trending_boycotts_json = json.loads(json.dumps(sorted(trending_boycotts, key=getKey, reverse=True)[:10]))
+    def sort_by_alpha(boycott):
+        return str(boycott['name'])
+
+    def sort_by_date(boycott):
+        return str(datetime.datetime.strptime(boycott['date'], '%Y-%m-%d'))
+
+    def sort_by_comments(boycott):
+        return int(boycott['num'])
+
+    top_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=sort_by_most, reverse=True)[:25]))
+    trending_boycotts_json = json.loads(json.dumps(sorted(trending_boycotts, key=sort_by_most, reverse=True)[:10]))
+
+
+    if request.method == 'POST':
+        form = FilterForm(data=request.POST)
+        if form.is_valid():
+            # process data in form
+            filter = form.save(commit=False)
+            tag = form.cleaned_data['tag']
+            sort = form.cleaned_data['sort']
+            print(sort)
+
+            print(SORT_CHOICES[sort])
+            # print(TAG_CHOICES[tag])
+
+
+            tagged = Boycotted.objects.all()
+            if tag !=0:
+                tagged.filter(tag=tag)
+
+            if sort ==2:
+                tagged=tagged.order_by('-date')
+
+
+
+
+            all_boycotts=[]
+            for boycott in tagged:
+                zipcode = boycott.zip
+                location = process_zip(zipcode)
+
+                top_bct = {
+                    'name': boycott.name,
+                    'id': boycott.id,
+                    'num': boycott.boycotts.count(),
+                    'location': location
+                }
+                all_boycotts.append(top_bct)
+
+
+            if sort == 0:
+                all_boycotts=sorted(all_boycotts, key=sort_by_most, reverse=True)
+
+            elif sort == 1:
+                all_boycotts=sorted(all_boycotts, key=sort_by_alpha)
+
+
+            all_boycotts_json = json.loads(json.dumps(all_boycotts))
+            # return HttpResponseRedirect('/?alert=signup')
+
+            # return render(request, 'home.html', {
+            #     'alert': alert,
+            #     'my_boycotts': my_boycotts_json,
+            #     'top_boycotts': top_boycotts_json,
+            #     'trending_boycotts': trending_boycotts_json,
+            #     'all_boycotts': json.loads(json.dumps(all_boycotts)),
+            #     'filterForm': form,
+            #     'news': news
+            # })
+
+    else:
+        form = FilterForm(initial={'tag': '1', 'sort': '1'})
+        all_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=sort_by_most, reverse=True)))
+
 
 
     return render(request, 'home.html', {
@@ -111,8 +187,12 @@ def home(request):
         'my_boycotts': my_boycotts_json,
         'top_boycotts': top_boycotts_json,
         'trending_boycotts': trending_boycotts_json,
+        'all_boycotts': all_boycotts_json,
+        'filterForm': form,
         'news': news
     })
+
+
 
 
 def Signup(request):

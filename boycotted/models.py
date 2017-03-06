@@ -1,7 +1,33 @@
 from django.core.validators import RegexValidator
 from account.models import *
 import datetime
+
 # Create your models here.
+TAG_CHOICES = (
+    (1, ("Other")),
+    (2, ("People")),
+    (3, ("Sports")),
+    (4, ("Buisnesses")),
+    (5, ("International")),
+    (6, ("Local"))
+)
+
+FILTER_TAG_CHOICES = (
+    (0, ("All")),
+    (1, ("Other")),
+    (2, ("People")),
+    (3, ("Sports")),
+    (4, ("Buisnesses")),
+    (5, ("International")),
+    (6, ("Local"))
+)
+
+SORT_CHOICES = (
+    (0, ("Most Boycotted")),
+    (1, ("Alphabetical Order")),
+    (2, ("Most Recent")),
+)
+
 
 # This model describes an entity being boycotted i.e. Trump or My local applebee's
 class Boycotted(models.Model):
@@ -18,7 +44,9 @@ class Boycotted(models.Model):
                            )
     # The boycotts filed against the boycotted object
     boycotts = models.ManyToManyField("boycotted.Boycott", blank=True)
-    date= models.DateTimeField(default=datetime.datetime.now)
+    date = models.DateTimeField(default=datetime.datetime.now)
+    tag = models.IntegerField(default=1, choices=TAG_CHOICES)
+
     def __str__(self):
         return 'Boycotted: ' + self.name
 
@@ -39,7 +67,11 @@ class Boycott(models.Model):
         Boycotted,
         on_delete=models.CASCADE
     )
-    def __str__(self):
-        return 'Target: '+ self.target.name +' - Boycotter: ' + self.boycotter.username + ' - Reason: '+self.reason
 
-#
+    def __str__(self):
+        return 'Target: ' + self.target.name + ' - Boycotter: ' + self.boycotter.username + ' - Reason: ' + self.reason
+
+
+class DirtyFilterModelIFeelGuiltyAbout(models.Model):
+    tag = models.IntegerField(default=0, choices=FILTER_TAG_CHOICES)
+    sort = models.IntegerField(default=0, choices=SORT_CHOICES)
