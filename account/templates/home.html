@@ -62,7 +62,7 @@
 
                                             {#                                        <label for="{{ filterForm.message.sort }}">Sort</label>#}
 
-                                            <div class="radiostuff col s8 offset-s2 left">
+                                            <div class="radiostuff col hidden s8 offset-s2 left">
                                                 <span class="label slightly-bigger">Sorting Order</span>
                                                 {{ filterForm.sort }}
                                             </div>
@@ -73,7 +73,7 @@
                                                     tomove.parent().parent().prepend(tomove);
                                                 }
                                                 {#                                                $('label').css('font-size', '1.5rem');#}
-{#                                                $(".radiostuff").removeClass("hidden");#}
+                                                $(".radiostuff").removeClass("hidden");
                                             </script>
 
                                         </div>
@@ -120,7 +120,7 @@
                                         <script>
                                             var sum = -1;
                                             var actual =0;
-                                            var limit = 23;
+                                            var limit = 25;
                                             $('.all:lt(limit)').each(function () {
                                                 sum += $(this).height();
                                                 sum +=1;

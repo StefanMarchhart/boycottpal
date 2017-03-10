@@ -44,6 +44,17 @@
                                     {{ boycott_form.reason }}
                                 </div>
                             </div>
+                            {% if request.user.is_superuser %}
+                            <div class="row">
+                                <div class="col s12 m10 offset-m1 fieldWrapper input-field left">
+                                    <span class="label left">Category <span class="red-text">[ADMIN ONLY]</span></span>
+                                    {{ tag_form.tag.errors }}
+                                    {#                                        <label for="{{ filterForm.message.tag }}">Tag</label>#}
+                                    <span id="tag">{{ tag_form.tag }}</span>
+                                </div>
+
+                            </div>
+                            {% endif %}
                             <div class="row center">
                                 <a class="waves-effect waves-red white red-text btn-flat" onClick="confirmit()"><i
                                         class="material-icons left">delete</i> Delete Boycott</a>
