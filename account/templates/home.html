@@ -125,9 +125,9 @@
                                                 actual++
 
                                             });
-                                            if(actual>=25){
-                                                    sum+=5;
-                                                }
+                                            if(actual<25){
+                                                $(".scroll").css('overflow','hidden')
+                                            }
                                             sum = sum+"px";
                                         $(".scroll").css('max-height',sum)
                                         </script>
