@@ -13,19 +13,19 @@ TAG_CHOICES = (
 )
 
 FILTER_TAG_CHOICES = (
-    (0, ("All")),
-    (1, ("Other")),
-    (2, ("People")),
-    (3, ("Sports")),
-    (4, ("Buisnesses")),
-    (5, ("International")),
-    (6, ("Local"))
+    (1, ("All")),
+    (2, ("Other")),
+    (3, ("People")),
+    (4, ("Sports")),
+    (5, ("Buisnesses")),
+    (6, ("International")),
+    (7, ("Local"))
 )
 
 SORT_CHOICES = (
-    (0, ("Most Boycotted")),
-    (1, ("Alphabetical Order")),
-    (2, ("Most Recent")),
+    (1, ("Most Boycotted")),
+    (2, ("Alphabetical Order")),
+    (3, ("Most Recent")),
 )
 
 

@@ -22,7 +22,7 @@ footer {
 }
 
 .radiostuff ul li {
-    padding-bottom: 20px;
+    /*padding-bottom: 20px;*/
 }
 
 .biglabel {
@@ -90,9 +90,16 @@ change "brown" to something of your choosing
 .label{
     color: #9e9e9e;
 }
+.slightly-bigger{
+    font-size: 1.25em;
+}
 
 .select-wrapper *{
     color: #1976D2 !important;
     text-align: center;
 
+}
+.scroll{
+    max-height:1050px;
+    overflow-y:scroll;
 }
