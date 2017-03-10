@@ -74,21 +74,11 @@ def home(request):
         my_boycotts_json = json.loads(json.dumps(my_boycotts))
     trending_boycotts = []
     # top_boycotts = []
-    # for top_boycott in Boycotted.objects.all():
-    #     zipcode = top_boycott.zip
-    #     location = process_zip(zipcode)
     #
-    #     top_bct = {
-    #         'name': top_boycott.name,
-    #         'id': top_boycott.id,
-    #         'num': top_boycott.boycotts.count(),
-    #         'location': location
-    #     }
-    #     top_boycotts.append(top_bct)
 
 
 
-    # for trending_boycott in Boycotted.objects.filter(date__month=date.month):
+
     tomorrow = datetime.date.today() + datetime.timedelta(days=1)
     lastMonth = datetime.date.today() + datetime.timedelta(days=-30)
     for trending_boycott in Boycotted.objects.filter(date__range=[lastMonth,tomorrow]):
@@ -125,8 +115,8 @@ def home(request):
         if form.is_valid():
             # process data in form
             filter = form.save(commit=False)
-            tag = form.cleaned_data['tag']
-            sort = form.cleaned_data['sort']
+            tag = str(int(form.cleaned_data['tag'])-1)
+            sort = str(int(form.cleaned_data['sort'])-1)
             prnt="Tag Value-"+str(tag)+'| '+"Sort Value-"+str(sort)+'\n'
 
 
@@ -187,8 +177,21 @@ def home(request):
     else:
         print("no filtering or sorting")
         form = FilterForm(initial={'tag': '1', 'sort': '1'})
-        # all_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=sort_by_most, reverse=True)))
-        all_boycotts_json = json.loads(json.dumps([]))
+        all_boycotts=[]
+        for boycott in Boycotted.objects.all():
+            zipcode = boycott.zip
+            location = process_zip(zipcode)
+
+            top_bct = {
+                'name': boycott.name,
+                'id': boycott.id,
+                'num': boycott.boycotts.count(),
+                'location': location
+            }
+            all_boycotts.append(top_bct)
+
+        all_boycotts_json = json.loads(json.dumps(sorted(all_boycotts, key=sort_by_most, reverse=True)))
+        # all_boycotts_json = json.loads(json.dumps([]))
 
 
 

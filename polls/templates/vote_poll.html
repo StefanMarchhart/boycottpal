@@ -3,16 +3,16 @@
 
 {% block content %}
 
-                        <script>
-                        function report_error(error) {
-                            swal({
-                                title: "Error",
-                                text: error,
-                                type: "error",
-                                html: true
-                            });
-                        }
-                    </script>
+    <script>
+        function report_error(error) {
+            swal({
+                title: "Error",
+                text: error,
+                type: "error",
+                html: true
+            });
+        }
+    </script>
     <div class="section">
         <div class="container">
             <div class="row">
@@ -20,10 +20,10 @@
                     <div class="grey lighten-2 card">
                         <div class="card-content black-text">
                             <div class="center">
-                            <span class="card-title">{{ name }}</span>
+                                <span class="card-title">{{ name }}</span>
                             </div>
                             <div class="panel-body">
-                                <form method="post" action="{% url 'VotePoll' id %} " >
+                                <form method="post" action="{% url 'VotePoll' id %} ">
                                     {% csrf_token %}
 
                                     {% if poll_form.non_field_errors %}
@@ -31,7 +31,7 @@
                                             report_error('{{ poll_form.non_field_errors }}')
                                         </script>
                                     {% endif %}
-{#                                    {{ poll_form.as_p }}#}
+                                    {#                                    {{ poll_form.as_p }}#}
 
 
                                     <div class="row">
@@ -49,25 +49,25 @@
                                         </div>
                                     </div>
 
-                                                                        <div class="row center">
+                                    <div class="row center">
 
-                                                                            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                                                                                <i class="material-icons right">send</i>
-                                                                            </button>
+                                        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                                            <i class="material-icons right">send</i>
+                                        </button>
 
-                                                                            <a href="/" class="waves-effect waves-light red btn"><i
-                                                                                    class="material-icons right">cancel</i>Cancel</a>
+                                        <a href="/" class="waves-effect waves-light red btn"><i
+                                                class="material-icons right">cancel</i>Cancel</a>
 
-                                                                        </div>
-                                                                        <input type="hidden" name="next" value="{{ next }}"/>
+                                    </div>
+                                    <input type="hidden" name="next" value="{{ next }}"/>
                                 </form>
 
                                 <script>
                                     for (i = 0; i < {{ num_choices }}; i++) {
-                                        tomove = $("#id_choice_"+i);
+                                        tomove = $("#id_choice_" + i);
                                         tomove.parent().parent().prepend(tomove);
                                     }
-                                    $('label').css('font-size','1.5rem');
+                                    $('label').css('font-size', '1.5rem');
                                 </script>
                             </div>
                         </div>
