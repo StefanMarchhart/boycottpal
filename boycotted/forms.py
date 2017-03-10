@@ -6,6 +6,10 @@ class BoycottedForm(forms.ModelForm):
     class Meta:
         model = Boycotted
         fields = ['name', 'zip', 'tag']
+class AdminTagForm(forms.ModelForm):
+    class Meta:
+        model = Boycotted
+        fields = ['tag']
 
 class BoycottForm(forms.ModelForm):
     class Meta:

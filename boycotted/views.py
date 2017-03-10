@@ -103,6 +103,7 @@ def ViewBoycotted(request,boycotted_id):
 
 @login_required(login_url='/login/')
 def EditBoycott(request,boycott_id):
+    prnt=''
     boycott = Boycott.objects.get(id=boycott_id)
     if request.user.username != boycott.boycotter.username:
         return HttpResponseRedirect('/')
@@ -119,24 +120,33 @@ def EditBoycott(request,boycott_id):
     if request.method == 'POST':
 
         boycott_form = BoycottForm(data=request.POST, instance=boycott)
-        if boycott_form.is_valid():
+        tag_form = AdminTagForm(data=request.POST)
+        if boycott_form.is_valid() and tag_form.is_valid():
 
+            tag = str(int(tag_form.cleaned_data['tag']))
+
+            target=Boycott.objects.get(id=boycott_id).target
 
             new_boycott = boycott_form.save(commit=False)
 
             boycott.reason=new_boycott.reason
+            target.tag = int(tag)
             boycott.save()
+            target.save()
 
             return HttpResponseRedirect('/')
 
     else:
         boycott_form = BoycottForm(instance=boycott)
+        tag_form = AdminTagForm(instance=boycott)
 
     return render(request, 'edit_boycott.html',
                   {'boycott_form': boycott_form,
+                   'tag_form':tag_form,
                    'name': boycott.target.name,
                    'location': location,
-                   'boycott_id': boycott_id
+                   'boycott_id': boycott_id,
+                   'prnt':prnt
                    })
 
 @login_required(login_url='/login/')
