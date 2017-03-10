@@ -149,12 +149,51 @@ def EditBoycott(request,boycott_id):
                    'prnt':prnt
                    })
 
+
+@user_passes_test(lambda u: u.is_superuser, login_url='/login/')
+def EditBoycotted(request,boycotted_id):
+
+    boycotted = Boycotted.objects.get(id=boycotted_id)
+
+    if boycotted.zip == "":
+        zip=""
+        location = ""
+    else:
+        zip=boycotted.zip
+        search = ZipcodeSearchEngine()
+        location = search.by_zipcode(zip)
+        location = "(" + str(location.City) + ", " + str(location.State) + ")"
+
+
+    if request.method == 'POST':
+        print('actuallyposting')
+        boycotted_form = BoycottedForm(data=request.POST)
+
+        tag =  boycotted_form.data['tag']
+        # new_boycotted = boycotted_form.save(commit=False)
+
+        boycotted.tag = tag
+        boycotted.save()
+        return HttpResponseRedirect('/boycotted/view/all/')
+
+    else:
+        boycotted_form = BoycottedForm(instance=boycotted)
+
+    return render(request, 'edit_boycotted.html',
+                  {'boycotted_form': boycotted_form,
+                   'name': boycotted.name,
+                   'location': location,
+                   'boycotted_id': boycotted_id,
+
+                   })
+
+
 @login_required(login_url='/login/')
 def DeleteBoycott(request, boycott_id):
     boycott = Boycott.objects.get(id=boycott_id)
     if not request.user.is_superuser:
         if request.user.username != boycott.boycotter.username:
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/boycotted/view/all/')
     boycotted=boycott.target
     boycott.delete()
     if boycotted.boycotts.count()==0:
