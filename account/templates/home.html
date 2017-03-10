@@ -118,18 +118,16 @@
                                         {% endfor %}
 
                                         <script>
-                                            var sum = -1;
+                                            var sum = 0;
                                             var actual =0;
-                                            var limit = 25;
-                                            $('.all:lt(limit)').each(function () {
-                                                sum += $(this).height();
-                                                sum +=1;
-                                                sum+=20;
-                                                actual++;
-                                                if(actual>limit){
+                                            $('.all:lt(47)').each(function () {
+                                                sum += $(this).outerHeight();
+                                                actual++
+
+                                            });
+                                            if(actual>=47){
                                                     sum+=5;
                                                 }
-                                            });
                                             sum = sum+"px";
                                         $(".scroll").css('max-height',sum)
                                         </script>
