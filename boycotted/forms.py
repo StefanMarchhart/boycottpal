@@ -1,5 +1,5 @@
 from django import forms
-from boycotted.models import Boycott, Boycotted, DirtyFilterModelIFeelGuiltyAbout
+from boycotted.models import Boycott, Boycotted, DirtyFilterModelIFeelGuiltyAbout, SORT_CHOICES
 
 
 class BoycottedForm(forms.ModelForm):
@@ -13,6 +13,8 @@ class BoycottForm(forms.ModelForm):
         fields = ['reason']
 
 class FilterForm(forms.ModelForm):
+    sort = forms.ChoiceField(choices=SORT_CHOICES, initial='',
+                                        widget=forms.RadioSelect)
     class Meta:
         model = DirtyFilterModelIFeelGuiltyAbout
-        fields = ['tag','sort']
+        fields = ['tag']

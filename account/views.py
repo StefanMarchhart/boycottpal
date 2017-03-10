@@ -73,18 +73,18 @@ def home(request):
 
         my_boycotts_json = json.loads(json.dumps(my_boycotts))
     trending_boycotts = []
-    top_boycotts = []
-    for top_boycott in Boycotted.objects.all():
-        zipcode = top_boycott.zip
-        location = process_zip(zipcode)
-
-        top_bct = {
-            'name': top_boycott.name,
-            'id': top_boycott.id,
-            'num': top_boycott.boycotts.count(),
-            'location': location
-        }
-        top_boycotts.append(top_bct)
+    # top_boycotts = []
+    # for top_boycott in Boycotted.objects.all():
+    #     zipcode = top_boycott.zip
+    #     location = process_zip(zipcode)
+    #
+    #     top_bct = {
+    #         'name': top_boycott.name,
+    #         'id': top_boycott.id,
+    #         'num': top_boycott.boycotts.count(),
+    #         'location': location
+    #     }
+    #     top_boycotts.append(top_bct)
 
 
 
@@ -115,9 +115,10 @@ def home(request):
     def sort_by_comments(boycott):
         return int(boycott['num'])
 
-    top_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=sort_by_most, reverse=True)[:25]))
+    # top_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=sort_by_most, reverse=True)[:25]))
     trending_boycotts_json = json.loads(json.dumps(sorted(trending_boycotts, key=sort_by_most, reverse=True)[:10]))
 
+    prnt=''
 
     if request.method == 'POST':
         form = FilterForm(data=request.POST)
@@ -126,18 +127,22 @@ def home(request):
             filter = form.save(commit=False)
             tag = form.cleaned_data['tag']
             sort = form.cleaned_data['sort']
-            print(sort)
+            prnt="Tag Value-"+str(tag)+'| '+"Sort Value-"+str(sort)+'\n'
 
-            print(SORT_CHOICES[sort])
-            # print(TAG_CHOICES[tag])
 
 
             tagged = Boycotted.objects.all()
-            if tag !=0:
-                tagged.filter(tag=tag)
+            if int(tag) !=0:
+                # prnt+=str(tagged.all())
+                tagged=tagged.filter(tag=tag)
+                print("filter")
+                # prnt+="|"+str(tagged.all())
 
-            if sort ==2:
+            if int(sort) ==2:
+                # prnt+=str(tagged.all())
                 tagged=tagged.order_by('-date')
+                print("sorting by date")
+                # prnt += "|" + str(tagged.all())
 
 
 
@@ -156,40 +161,46 @@ def home(request):
                 all_boycotts.append(top_bct)
 
 
-            if sort == 0:
+            if sort == str(0):
                 all_boycotts=sorted(all_boycotts, key=sort_by_most, reverse=True)
+                print("sorting by most")
 
-            elif sort == 1:
+            elif sort == str(1):
+                # prnt+=str(all_boycotts)
                 all_boycotts=sorted(all_boycotts, key=sort_by_alpha)
-
-
+                # prnt += '|'+str(all_boycotts)
+                print("sorting by alpha")
+            print("all boycotts")
+            print(all_boycotts)
             all_boycotts_json = json.loads(json.dumps(all_boycotts))
             # return HttpResponseRedirect('/?alert=signup')
 
-            # return render(request, 'home.html', {
-            #     'alert': alert,
-            #     'my_boycotts': my_boycotts_json,
-            #     'top_boycotts': top_boycotts_json,
-            #     'trending_boycotts': trending_boycotts_json,
-            #     'all_boycotts': json.loads(json.dumps(all_boycotts)),
-            #     'filterForm': form,
-            #     'news': news
-            # })
+            return render(request, 'home.html', {
+                'alert': alert,
+                'my_boycotts': my_boycotts_json,
+                'trending_boycotts': trending_boycotts_json,
+                'all_boycotts': json.loads(json.dumps(all_boycotts)),
+                'filterForm': form,
+                'news': news
+            })
 
     else:
+        print("no filtering or sorting")
         form = FilterForm(initial={'tag': '1', 'sort': '1'})
-        all_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=sort_by_most, reverse=True)))
+        # all_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=sort_by_most, reverse=True)))
+        all_boycotts_json = json.loads(json.dumps([]))
 
 
 
     return render(request, 'home.html', {
         'alert': alert,
         'my_boycotts': my_boycotts_json,
-        'top_boycotts': top_boycotts_json,
+        # 'top_boycotts': top_boycotts_json,
         'trending_boycotts': trending_boycotts_json,
         'all_boycotts': all_boycotts_json,
         'filterForm': form,
-        'news': news
+        'news': news,
+        'print':prnt,
     })
 
 
