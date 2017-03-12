@@ -81,6 +81,11 @@ MIDDLEWARE_CLASSES = [
 
 CORS_ORIGIN_ALLOW_ALL=True
 
+CORS_ORIGIN_WHITELIST = (
+    'boycottpal.com',
+    'boycott-dev.herokuapp.com',
+)
+
 ROOT_URLCONF = 'boycott.urls'
 
 TEMPLATES = [
