@@ -175,7 +175,6 @@ def home(request):
             })
 
     else:
-        print("no filtering or sorting")
         form = FilterForm(initial={'tag': '1', 'sort': '1'})
         all_boycotts=[]
         for boycott in Boycotted.objects.all():
