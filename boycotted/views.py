@@ -241,4 +241,4 @@ def IncrementComment(request,identifier):
     boycotted.comment_count=comments
 
     boycotted.save()
-    return
+    return HttpResponseRedirect('')
