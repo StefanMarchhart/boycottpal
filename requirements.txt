@@ -11,6 +11,7 @@ prompt-toolkit==1.0.9
 psycopg2==2.6.2
 Pygments==2.2.0
 pytz==2016.10
+requests==2.13.0
 simplegeneric==0.8.1
 six==1.10.0
 traitlets==4.3.1

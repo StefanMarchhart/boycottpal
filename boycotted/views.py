@@ -1,5 +1,5 @@
 from datetime import datetime
-
+import requests
 from account.views import _get_disqus_sso
 from django.contrib.auth.decorators import login_required, user_passes_test
 import json
@@ -225,3 +225,20 @@ def DeleteBoycotted(request, boycotted_id):
 
 
     return HttpResponseRedirect('/')
+
+def IncrementComment(request,identifier):
+
+    params=identifier.split('-')
+    boycotted= Boycotted.objects.get(params[2])
+
+    params={
+        "api_key":"UCkYzgSPnP4OtgopaqnhrhMrQnL6a8hJBvfzslmbB80N1jCaTexRI7mmVBumkoBO",
+        "forum":'boycottpal',
+        'thread:ident':identifier
+    }
+    r= requests.get('https://disqus.com/api/3.0/threads/details.json',params=params)
+    comments=int(r.json()['posts'])
+    boycotted.comment_count=comments
+
+    boycotted.save()
+    return
