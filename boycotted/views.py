@@ -229,7 +229,7 @@ def DeleteBoycotted(request, boycotted_id):
 def IncrementComment(request,identifier):
 
     params=identifier.split('-')
-    boycotted= Boycotted.objects.get(params[2])
+    boycotted= Boycotted.objects.get(id=params[2])
 
     params={
         "api_key":"UCkYzgSPnP4OtgopaqnhrhMrQnL6a8hJBvfzslmbB80N1jCaTexRI7mmVBumkoBO",
