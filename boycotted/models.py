@@ -26,6 +26,7 @@ SORT_CHOICES = (
     (1, ("Most Boycotted")),
     (2, ("Alphabetical Order")),
     (3, ("Most Recent")),
+    (4, ("Most Comments"))
 )
 
 
