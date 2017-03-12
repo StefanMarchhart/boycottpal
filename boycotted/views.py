@@ -237,7 +237,7 @@ def IncrementComment(request,identifier):
         'thread:ident':identifier
     }
     r= requests.get('https://disqus.com/api/3.0/threads/details.json',params=params)
-    comments=int(r.json()['posts'])
+    comments=int(r.json()['response']['posts'])
     boycotted.comment_count=comments
 
     boycotted.save()
