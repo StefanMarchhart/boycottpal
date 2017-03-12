@@ -37,7 +37,8 @@ def ViewPoll(request,poll_id):
 
 def ViewAllPolls(request):
     all_polls=[]
-    for poll in Poll.objects.all():
+    polls=Poll.objects.all().order_by('-date')
+    for poll in polls:
         pol= {
             'name':poll.name,
             'id':poll.id,

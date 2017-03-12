@@ -46,6 +46,7 @@ class Boycotted(models.Model):
     boycotts = models.ManyToManyField("boycotted.Boycott", blank=True)
     date = models.DateTimeField(default=datetime.datetime.now)
     tag = models.IntegerField(default=1, choices=TAG_CHOICES)
+    comment_count = models.IntegerField(default=0)
 
     def __str__(self):
         return 'Boycotted: ' + self.name
