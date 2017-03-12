@@ -3,7 +3,7 @@ import requests
 from account.views import _get_disqus_sso
 from django.contrib.auth.decorators import login_required, user_passes_test
 import json
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from boycott.general import process_zip
@@ -241,4 +241,4 @@ def IncrementComment(request,identifier):
     boycotted.comment_count=comments
 
     boycotted.save()
-    return HttpResponseRedirect('')
+    return HttpResponse('Increment successful. Count is now: '+str(comments))

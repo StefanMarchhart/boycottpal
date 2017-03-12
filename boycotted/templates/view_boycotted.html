@@ -73,16 +73,18 @@
                             <span class="card-title">Talk about {{ name | safe }} {{ location }}</span>
                             <div id="disqus_thread"></div>
                             <script>
+                                var identifier = '{{ SERVER }}-Boycotted-{{ id }}'
                                 function updateComment(identifier) {
                                     jQuery.get('{{ CURRENT_ROOT }}boycotted/incrementComment/'+identifier)
                                 }
+                                updateComment(identifier);
                                 {#                            #}
                                 {#                            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.#}
                                 {#                            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/#}
                                 {#                            #}
                                 var disqus_config = function () {
                                     this.page.url = "{{ CURRENT_ROOT }}boycotted/view/{{ id }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                                    this.page.identifier = "{{ SERVER }}-Boycotted-{{ id }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                    this.page.identifier = identifier; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
                                     this.page.title = "{{ name | safe }} {{ location }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
                                     {{ disqus_sso | safe }}
                                     this.sso = {
@@ -91,7 +93,7 @@
                                         url: "{{CURRENT_ROOT}}login/",
                                         logout: "{{CURRENT_ROOT}}logout/"
                                     }
-                                    this.callbacks.onNewComment = [function() { updateComment("{{ SERVER }}-Boycotted-{{ id }}"); }];
+                                    this.callbacks.onNewComment = [function() { updateComment(identifier); }];
                                 };
 
                                 (function () { // DON'T EDIT BELOW THIS LINE
