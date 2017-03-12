@@ -103,7 +103,7 @@ def home(request):
         return str(datetime.datetime.strptime(boycott['date'], '%Y-%m-%d'))
 
     def sort_by_comments(boycott):
-        return int(boycott['num'])
+        return int(boycott['comment_count'])
 
     # top_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=sort_by_most, reverse=True)[:25]))
     trending_boycotts_json = json.loads(json.dumps(sorted(trending_boycotts, key=sort_by_most, reverse=True)[:10]))
@@ -146,7 +146,8 @@ def home(request):
                     'name': boycott.name,
                     'id': boycott.id,
                     'num': boycott.boycotts.count(),
-                    'location': location
+                    'location': location,
+                    'comment_count': boycott.comment_count
                 }
                 all_boycotts.append(top_bct)
 
@@ -160,6 +161,9 @@ def home(request):
                 all_boycotts=sorted(all_boycotts, key=sort_by_alpha)
                 # prnt += '|'+str(all_boycotts)
                 print("sorting by alpha")
+
+            elif sort == str(3):
+                all_boycotts=sorted(all_boycotts, key=sort_by_comments, reverse=True)
             print("all boycotts")
             print(all_boycotts)
             all_boycotts_json = json.loads(json.dumps(all_boycotts))
