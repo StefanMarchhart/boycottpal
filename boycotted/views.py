@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from boycott.general import process_zip
+from boycott.settings import SERVER
 from boycotted.forms import *
 from boycotted.models import *
 from uszipcode import ZipcodeSearchEngine
@@ -67,6 +68,7 @@ def AddBoycott(request):
 def ViewBoycotted(request,boycotted_id):
     # if this is a POST request we need to process the form data
     boycotts=[]
+
     boycotted=Boycotted.objects.get(id=boycotted_id)
 
     if boycotted.zip == "":
@@ -90,6 +92,10 @@ def ViewBoycotted(request,boycotted_id):
 
     disqus_sso = _get_disqus_sso(request.user)
 
+    identifier= SERVER+'-Boycotted-'+boycotted_id
+
+
+    IncrementComment(request, identifier)
 
     return render(request, 'view_boycotted.html', {
         'name': boycotted.name,
