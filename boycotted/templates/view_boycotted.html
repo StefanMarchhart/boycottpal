@@ -73,7 +73,7 @@
                             <span class="card-title">Talk about {{ name | safe }} {{ location }}</span>
                             <div id="disqus_thread"></div>
                             <script>
-                                var identifier = '{{ SERVER }}-Boycotted-{{ id }}'
+                                var identifier = '{{ SERVER }}-Boycotted-{{ id }}';
                                 function updateComment(identifier) {
                                     jQuery.get('{{ CURRENT_ROOT }}boycotted/incrementComment/'+identifier)
                                 }
@@ -91,7 +91,7 @@
                                         button: "https://i.imgur.com/IEkisek.png",
                                         url: "{{CURRENT_ROOT}}login/",
                                         logout: "{{CURRENT_ROOT}}logout/"
-                                    }
+                                    };
                                     this.callbacks.onNewComment = [function() { updateComment(identifier); }];
                                 };
 
@@ -101,6 +101,8 @@
                                     s.setAttribute('data-timestamp', +new Date());
                                     (d.head || d.body).appendChild(s);
                                 })();
+
+                                $( document ).ready(updateComment(identifier))
                             </script>
                             <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments
                                 powered by Disqus.</a></noscript>
