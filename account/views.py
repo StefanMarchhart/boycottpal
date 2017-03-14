@@ -35,6 +35,7 @@ def token_generator(size=20, chars=string.ascii_uppercase + string.digits):
 
 # Create your views here.
 def home(request):
+    prnt = ''
     # Hit counter
     if HC.objects.all().count()==0:
         HC.objects.create()
@@ -81,20 +82,30 @@ def home(request):
 
     tomorrow = datetime.date.today() + datetime.timedelta(days=1)
     lastMonth = datetime.date.today() + datetime.timedelta(days=-30)
-    for trending_boycott in Boycotted.objects.filter(date__range=[lastMonth,tomorrow]):
+
+    # for trending_boycott in Boycotted.objects.filter(date__range=[lastMonth,tomorrow]):
+    for trending_boycott in Boycotted.objects.all():
         zipcode = trending_boycott.zip
         location = process_zip(zipcode)
 
-        trend_bct = {
-            'name': trending_boycott.name,
-            'id': trending_boycott.id,
-            'num': trending_boycott.boycotts.count(),
-            'location': location
-        }
-        trending_boycotts.append(trend_bct)
+        boycotts = trending_boycott.boycotts.filter(date__range=[lastMonth,tomorrow])
+        if boycotts.count()>0:
+
+            trend_bct = {
+                'name': trending_boycott.name,
+                'id': trending_boycott.id,
+                'num': trending_boycott.boycotts.count(),
+                'location': location,
+                'numrecent': boycotts.count()
+            }
+            trending_boycotts.append(trend_bct)
+        prnt=prnt+ " num:"+str(trending_boycott.boycotts.count())+" numrecent: "+str(boycotts.count())
 
     def sort_by_most(boycott):
         return int(boycott['num'])
+
+    def sort_by_most_filtered(boycott):
+        return int(boycott['numrecent'])
 
     def sort_by_alpha(boycott):
         return str(boycott['name'])
@@ -106,9 +117,9 @@ def home(request):
         return int(boycott['comment_count'])
 
     # top_boycotts_json = json.loads(json.dumps(sorted(top_boycotts, key=sort_by_most, reverse=True)[:25]))
-    trending_boycotts_json = json.loads(json.dumps(sorted(trending_boycotts, key=sort_by_most, reverse=True)[:10]))
+    trending_boycotts_json = json.loads(json.dumps(sorted(trending_boycotts, key=sort_by_most_filtered, reverse=True)[:10]))
 
-    prnt=''
+
 
     if request.method == 'POST':
         form = FilterForm(data=request.POST)
@@ -117,7 +128,6 @@ def home(request):
             filter = form.save(commit=False)
             tag = str(int(form.cleaned_data['tag'])-1)
             sort = str(int(form.cleaned_data['sort'])-1)
-            prnt="Tag Value-"+str(tag)+'| '+"Sort Value-"+str(sort)+'\n'
 
 
 
@@ -175,7 +185,8 @@ def home(request):
                 'trending_boycotts': trending_boycotts_json,
                 'all_boycotts': json.loads(json.dumps(all_boycotts)),
                 'filterForm': form,
-                'news': news
+                'news': news,
+                'prnt':prnt
             })
 
     else:
@@ -206,7 +217,7 @@ def home(request):
         'all_boycotts': all_boycotts_json,
         'filterForm': form,
         'news': news,
-        'print':prnt,
+        'prnt':prnt,
     })
 
 
