@@ -92,10 +92,10 @@ def ViewBoycotted(request,boycotted_id):
 
     disqus_sso = _get_disqus_sso(request.user)
 
-    identifier= SERVER+'-Boycotted-'+boycotted_id
-
-
-    IncrementComment(request, identifier)
+    # identifier= SERVER+'-Boycotted-'+boycotted_id
+    #
+    #
+    # IncrementComment(request, identifier)
 
     return render(request, 'view_boycotted.html', {
         'name': boycotted.name,
