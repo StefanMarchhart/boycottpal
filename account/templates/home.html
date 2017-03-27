@@ -62,7 +62,7 @@
 
                                             {#                                        <label for="{{ filterForm.message.sort }}">Sort</label>#}
 
-                                            <div class="radiostuff col hidden s12 left">
+                                            <div class="radiostuff col s12 m8 offset-m2 left">
                                                 <span class="label slightly-bigger">Sorting Order</span>
                                                 {{ filterForm.sort }}
                                             </div>
@@ -279,105 +279,6 @@
             </div>
 
         </div>
-        {#    #}
-        {#        <div class="section">#}
-        {##}
-        {#        </div>#}
-        {#        <div class="row">#}
-        {#            <div class="col s12 m6 offset-m3">#}
-        {#                <div class="icon-block">#}
-        {#                    <h5 class="center light-blue-text text-darken-2"><i class="material-icons medium">sort</i>#}
-        {#                    </h5>#}
-        {#                    <h5 class="center">All Boycotts</h5>#}
-        {#                    <ul class="collection white">#}
-        {#                        <div class="panel-body" style="overflow: auto">#}
-        {#                            <div class="row">#}
-        {#                                <form method="post" action="{% url 'home' %} " class="center">#}
-        {#                                    {% csrf_token %}#}
-        {##}
-        {##}
-        {#                                {{ filterForm}}#}
-        {#                                    <div class="row">#}
-        {#                                        {% if filterForm.non_field_errors %}#}
-        {#                                            <script>#}
-        {#                                                report_error('{{ filterForm.non_field_errors }}')#}
-        {#                                            </script>#}
-        {#                                        {% endif %}#}
-        {#                                    </div>#}
-        {#                                    <div class="row">#}
-        {#                                        <div class="col s12 m6 fieldWrapper input-field">#}
-        {#                                            <span class="label">Category</span>#}
-        {#                                            {{ filterForm.tag.errors }}#}
-        {#                                        <label for="{{ filterForm.message.tag }}">Tag</label>#}
-        {#                                            {{ filterForm.tag }}#}
-        {#                                        </div>#}
-        {##}
-        {#                                        <div class="col s12 m6 fieldWrapper input-field">#}
-        {#                                            <span class="label">Sort</span>#}
-        {#                                        <label for="{{ filterForm.message.sort }}">Sort</label>#}
-        {##}
-        {#                                            <div class="radiostuff">#}
-        {#                                                {{ filterForm.sort }}#}
-        {#                                            </div>#}
-        {#                                            <script>#}
-        {#                                                for (i = 0; i < 3; i++) {#}
-        {#                                                    tomove = $("#id_sort_" + i);#}
-        {#                                                    tomove.parent().parent().prepend(tomove);#}
-        {#                                                }#}
-        {#                                                $('label').css('font-size', '1.5rem');#}
-        {#                                            </script>#}
-        {##}
-        {#                                        </div>#}
-        {#                                    </div>#}
-        {##}
-        {#                                    <button class="btn waves-effect waves-light blue" type="submit" name="action">Sort#}
-        {#                                        Boycotts#}
-        {#                                        <i class="material-icons right">sort</i>#}
-        {#                                    </button>#}
-        {##}
-        {##}
-        {#                                    <input type="hidden" name="next" value="{{ next }}"/>#}
-        {#                                </form>#}
-        {#                            </div>#}
-        {#                            <div class="row">#}
-        {#                                <ul class="collection white">#}
-        {##}
-        {#                                    {% if all_boycotts|length == 0 %}#}
-        {#                                        <li class="collection-item center">#}
-        {#                                            <div>#}
-        {#                                                No Boycotts match this Query!#}
-        {#                                            </div>#}
-        {#                                        </li>#}
-        {##}
-        {#                                    {% else %}#}
-        {##}
-        {#                                        {% for boycott in all_boycotts %}#}
-        {#                                            <li class="collection-item collect">#}
-        {#                                                <div style="height: 22px;">#}
-        {#                                                    <a href="/boycotted/view/{{ boycott.id }}"#}
-        {#                                                       class="left blue-text text-darken-2">{{ forloop.counter }}. {{ boycott.name | safe }} {{ boycott.location }}</a>#}
-        {#                                                    <a href="/boycotted/view/{{ boycott.id }}#disqus_thread"#}
-        {#                                                       class="secondary-content right blue-text text-darken-2"></a>#}
-        {#                                                    <a href="/boycotted/view/{{ boycott.id }}"#}
-        {#                                                       class="secondary-content right"><i#}
-        {#                                                            class="material-icons blue-text text-darken-2 comment-icon">comment</i>#}
-        {#                                                    </a>#}
-        {#                                                </div>#}
-        {##}
-        {##}
-        {#                                            </li>#}
-        {#                                        {% endfor %}#}
-        {#                                    {% endif %}#}
-        {#                                </ul>#}
-        {#                            </div>#}
-        {##}
-        {#                        </div>#}
-        {##}
-        {#                    </ul>#}
-        {#                </div>#}
-        {##}
-        {#            </div>#}
-        {#        </div>#}
     </div>
 
 

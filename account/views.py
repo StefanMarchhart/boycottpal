@@ -416,12 +416,13 @@ def MassEmail(request):
             cleanEmail = email_form.cleaned_data
             email = cleanEmail.get('email')
             subject = cleanEmail.get('subject')
-            mailList = []
-            for user in BoycottUser.objects.all():
-                mailList.append(user.email)
 
-            send_mail(subject, email, 'admin@BoycottPal.com', mailList,
-                      fail_silently=True)
+            for user in BoycottUser.objects.all():
+                send_mail(subject, email, 'admin@BoycottPal.com', [user.email],
+                          fail_silently=True)
+
+            # send_mail(subject, email, 'admin@BoycottPal.com', mailList,
+            #           fail_silently=True)
             return HttpResponseRedirect('/console/?alert=sent')
 
     else:
