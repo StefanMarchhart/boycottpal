@@ -103,3 +103,8 @@ change "brown" to something of your choosing
     max-height:1050px;
     overflow-y:scroll;
 }
+
+#id_sort li{
+    float: left;
+    clear: left;
+}
