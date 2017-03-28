@@ -7,7 +7,7 @@ TAG_CHOICES = (
     (1, ("Other")),
     (2, ("People")),
     (3, ("Sports")),
-    (4, ("Buisnesses")),
+    (4, ("Businesses")),
     (5, ("International")),
     (6, ("Local"))
 )
@@ -17,7 +17,7 @@ FILTER_TAG_CHOICES = (
     (2, ("Other")),
     (3, ("People")),
     (4, ("Sports")),
-    (5, ("Buisnesses")),
+    (5, ("Businesses")),
     (6, ("International")),
     (7, ("Local"))
 )
