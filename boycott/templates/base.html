@@ -46,6 +46,11 @@
         <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">BoycottPal</a>
             <ul class="right hide-on-med-and-down">
                 {% if user.is_authenticated %}
+                    <li>
+                        <a href="https://www.facebook.com/BoycottPal-1262118757216161/" class="fa fa-facebook"></a>
+                        <a href="https://twitter.com/BoycottPal" class="fa fa-twitter"></a>
+                        <a href="https://www.pinterest.com/wwwboycottpalcom/pins/" class="fa fa-pinterest"></a>
+                    </li>
                     <li><a href="/settings/"><i class="material-icons left">person</i>{{ user.username }}</a></li>
                     <li><a href="/poll/vote/{{ recent_poll }}"><i class="material-icons left">poll</i>Poll</a></li>
                     <li><a href="/blog/"><i class="material-icons left">comment</i>Blog</a></li>
