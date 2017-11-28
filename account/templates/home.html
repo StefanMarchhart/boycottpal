@@ -149,9 +149,30 @@
             </div>
             <div class="col s12 m6 box-main">
                 {% if not user.is_authenticated %}
-
+                    
                     <div class="section no-pad-bot blue grey lighten-3" id="index-banner">
                         <div class="container">
+                             <script type="text/javascript">
+                              (function() {
+                                if (window.CHITIKA === undefined) {
+                                  window.CHITIKA = {
+                                    'units': []
+                                  };
+                                };
+                                var unit = {
+                                  "calltype": "async[2]",
+                                  "publisher": "Csense4u",
+                                  "width": 728,
+                                  "height": 90,
+                                  "sid": "Chitika Default"
+                                };
+                                var placement_id = window.CHITIKA.units.length;
+                                window.CHITIKA.units.push(unit);
+                                document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
+                              }());
+
+                            </script>
+                            <script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
 
                             <br><br>
                             {#                            <h1 class="header center orange-text text-darken-2">Welcome to BoycottPal</h1>#}
@@ -309,8 +330,8 @@
                         var unit = {
                           "calltype": "async[2]",
                           "publisher": "Csense4u",
-                          "width": 550,
-                          "height": 250,
+                          "width": 160,
+                          "height": 600,
                           "sid": "Chitika Default"
                         };
                         var placement_id = window.CHITIKA.units.length;
@@ -319,6 +340,8 @@
                       }());
 
                     </script>
+                    <script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
+
                 </div>
             </div>
 
